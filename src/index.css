@@ -1,15 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap');
 
-/* --- Variables CSS (Palette GitS Cinématique) --- */
+/* --- Variables CSS (Palette GitS Haute Lisibilité) --- */
 :root {
-  --color-bg-primary: #000216;      
-  --color-bg-secondary: #001228;    
-  --color-text-primary: #e0e0e0;     
+  /* FOND : On part sur un noir quasi pur pour le contraste max (comme ta référence) */
+  --color-bg-primary: #050505;      
+  --color-bg-secondary: #0e1216; /* Légèrement plus clair pour les cartes */
+  
+  /* TEXTE : Blanc cassé très clair pour la lecture */
+  --color-text-primary: #f0f0f0;     
   --color-text-title: #ffffff;      
-  --color-accent-neon: #00ffff;      
-  --color-accent-teal: #006679;      
-  --color-accent-secondary: #afff00;
-  --color-interface-dark: #1f3747;   
+  
+  /* ACCENTS : On garde le Néon mais on s'assure qu'il pete */
+  --color-accent-neon: #00ffff;      /* Cyan Cyanure */
+  --color-accent-teal: #008cba;      /* Teal un peu plus clair pour être lisible sur le noir */
+  --color-accent-secondary: #afff00; /* Vert Acide */
+  
+  /* INTERFACE */
+  --color-interface-dark: #333333;   /* Gris neutre pour les lignes discrètes */
+  --color-interface-light: #8899a6;  /* Gris moyen pour les textes secondaires */
+  
+  /* Polices */
   --font-title: 'Orbitron', sans-serif;
   --font-body: 'Inter', sans-serif;
 }
@@ -20,6 +30,7 @@ body {
   font-family: var(--font-body);
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
+  line-height: 1.6; /* Améliore la lisibilité du texte */
   min-height: 100vh;
 }
 
@@ -37,3 +48,9 @@ a {
 }
 
 a:hover { color: var(--color-accent-secondary); }
+
+/* Scrollbar stylisée (Bonus pour Chrome/Safari) */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--color-interface-dark); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent-teal); }
