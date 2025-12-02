@@ -5,7 +5,8 @@ import './index.css';
 import HomePage from './pages/Home.tsx';
 import ProjectsPage from './pages/Projects.tsx';
 import ExperiencePage from './pages/Experience.tsx';
-import SkillsPage from './pages/Skills.tsx'; // <--- NOUVEL IMPORT
+import SkillsPage from './pages/Skills.tsx';
+import ContactPage from './pages/Contact.tsx'; // <--- NOUVEL IMPORT
 
 const BurgerIcon: React.FC = () => (
     <div style={{ width: '25px', height: '20px', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '4px' }}>
@@ -56,14 +57,10 @@ function App() {
         <HomePage /> 
         <ProjectsPage /> 
         <ExperiencePage />
-        
-        {/* NOUVELLE SECTION COMPÉTENCES */}
         <SkillsPage /> 
-
-        {/* Dernière section restante */}
-        <section id="contact" style={{ minHeight: '100vh', paddingTop: '100px', paddingBottom: '100px' }}>
-             <h2>Contact / End of Transmission</h2>
-        </section>
+        
+        {/* LA SECTION FINALE */}
+        <ContactPage /> 
         
       </main>
     </div>
