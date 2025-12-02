@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProjectCard from '../components/ProjectCard.tsx';
+import ProjectModal from '../components/ProjectModal.tsx'; // Import du Modal
 import type { Project } from '../types/project.ts';
 
 const PROJECT_DATA: Project[] = [
@@ -26,19 +27,39 @@ const PROJECT_DATA: Project[] = [
 ];
 
 const ProjectsPage: React.FC = () => {
+  // État pour savoir quel projet est ouvert (null = aucun)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
   return (
     <section id="projects" style={{ minHeight: '100vh', paddingTop: '100px', paddingBottom: '100px' }}>
       <h2 style={{ fontSize: '3em', color: 'var(--color-text-title)', marginBottom: '50px' }}>
         [ PROJECTS / TECHNICAL ARTIFACTS ]
       </h2>
+      
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '30px' }}>
         {PROJECT_DATA.map(project => (
-          <ProjectCard key={project.id} project={project} />
+          // On ajoute le onClick ici sur le conteneur de la carte
+          <div 
+            key={project.id} 
+            onClick={() => setSelectedProject(project)}
+            style={{ cursor: 'pointer' }} // Indique que c'est cliquable
+          >
+            <ProjectCard project={project} />
+          </div>
         ))}
       </div>
+
       <p style={{ marginTop: '50px', color: 'var(--color-interface-light)', textAlign: 'center' }}>
         // END OF FILE TRANSFER LOG // MORE ARTIFACTS IN DEVELOPMENT //
       </p>
+
+      {/* Affichage conditionnel du Modal */}
+      {selectedProject && (
+        <ProjectModal 
+          project={selectedProject} 
+          onClose={() => setSelectedProject(null)} 
+        />
+      )}
     </section>
   );
 };
