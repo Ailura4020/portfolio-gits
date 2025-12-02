@@ -7,4 +7,5 @@ export interface Project {
   status: 'Complete' | 'Archive' | 'Experimental';
   githubLink: string;
   demoLink?: string;
+  imageUrl?: string;
 }
