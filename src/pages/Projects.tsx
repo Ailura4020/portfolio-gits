@@ -13,7 +13,7 @@ const PROJECT_DATA: Project[] = [
     status: 'Complete',
     githubLink: "https://github.com/Ailura4020/Angul-it.git",
     demoLink: undefined,
-  },
+    imageUrl: "/projects/angul-it-screen.png",  },
   {
     id: 2,
     title: "Make-your-game: Level Generation",
@@ -23,6 +23,7 @@ const PROJECT_DATA: Project[] = [
     status: 'Complete',
     githubLink: "https://github.com/Aukryx/Make-your-game.git",
     demoLink: undefined,
+    // imageUrl: "/projects/js-game-screen.png",
   },
 ];
 
