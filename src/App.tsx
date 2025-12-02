@@ -2,6 +2,7 @@ import React from 'react';
 import './index.css'; 
 import HomePage from './pages/Home.tsx';
 import ProjectsPage from './pages/Projects.tsx';
+import ExperiencePage from './pages/Experience.tsx';
 
 const BurgerIcon: React.FC = () => (
     <div style={{ width: '25px', height: '20px', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '4px' }}>
@@ -53,9 +54,7 @@ function App() {
       <main style={{ padding: '0px 40px', maxWidth: '1400px', margin: '0 auto', paddingTop: '110px' }}>
         <HomePage /> 
         <ProjectsPage /> 
-        <section id="experience" style={{ minHeight: '100vh', paddingTop: '100px' }}>
-             <h2>Experience / Interaction Log</h2>
-        </section>
+        <ExperiencePage />
         <section id="skills" style={{ minHeight: '100vh', paddingTop: '100px' }}>
              <h2>Skills / Capability Matrix</h2>
         </section>
