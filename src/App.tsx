@@ -25,7 +25,7 @@ const NavigationBar: React.FC = () => {
     >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 40px', height: '50px' }}>
           <div style={{ fontFamily: 'var(--font-title)', fontSize: '24px', color: 'var(--color-accent-neon)' }}>
-              [PROJECT AILURA]
+              [MAJOR AILURA]
           </div>
           <div style={{ display: 'flex', gap: '15px', alignItems: 'center', color: 'var(--color-text-primary)' }}>
               <span style={{ fontSize: '14px', letterSpacing: '2px' }}>FR / EN</span>

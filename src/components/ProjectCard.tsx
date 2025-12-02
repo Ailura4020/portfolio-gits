@@ -32,17 +32,23 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       <p style={{ color: 'var(--color-interface-light)', fontSize: '0.8em', marginBottom: '15px' }}>
         Codename: <span style={{ fontFamily: 'var(--font-title)' }}>[{project.codename}]</span>
       </p>
+      
+      {/* CORRECTION ICI : "SYSTEM ARCHITECTURE" au lieu de "Stack Matrix" */}
       <p style={{ color: 'var(--color-text-primary)', marginBottom: '10px' }}>
-        **Stack Matrix:** {project.stack.join(' | ')}
+        <strong style={{ color: 'var(--color-accent-teal)' }}>[ SYSTEM ARCHITECTURE ]</strong> {project.stack.join(' | ')}
       </p>
+
       <p style={{ marginBottom: '20px', fontSize: '0.9em' }}>
         {project.summary}
       </p>
+      
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <a href={project.githubLink} target="_blank" rel="noopener noreferrer" 
            style={{ color: 'var(--color-accent-neon)' }}>
           [ View Source Code ]
         </a>
+        
+        {/* Le statut utilisera maintenant le vert défini dans accent-secondary */}
         <span style={{ 
           color: project.status === 'Complete' ? 'var(--color-accent-secondary)' : 'var(--color-accent-teal)',
           fontFamily: 'var(--font-title)',
