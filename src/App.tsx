@@ -10,9 +10,7 @@ import ContactPage from './pages/Contact.tsx';
 import CustomCursor from './components/CustomCursor.tsx'; 
 import BackgroundManager from './components/BackgroundManager.tsx';
 
-/* ... Garde tout le code des animations et des composants Menu/Burger comme avant ... */
-// (Je ne remets pas tout le bloc du haut pour gagner de la place, garde ce que tu as déjà)
-
+/* --- GARDER TES KEYFRAMES CSS --- */
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
   @keyframes slideInRight {
@@ -23,13 +21,14 @@ styleSheet.innerText = `
     0% { opacity: 0; transform: translateX(20px); }
     100% { opacity: 1; transform: translateX(0); }
   }
-    @keyframes fadeIn {
+  @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }
   }
 `;
 document.head.appendChild(styleSheet);
 
+/* --- GARDER TON COMPOSANT BURGER ICON --- */
 const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen, onClick }) => (
     <div 
       onClick={onClick}
@@ -53,6 +52,7 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
     </div>
 );
 
+/* --- GARDER LE MENU OVERLAY --- */
 interface MenuProps {
   isOpen: boolean;
   onClose: () => void;
@@ -79,6 +79,7 @@ const MobileMenuOverlay: React.FC<MenuProps> = ({ isOpen, onClose, setHoveredSec
                 paddingLeft: '80px', 
                 animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)' 
             }}>
+                {/* Décorations menu... */}
                 <div style={{ position: 'absolute', top: 0, right: 0, width: '100px', height: '100%', borderLeft: '1px dashed var(--color-interface-dark)', pointerEvents: 'none', opacity: 0.3 }}></div>
                 <div style={{ color: 'var(--color-accent-teal)', fontFamily: 'var(--font-body)', fontSize: '0.8em', letterSpacing: '0.2em', marginBottom: '40px', opacity: 0.8 }}>// NAVIGATION PROTOCOLS</div>
                 
@@ -111,7 +112,6 @@ const MobileMenuOverlay: React.FC<MenuProps> = ({ isOpen, onClose, setHoveredSec
                         </a>
                     ))}
                 </nav>
-                <div style={{ marginTop: 'auto', marginBottom: '50px', color: 'var(--color-interface-dark)', fontFamily: 'var(--font-title)', fontSize: '0.7em', }}>SYSTEM STATUS: ONLINE <br/> SECURITY: ENCRYPTED</div>
             </div>
         </>
     );
@@ -143,38 +143,31 @@ const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }>
 
 function App() {
   const [menuHoveredSection, setMenuHoveredSection] = useState<string | null>(null);
+  
+  // NOUVEL ÉTAT : Theme courant (couleur)
+  const [currentTheme, setCurrentTheme] = useState('home');
+
+  // Si le menu est survolé, on utilise sa section, sinon le thème du scroll
+  const activeTheme = menuHoveredSection || currentTheme;
 
   return (
-    <div className="App" style={{ minHeight: '100vh', backgroundColor: 'transparent' }}>
+    // ON APPLIQUE LE THEME ICI
+    <div className="App" data-theme={activeTheme} style={{ minHeight: '100vh', backgroundColor: 'transparent' }}>
       
-      <BackgroundManager hoveredSection={menuHoveredSection} />
+      <BackgroundManager 
+        hoveredSection={menuHoveredSection} 
+        onSectionChange={setCurrentTheme} // On connecte le détecteur
+      />
 
       <CustomCursor />
       <NavigationBar setHoveredSection={setMenuHoveredSection} />
       
       <main style={{ padding: '0px 40px', maxWidth: '1400px', margin: '0 auto', paddingTop: '120px' }}>
-        
-        {/* CORRECTION ICI : Ajout des sections avec les IDs pour le scroll tracker */}
-        <section id="home">
-            <HomePage />
-        </section>
-
-        <section id="projects">
-            <ProjectsPage />
-        </section>
-
-        <section id="experience">
-            <ExperiencePage />
-        </section>
-
-        <section id="skills">
-            <SkillsPage />
-        </section>
-
-        <section id="contact">
-            <ContactPage />
-        </section>
-        
+        <section id="home"><HomePage /></section>
+        <section id="projects"><ProjectsPage /></section>
+        <section id="experience"><ExperiencePage /></section>
+        <section id="skills"><SkillsPage /></section>
+        <section id="contact"><ContactPage /></section>
       </main>
     </div>
   );

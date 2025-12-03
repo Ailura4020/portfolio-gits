@@ -1,8 +1,7 @@
 // src/components/BackgroundManager.tsx
+
 import React, { useEffect, useState } from 'react';
 
-// On exporte la config pour pouvoir l'utiliser ailleurs si besoin, 
-// mais surtout pour s'assurer que les IDs correspondent.
 export const SECTION_CONFIG = [
   {
     id: 'home',
@@ -31,25 +30,32 @@ export const SECTION_CONFIG = [
   }
 ];
 
-// Ajout d'une prop pour recevoir la section survolée
+// Interface mise à jour
 interface BackgroundManagerProps {
   hoveredSection?: string | null;
+  onSectionChange?: (sectionId: string) => void; // Nouvelle prop pour prévenir App.tsx
 }
 
-const BackgroundManager: React.FC<BackgroundManagerProps> = ({ hoveredSection }) => {
+const BackgroundManager: React.FC<BackgroundManagerProps> = ({ hoveredSection, onSectionChange }) => {
   const [scrollActiveSection, setScrollActiveSection] = useState('home');
 
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setScrollActiveSection(entry.target.id);
+          const newSection = entry.target.id;
+          setScrollActiveSection(newSection);
+          
+          // C'est ici qu'on prévient App.tsx pour changer la couleur !
+          if (onSectionChange) {
+            onSectionChange(newSection);
+          }
         }
       });
     };
 
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 0.25 
+      threshold: 0.5 // MODIFICATION : 50% de la section doit être visible (plus stable)
     });
 
     SECTION_CONFIG.forEach((section) => {
@@ -58,10 +64,9 @@ const BackgroundManager: React.FC<BackgroundManagerProps> = ({ hoveredSection })
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [onSectionChange]);
 
-  // LOGIQUE CLÉ : Si on survole un menu (hoveredSection existe), on l'utilise.
-  // Sinon, on utilise la section active du scroll (scrollActiveSection).
+  // Si on survole le menu, on prend cette section, sinon celle du scroll
   const activeSection = hoveredSection || scrollActiveSection;
 
   return (
@@ -74,7 +79,6 @@ const BackgroundManager: React.FC<BackgroundManagerProps> = ({ hoveredSection })
           key={section.id}
           style={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-            // Transition saccadée conservée
             opacity: activeSection === section.id ? 1 : 0,
             transition: 'opacity 0.6s steps(5)', 
             background: section.image ? `url(${section.image}) center/cover no-repeat` : section.fallbackColor,
@@ -88,7 +92,6 @@ const BackgroundManager: React.FC<BackgroundManagerProps> = ({ hoveredSection })
         </div>
       ))}
       
-      {/* Scanlines */}
       <div style={{
         position: 'absolute', inset: 0,
         backgroundImage: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06))',

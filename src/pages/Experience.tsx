@@ -13,6 +13,10 @@ const ExperiencePage: React.FC = () => {
       isOngoing: true, // Mode Vert "Matrix" / "Ghost"
       content: (
         <>
+        <div style={{ fontFamily: 'var(--font-title)', color: 'rgba(57, 255, 20, 0.8)', marginBottom: '10px', fontSize: '0.9em' }}>
+             // LOCATION: ROUEN, NORMANDIE
+           </div>
+           
           <p style={{ marginBottom: '20px', fontFamily: 'var(--font-title)', color: '#39ff14' }}>
             <strong>{'>'} CURRENT SYNC: DUAL PROCESSING...</strong>
           </p>

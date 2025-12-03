@@ -1,157 +1,177 @@
 // src/pages/Skills.tsx
-
 import React from 'react';
 
-// --- BLOC 1 : COMPÉTENCES TECHNIQUES (Hard Skills) ---
-const TECH_SKILLS = [
-  {
-    category: "LANGAGES & SYSTÈME",
-    // Ajout de Go et Shell qui sont typiques de tes projets Net-cat/Forum
-    items: ["Java", "Go (Golang)", "JavaScript", "TypeScript", "SQL", "Shell / Bash"]
-  },
-  {
-    category: "ARCHITECTURE & RÉSEAU",
-    // Ajout de WebSockets (Forum), API REST (Groupie), Docker (Forum)
-    items: ["Spring Boot", "Angular", "WebSockets", "API REST", "Docker", "Microservices"]
-  },
-  {
-    category: "DONNÉES & OUTILS",
-    // Ajout de SQLite (Forum) en plus de Postgres
-    items: ["Git / GitHub", "PostgreSQL", "SQLite", "VS Code", "IntelliJ", "CI/CD"]
-  }
-];
+// Composant Barre de compétence
+const SkillBar: React.FC<{ name: string; level: number }> = ({ name, level }) => (
+  <div style={{ marginBottom: '20px' }}> {/* + d'espace entre les barres */}
+    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '1em', color: '#fff' }}>
+      <span style={{ fontFamily: 'var(--font-title)', letterSpacing: '1px' }}>{name}</span>
+      <span style={{ color: 'var(--color-accent-neon)', opacity: 0.8 }}>{level}%</span>
+    </div>
+    <div style={{ width: '100%', height: '6px', background: 'rgba(255, 255, 255, 0.1)' }}> {/* Barre un peu plus épaisse */}
+      <div style={{ 
+        width: `${level}%`, height: '100%', 
+        background: 'var(--color-accent-neon)',
+        boxShadow: '0 0 10px var(--color-accent-neon)' 
+      }}></div>
+    </div>
+  </div>
+);
 
-// --- BLOC 2 : ATOUTS & RELATIONNEL (Soft Skills) ---
-const ASSETS_SKILLS = [
-  {
-    category: "INTELLIGENCE RELATIONNELLE",
-    items: ["Communication Client", "Négociation", "Analyse de Besoin", "Gestion de Conflit", "Esprit d'Équipe"]
-  },
-  {
-    category: "PÉDAGOGIE & MÉTHODOLOGIE",
-    // Mise en avant du Peer-to-Peer et de l'Agile (Zone01)
-    items: ["Peer-Learning (P2P)", "Méthode Agile", "Code Review", "Vulgarisation", "Autonomie"]
-  }
-];
+// Composant Carte (Fenêtre)
+const SkillCard: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
+  <div style={{
+    background: 'rgba(0, 0, 0, 0.85)',
+    border: '1px solid var(--color-interface-dark)',
+    borderTop: '2px solid var(--color-accent-neon)',
+    
+    // --- MODIFICATION 1 : ESPACE INTERNE ---
+    padding: '40px', // Plus d'air autour du texte (était 25px)
+    
+    // --- MODIFICATION 2 : HAUTEUR MINIMALE ---
+    minHeight: '450px', // Uniformise la taille des fenêtres
+    display: 'flex',
+    flexDirection: 'column',
+    
+    position: 'relative',
+    backdropFilter: 'blur(5px)'
+  }}>
+    {/* Titre de la carte */}
+    <h3 style={{ 
+      color: 'var(--color-accent-neon)', 
+      marginBottom: '30px', // Plus d'espace sous le titre
+      fontSize: '1.4em', // Titre un peu plus gros
+      borderBottom: '1px dashed rgba(255, 42, 42, 0.3)',
+      paddingBottom: '15px',
+      letterSpacing: '3px',
+      textTransform: 'uppercase'
+    }}>
+      {title}
+    </h3>
+    
+    {/* Le contenu prend toute la place restante */}
+    <div style={{ flex: 1 }}>
+      {children}
+    </div>
+    
+    {/* Déco coin */}
+    <div style={{ position: 'absolute', bottom: 0, right: 0, width: '15px', height: '15px', background: 'var(--color-accent-neon)' }}></div>
+  </div>
+);
 
 const SkillsPage: React.FC = () => {
   return (
-    <section id="skills" style={{ minHeight: '100vh', paddingTop: '100px', paddingBottom: '100px' }}>
+    <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
       
-      {/* --- EN-TÊTE --- */}
-      <h2 style={{ fontSize: '3em', color: 'var(--color-text-title)', marginBottom: '10px' }}>
-        [ DIAGNOSTIC SYSTÈME ]
+      <h2 style={{ 
+        fontSize: '3.5em', 
+        marginBottom: '10px',
+        fontFamily: 'var(--font-title)',
+        color: '#fff',
+        textShadow: '0 0 20px rgba(255, 42, 42, 0.6)'
+      }}>
+        <span style={{ color: 'var(--color-accent-neon)' }}>[</span> DIAGNOSTIC SYSTÈME <span style={{ color: 'var(--color-accent-neon)' }}>]</span>
       </h2>
-      <p style={{ color: 'var(--color-accent-teal)', fontFamily: 'var(--font-title)', marginBottom: '60px', letterSpacing: '0.1em' }}>
-        // ANALYSE DU PROFIL HYBRIDE : BACK-END + SYSTÈME + HUMAIN
+      
+      <p style={{ 
+        color: '#ccc', 
+        maxWidth: '800px', // Un peu plus large pour la phrase d'intro
+        marginBottom: '60px',
+        fontFamily: 'var(--font-code)',
+        fontSize: '1em', // Texte un peu plus gros
+        background: 'rgba(0,0,0,0.6)', 
+        padding: '15px',
+        borderLeft: '3px solid var(--color-accent-neon)'
+      }}>
+        {'>'} ANALYSE DU PROFIL HYBRIDE : BACK-END + SYSTÈME + HUMAIN <br/>
+        {'>'} INTEGRITY CHECK: <span style={{ color: '#39ff14' }}>COMPLETE</span>
       </p>
 
-      {/* --- PARTIE 1 : MODULES TECHNIQUES --- */}
-      <h3 style={{ 
-          color: 'var(--color-accent-neon)', 
-          fontSize: '1.5em', 
-          borderBottom: '1px dashed var(--color-interface-light)', 
-          paddingBottom: '10px', 
-          marginBottom: '30px' 
-      }}>
-        :: MODULES TECHNIQUES & SYSTÈME ::
-      </h3>
-
+      {/* Grille de Skills */}
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-        gap: '30px',
-        marginBottom: '60px'
+        // --- MODIFICATION 3 : CARTES PLUS LARGES ---
+        // On passe de 300px à 380px. Sur grand écran, ça fera de belles grosses cartes.
+        gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', 
+        gap: '40px' // Plus d'espace entre les cartes
       }}>
-        {TECH_SKILLS.map((group, index) => (
-          <div key={index} style={{
-            backgroundColor: 'rgba(0, 18, 40, 0.5)',
-            border: '1px solid var(--color-interface-dark)',
-            borderLeft: '4px solid var(--color-accent-teal)',
-            padding: '25px',
-            position: 'relative'
-          }}>
-            <h4 style={{ color: 'var(--color-text-title)', marginBottom: '20px', fontFamily: 'var(--font-title)' }}>
-              {group.category}
-            </h4>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              {group.items.map(item => (
-                <span key={item} style={{
-                  fontSize: '0.85em',
-                  color: 'var(--color-accent-neon)',
-                  border: '1px solid var(--color-accent-teal)',
-                  padding: '4px 8px',
-                  backgroundColor: 'rgba(0, 255, 255, 0.05)'
-                }}>
-                  {item}
-                </span>
-              ))}
-            </div>
+        
+        {/* --- COLONNE 1 --- */}
+        <SkillCard title="LANGAGES & SYSTÈME">
+          <SkillBar name="JavaScript / TypeScript" level={90} />
+          <SkillBar name="Go (Golang)" level={75} />
+          <SkillBar name="SQL / PostgreSQL" level={85} />
+          <SkillBar name="Shell / Bash" level={60} />
+          
+          <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+             {['Java', 'HTML5', 'CSS3'].map(t => (
+               <span key={t} style={{ 
+                   fontSize: '0.85em', // Un poil plus gros
+                   border: '1px solid #555', 
+                   color: '#ddd', 
+                   padding: '6px 12px', 
+                   letterSpacing: '1.5px', // Garde ton espacement lisible
+                   fontWeight: '600',
+                   textTransform: 'uppercase'
+               }}>
+                   {t}
+               </span>
+             ))}
           </div>
-        ))}
-      </div>
+        </SkillCard>
 
-      {/* --- PARTIE 2 : ATOUTS (SOFT SKILLS) --- */}
-      <h3 style={{ 
-          color: 'var(--color-accent-secondary)', 
-          fontSize: '1.5em', 
-          borderBottom: '1px dashed var(--color-interface-light)', 
-          paddingBottom: '10px', 
-          marginBottom: '30px' 
-      }}>
-        :: ATOUTS & PROFIL PSYCHOMÉTRIQUE ::
-      </h3>
-
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-        gap: '30px'
-      }}>
-        {ASSETS_SKILLS.map((group, index) => (
-          <div key={index} style={{
-            backgroundColor: 'rgba(0, 18, 40, 0.5)',
-            border: '1px solid var(--color-interface-dark)',
-            borderLeft: '4px solid var(--color-accent-secondary)',
-            padding: '25px',
-            position: 'relative'
-          }}>
-            <h4 style={{ color: 'var(--color-text-title)', marginBottom: '20px', fontFamily: 'var(--font-title)' }}>
-              {group.category}
-            </h4>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              {group.items.map(item => (
-                <span key={item} style={{
-                  fontSize: '0.85em',
-                  color: 'var(--color-accent-secondary)',
-                  border: '1px solid var(--color-accent-secondary)',
-                  padding: '4px 8px',
-                  backgroundColor: 'rgba(175, 255, 0, 0.05)'
-                }}>
-                  {item}
-                </span>
-              ))}
-            </div>
+        {/* --- COLONNE 2 --- */}
+        <SkillCard title="ARCHITECTURE & TOOLS">
+          <SkillBar name="React / Angular" level={85} />
+          <SkillBar name="Docker / CI-CD" level={70} />
+          <SkillBar name="API REST" level={90} />
+          <SkillBar name="Git / GitHub" level={85} />
+          
+          <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+             {['Spring Boot', 'Microservices', 'WebSockets', 'VS Code'].map(t => (
+               <span key={t} style={{ 
+                   fontSize: '0.85em', 
+                   border: '1px solid #555', 
+                   color: '#ddd', 
+                   padding: '6px 12px',
+                   letterSpacing: '1.5px',
+                   fontWeight: '600',
+                   textTransform: 'uppercase'
+               }}>
+                   {t}
+               </span>
+             ))}
           </div>
-        ))}
-      </div>
+        </SkillCard>
 
-      {/* --- PIED DE PAGE : DIAGNOSTIC --- */}
-      <div style={{ 
-          marginTop: '80px', 
-          borderTop: '1px solid var(--color-interface-dark)', 
-          paddingTop: '20px', 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          color: 'var(--color-interface-light)', 
-          fontSize: '0.8em', 
-          fontFamily: 'var(--font-title)'
-      }}>
-        <span>TAUX DE SYNCHRO: 98.4%</span>
-        <span>COEFFICIENT CRIMINALITÉ: <span style={{ color: 'var(--color-accent-neon)' }}>0 (CLEAR)</span></span>
-        <span>ÉTAT DU SYSTÈME: OPTIMAL</span>
-      </div>
+        {/* --- COLONNE 3 --- */}
+        <SkillCard title="PSYCHOMÉTRIE & SOFTSKILLS">
+           <ul style={{ listStyle: 'none', color: '#fff', lineHeight: '2' }}> {/* Interligne augmenté (lineHeight 2) */}
+             <li style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+               <span style={{ color: 'var(--color-accent-neon)', fontSize: '1.2em' }}>[+]</span> Intelligence Relationnelle
+             </li>
+             <li style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+               <span style={{ color: 'var(--color-accent-neon)', fontSize: '1.2em' }}>[+]</span> Pédagogie & Vulgarisation
+             </li>
+             <li style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+               <span style={{ color: 'var(--color-accent-neon)', fontSize: '1.2em' }}>[+]</span> Gestion de Conflit
+             </li>
+             <li style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+               <span style={{ color: 'var(--color-accent-neon)', fontSize: '1.2em' }}>[+]</span> Analyse de Besoin Client
+             </li>
+             <li style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+               <span style={{ color: 'var(--color-accent-neon)', fontSize: '1.2em' }}>[+]</span> Peer-Learning (P2P)
+             </li>
+           </ul>
+           
+           <div style={{ marginTop: '35px', padding: '15px', background: 'rgba(255, 42, 42, 0.1)', border: '1px solid var(--color-accent-neon)', textAlign: 'center' }}>
+             <small style={{ color: 'var(--color-accent-neon)', letterSpacing: '2px', textTransform: 'uppercase' }}>Taux de Synchro Équipe</small>
+             <div style={{ fontSize: '2em', fontWeight: 'bold', color: '#fff', marginTop: '5px' }}>98.4%</div>
+           </div>
+        </SkillCard>
 
-    </section>
+      </div>
+    </div>
   );
 };
 

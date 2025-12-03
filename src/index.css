@@ -1,38 +1,61 @@
+/* src/index.css */
+
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap');
 
-/* --- Variables CSS (Palette GitS Haute Lisibilité) --- */
 :root {
-  /* FOND : On part sur un noir quasi pur pour le contraste max (comme ta référence) */
+  /* --- BASE (Mode HOME par défaut) --- */
   --color-bg-primary: #050505;      
-  --color-bg-secondary: #0e1216; /* Légèrement plus clair pour les cartes */
+  --color-bg-secondary: #0e1216;
   
-  /* TEXTE : Blanc cassé très clair pour la lecture */
   --color-text-primary: #f0f0f0;     
   --color-text-title: #ffffff;      
   
-  /* ACCENTS : On garde le Néon mais on s'assure qu'il pete */
-  --color-accent-neon: #00ffff;      /* Cyan Cyanure */
-  --color-accent-teal: #008cba;      /* Teal un peu plus clair pour être lisible sur le noir */
-  --color-accent-secondary: #afff00; /* Vert Acide */
+  /* La couleur magique qui va changer */
+  --color-accent-neon: #00ffff;      /* Cyan (Base) */
   
-  /* INTERFACE */
-  --color-interface-dark: #333333;   /* Gris neutre pour les lignes discrètes */
-  --color-interface-light: #8899a6;  /* Gris moyen pour les textes secondaires */
+  --color-accent-teal: #008cba;      
+  --color-accent-secondary: #afff00; 
   
-  /* Polices */
+  --color-interface-dark: #333333;   
+  --color-interface-light: #8899a6;  
+  
   --font-title: 'Orbitron', sans-serif;
   --font-body: 'Inter', sans-serif;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* --- THEME OVERRIDES (Le cœur du système dynamique) --- */
 
-/* src/index.css */
+/* MODE: PROJECTS (Jaune Industriel / Cyberpunk Street) */
+[data-theme="projects"] {
+  --color-accent-neon: #ffcc00; 
+}
+
+/* MODE: EXPERIENCE (Vert Matrix / Militaire) */
+[data-theme="experience"] {
+  --color-accent-neon: #39ff14; 
+}
+
+/* MODE: SKILLS (Rouge Alerte / Hardware) */
+[data-theme="skills"] {
+  --color-accent-neon: #ff2a2a; 
+}
+
+/* MODE: CONTACT (Blanc Pur / Signal) */
+[data-theme="contact"] {
+  --color-accent-neon: #e0e0e0; 
+}
+
+
+/* --- Le reste de ton CSS standard --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: var(--font-body);
-  background-color: transparent; /* <-- REMPLACE PAR ÇA */
+  background-color: transparent;
   color: var(--color-text-primary);
   min-height: 100vh;
+  /* Transition fluide des couleurs sur toute la page */
+  transition: color 0.5s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -50,14 +73,11 @@ a {
 
 a:hover { color: var(--color-accent-secondary); }
 
-/* Scrollbar stylisée (Bonus pour Chrome/Safari) */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--color-interface-dark); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-accent-teal); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent-neon); } /* La scrollbar s'adapte aussi ! */
 
 @media (min-width: 992px) {
-  * {
-    cursor: none !important;
-  }
+  * { cursor: none !important; }
 }
