@@ -8,9 +8,11 @@ import ExperiencePage from './pages/Experience.tsx';
 import SkillsPage from './pages/Skills.tsx';
 import ContactPage from './pages/Contact.tsx';
 import CustomCursor from './components/CustomCursor.tsx'; 
-import BackgroundManager from './components/BackgroundManager.tsx'; // <--- 1. IMPORT IMPORTANT
+import BackgroundManager from './components/BackgroundManager.tsx';
 
-// --- ANIMATIONS CSS (Menu Burger) ---
+/* ... Garde tout le code des animations et des composants Menu/Burger comme avant ... */
+// (Je ne remets pas tout le bloc du haut pour gagner de la place, garde ce que tu as déjà)
+
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
   @keyframes slideInRight {
@@ -24,7 +26,6 @@ styleSheet.innerText = `
 `;
 document.head.appendChild(styleSheet);
 
-// --- Composant : Icône Burger ---
 const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen, onClick }) => (
     <div 
       onClick={onClick}
@@ -48,8 +49,13 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
     </div>
 );
 
-// --- Composant : Menu Latéral ---
-const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+interface MenuProps {
+  isOpen: boolean;
+  onClose: () => void;
+  setHoveredSection: (section: string | null) => void;
+}
+
+const MobileMenuOverlay: React.FC<MenuProps> = ({ isOpen, onClose, setHoveredSection }) => {
     if (!isOpen) return null;
     const links = ['HOME', 'PROJECTS', 'EXPERIENCE', 'SKILLS', 'CONTACT'];
 
@@ -63,14 +69,21 @@ const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                 position: 'fixed', top: '90px', right: 0, width: '100%', maxWidth: '600px', height: 'calc(100vh - 90px)', 
                 backgroundColor: 'rgba(0, 2, 22, 0.98)', borderLeft: '2px solid var(--color-accent-neon)', 
                 boxShadow: '-10px 0 40px rgba(0, 255, 255, 0.15)', zIndex: 150, 
-                display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '80px', 
+                display: 'flex', flexDirection: 'column', 
+                justifyContent: 'flex-start',
+                paddingTop: '15vh',
+                paddingLeft: '80px', 
                 animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)' 
             }}>
                 <div style={{ position: 'absolute', top: 0, right: 0, width: '100px', height: '100%', borderLeft: '1px dashed var(--color-interface-dark)', pointerEvents: 'none', opacity: 0.3 }}></div>
                 <div style={{ color: 'var(--color-accent-teal)', fontFamily: 'var(--font-body)', fontSize: '0.8em', letterSpacing: '0.2em', marginBottom: '40px', opacity: 0.8 }}>// NAVIGATION PROTOCOLS</div>
+                
                 <nav style={{ display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'flex-start' }}>
                     {links.map((link, index) => (
-                        <a key={link} href={`#${link.toLowerCase()}`} onClick={onClose} style={{ 
+                        <a key={link} href={`#${link.toLowerCase()}`} onClick={onClose} 
+                            onMouseEnter={() => setHoveredSection(link.toLowerCase())}
+                            onMouseLeave={() => setHoveredSection(null)}
+                            style={{ 
                                 fontFamily: 'var(--font-title)', fontSize: '2.5em', color: 'transparent', WebkitTextStroke: '1px var(--color-text-primary)',
                                 textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none', position: 'relative', opacity: 0, 
                                 animation: `linkFadeIn 0.4s ease forwards ${0.1 + index * 0.1}s`, cursor: 'pointer', transition: 'all 0.3s'
@@ -100,8 +113,7 @@ const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     );
 };
 
-// --- Composant : Barre de Navigation ---
-const NavigationBar: React.FC = () => {
+const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }> = ({ setHoveredSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <>
@@ -116,28 +128,49 @@ const NavigationBar: React.FC = () => {
                 <BurgerIcon isOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)} />
             </div>
         </div>
-        <MobileMenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+        <MobileMenuOverlay 
+            isOpen={isMenuOpen} 
+            onClose={() => setIsMenuOpen(false)} 
+            setHoveredSection={setHoveredSection} 
+        />
     </>
   );
 };
 
 function App() {
+  const [menuHoveredSection, setMenuHoveredSection] = useState<string | null>(null);
+
   return (
-    // 2. AJOUT DU FOND TRANSPARENT ICI
     <div className="App" style={{ minHeight: '100vh', backgroundColor: 'transparent' }}>
       
-      {/* 3. L'APPEL DU COMPOSANT BACKGROUND */}
-      <BackgroundManager />
+      <BackgroundManager hoveredSection={menuHoveredSection} />
 
       <CustomCursor />
-      <NavigationBar />
+      <NavigationBar setHoveredSection={setMenuHoveredSection} />
       
       <main style={{ padding: '0px 40px', maxWidth: '1400px', margin: '0 auto', paddingTop: '120px' }}>
-        <HomePage /> 
-        <ProjectsPage /> 
-        <ExperiencePage />
-        <SkillsPage /> 
-        <ContactPage /> 
+        
+        {/* CORRECTION ICI : Ajout des sections avec les IDs pour le scroll tracker */}
+        <section id="home">
+            <HomePage />
+        </section>
+
+        <section id="projects">
+            <ProjectsPage />
+        </section>
+
+        <section id="experience">
+            <ExperiencePage />
+        </section>
+
+        <section id="skills">
+            <SkillsPage />
+        </section>
+
+        <section id="contact">
+            <ContactPage />
+        </section>
+        
       </main>
     </div>
   );
