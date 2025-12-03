@@ -10,11 +10,11 @@ const ExperiencePage: React.FC = () => {
       label: 'ZONE01 / STREET CODER',
       role: 'FULL STACK & COACH',
       date: 'JUN 2024 - PRESENT',
-      isOngoing: true, // Mode Vert "Matrix"
+      isOngoing: true, // Mode Vert "Matrix" / "Ghost"
       content: (
         <>
           <p style={{ marginBottom: '20px', fontFamily: 'var(--font-title)', color: '#39ff14' }}>
-            <strong>{'>'} CURRENT OPERATIONS: DUAL PROCESSING...</strong>
+            <strong>{'>'} CURRENT SYNC: DUAL PROCESSING...</strong>
           </p>
           <p>
             Position hybride combinant l'acquisition intensive de compétences techniques et le mentoring pédagogique.
@@ -36,8 +36,8 @@ const ExperiencePage: React.FC = () => {
           <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid #39ff14' }}>
             <strong style={{ color: '#39ff14' }}>@ STREET CODER :</strong>
             <ul style={{ listStyle: 'none', marginTop: '5px' }}>
-              <li style={{ marginBottom: '5px' }}>[{'>'}] <strong>Alternante Coach Pédagogique :</strong> Transmission de savoirs numériques.</li>
-              <li style={{ marginBottom: '5px' }}>[{'>'}] Accompagnement des apprenant(e)s du numérique.</li>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] <strong>Coach Pédagogique :</strong> Transmission de savoirs numériques.</li>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] Accompagnement des publics éloignés du numérique.</li>
             </ul>
           </div>
 
@@ -66,7 +66,7 @@ const ExperiencePage: React.FC = () => {
              // LOCATION: NOUMÉA, NEW CALEDONIA
            </div>
            <p style={{ marginBottom: '20px' }}>
-            <strong>// ARCHIVED LOG:</strong> Gestion des flux de communication bancaire et résolution de requêtes clients critiques.
+            <strong>// ARCHIVED MEMORY:</strong> Gestion des flux de communication bancaire et résolution de requêtes clients critiques.
           </p>
           <ul style={{ listStyle: 'none', paddingLeft: '20px', borderLeft: '1px solid var(--color-interface-dark)' }}>
             <li style={{ marginBottom: '10px' }}>[+] Gestion de la relation client à distance (Centre d'appel).</li>
@@ -97,7 +97,7 @@ const ExperiencePage: React.FC = () => {
              // LOCATION: NOUMÉA, NEW CALEDONIA
            </div>
            <p style={{ marginBottom: '20px' }}>
-            <strong>// SQUAD LEADER LOG:</strong> Supervision des opérations de terrain et gestion des ressources humaines.
+            <strong>// RANK: SQUAD LEADER.</strong> Supervision des opérations de terrain et gestion des ressources humaines.
           </p>
           <ul style={{ listStyle: 'none', paddingLeft: '20px', borderLeft: '1px solid var(--color-interface-dark)' }}>
             <li style={{ marginBottom: '10px' }}>[+] Management d'équipe et planification des shifts.</li>
@@ -128,7 +128,7 @@ const ExperiencePage: React.FC = () => {
              // LOCATION: NEW CALEDONIA
            </div>
            <p style={{ marginBottom: '20px' }}>
-            <strong>// OPERATIVE LOG:</strong> Interface directe avec la clientèle et maintenance de l'espace opérationnel.
+            <strong>// FIELD OPERATIVE:</strong> Interface directe avec la clientèle et maintenance de l'espace opérationnel.
           </p>
           <ul style={{ listStyle: 'none', paddingLeft: '20px', borderLeft: '1px solid var(--color-interface-dark)' }}>
             <li style={{ marginBottom: '10px' }}>[+] Conseil client et vente (Direct Interface).</li>
@@ -156,7 +156,7 @@ const ExperiencePage: React.FC = () => {
       content: (
         <>
            <div style={{ fontFamily: 'var(--font-title)', color: 'var(--color-interface-light)', marginBottom: '10px' }}>
-             // LOCATION: FRANCE (ANGERS / ST-BARTHELEMY)
+             // LOCATION: FRANCE (ANGERS / ST-BARTH)
            </div>
            <p style={{ marginBottom: '20px' }}>
             <strong>// INITIAL DEPLOYMENT:</strong> Gestion de portefeuille client et objectifs commerciaux.
@@ -183,6 +183,8 @@ const ExperiencePage: React.FC = () => {
 
   return (
     <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
+      
+      {/* TITRE STYLE GHOST IN THE SHELL */}
       <h2 style={{ 
         fontSize: '3.5em', 
         marginBottom: '10px',
@@ -195,8 +197,10 @@ const ExperiencePage: React.FC = () => {
         borderLeft: '5px solid var(--color-accent-neon)',
         paddingLeft: '20px'
       }}>
-        OPERATIONAL LOGS
+        PERSONNEL FILE
       </h2>
+      
+      {/* SOUS-TITRE STYLE TERMINAL BOOT SEQUENCE */}
       <p style={{ 
         color: 'var(--color-interface-light)', 
         maxWidth: '600px', 
@@ -205,8 +209,8 @@ const ExperiencePage: React.FC = () => {
         fontFamily: 'var(--font-code)',
         fontSize: '0.9em'
       }}>
-        {'>'} ACCESSING CLASSIFIED PERSONNEL DATA... <br/>
-        {'>'} LOADING CAREER TRAJECTORY AND ACTIVE MISSIONS.
+        {'>'} ESTABLISHING CYBERBRAIN CONNECTION... <br/>
+        {'>'} DOWNLOADING SUBJECT HISTORY: AILURA.
       </p>
 
       <TacticalTabs tabs={missions} />
