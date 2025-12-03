@@ -7,10 +7,10 @@ import ProjectsPage from './pages/Projects.tsx';
 import ExperiencePage from './pages/Experience.tsx';
 import SkillsPage from './pages/Skills.tsx';
 import ContactPage from './pages/Contact.tsx';
-// 👇 L'IMPORT MANQUANT ÉTAIT ICI 👇
 import CustomCursor from './components/CustomCursor.tsx'; 
+import BackgroundManager from './components/BackgroundManager.tsx'; // <--- 1. IMPORT IMPORTANT
 
-// --- ANIMATIONS CSS ---
+// --- ANIMATIONS CSS (Menu Burger) ---
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
   @keyframes slideInRight {
@@ -29,35 +29,21 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
     <div 
       onClick={onClick}
       style={{ 
-        width: '40px', 
-        height: '24px', 
-        cursor: 'pointer', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        justifyContent: 'space-between',
-        zIndex: 200, 
-        position: 'relative'
+        width: '40px', height: '20px', cursor: 'pointer', display: 'flex', 
+        flexDirection: 'column', justifyContent: 'space-between', zIndex: 200, position: 'relative'
       }}
     >
         <div style={{ 
-            height: '2px', width: '100%',
-            backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', 
-            transition: 'all 0.4s ease',
-            transform: isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none'
+            height: '2px', width: '100%', backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', 
+            transition: 'all 0.4s ease', transform: isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none'
         }}></div>
         <div style={{ 
-            height: '2px', width: isOpen ? '0%' : '100%',
-            backgroundColor: 'var(--color-text-primary)', 
-            transition: 'all 0.2s ease',
-            opacity: isOpen ? 0 : 1,
-            marginLeft: 'auto'
+            height: '2px', width: isOpen ? '0%' : '100%', backgroundColor: 'var(--color-text-primary)', 
+            transition: 'all 0.2s ease', opacity: isOpen ? 0 : 1, marginLeft: 'auto'
         }}></div>
         <div style={{ 
-            height: '2px', width: isOpen ? '100%' : '70%',
-            backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', 
-            transition: 'all 0.4s ease',
-            transform: isOpen ? 'rotate(-45deg) translate(5px, -7px)' : 'none',
-            marginLeft: 'auto'
+            height: '2px', width: isOpen ? '100%' : '70%', backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', 
+            transition: 'all 0.4s ease', transform: isOpen ? 'rotate(-45deg) translate(5px, -7px)' : 'none', marginLeft: 'auto'
         }}></div>
     </div>
 );
@@ -65,78 +51,29 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
 // --- Composant : Menu Latéral ---
 const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
-
     const links = ['HOME', 'PROJECTS', 'EXPERIENCE', 'SKILLS', 'CONTACT'];
 
     return (
         <>
-            <div 
-                onClick={onClose}
-                style={{
-                    position: 'fixed', 
-                    top: '90px', 
-                    left: 0,
-                    width: '100%',
-                    height: 'calc(100vh - 90px)',
-                    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
-                    backdropFilter: 'blur(3px)',
-                    zIndex: 149,
-                }}
-            />
-
+            <div onClick={onClose} style={{
+                    position: 'fixed', top: '90px', left: 0, width: '100%', height: 'calc(100vh - 90px)',
+                    backgroundColor: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(3px)', zIndex: 149,
+                }} />
             <div style={{
-                position: 'fixed',
-                top: '90px', 
-                right: 0, 
-                width: '100%',
-                maxWidth: '600px', 
-                height: 'calc(100vh - 90px)', 
-                backgroundColor: 'rgba(0, 2, 22, 0.98)', 
-                borderLeft: '2px solid var(--color-accent-neon)', 
-                boxShadow: '-10px 0 40px rgba(0, 255, 255, 0.15)',
-                zIndex: 150, 
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                paddingLeft: '80px', 
+                position: 'fixed', top: '90px', right: 0, width: '100%', maxWidth: '600px', height: 'calc(100vh - 90px)', 
+                backgroundColor: 'rgba(0, 2, 22, 0.98)', borderLeft: '2px solid var(--color-accent-neon)', 
+                boxShadow: '-10px 0 40px rgba(0, 255, 255, 0.15)', zIndex: 150, 
+                display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '80px', 
                 animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)' 
             }}>
-                <div style={{
-                    position: 'absolute', top: 0, right: 0, width: '100px', height: '100%',
-                    borderLeft: '1px dashed var(--color-interface-dark)',
-                    pointerEvents: 'none', opacity: 0.3
-                }}></div>
-
-                <div style={{ 
-                    color: 'var(--color-accent-teal)', 
-                    fontFamily: 'var(--font-body)', 
-                    fontSize: '0.8em', 
-                    letterSpacing: '0.2em',
-                    marginBottom: '40px',
-                    opacity: 0.8
-                }}>
-                    // NAVIGATION PROTOCOLS
-                </div>
-
+                <div style={{ position: 'absolute', top: 0, right: 0, width: '100px', height: '100%', borderLeft: '1px dashed var(--color-interface-dark)', pointerEvents: 'none', opacity: 0.3 }}></div>
+                <div style={{ color: 'var(--color-accent-teal)', fontFamily: 'var(--font-body)', fontSize: '0.8em', letterSpacing: '0.2em', marginBottom: '40px', opacity: 0.8 }}>// NAVIGATION PROTOCOLS</div>
                 <nav style={{ display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'flex-start' }}>
                     {links.map((link, index) => (
-                        <a 
-                            key={link} 
-                            href={`#${link.toLowerCase()}`} 
-                            onClick={onClose} 
-                            style={{ 
-                                fontFamily: 'var(--font-title)', 
-                                fontSize: '2.5em', 
-                                color: 'transparent', 
-                                WebkitTextStroke: '1px var(--color-text-primary)',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.1em',
-                                textDecoration: 'none',
-                                position: 'relative',
-                                opacity: 0, 
-                                animation: `linkFadeIn 0.4s ease forwards ${0.1 + index * 0.1}s`, 
-                                cursor: 'pointer',
-                                transition: 'all 0.3s'
+                        <a key={link} href={`#${link.toLowerCase()}`} onClick={onClose} style={{ 
+                                fontFamily: 'var(--font-title)', fontSize: '2.5em', color: 'transparent', WebkitTextStroke: '1px var(--color-text-primary)',
+                                textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none', position: 'relative', opacity: 0, 
+                                animation: `linkFadeIn 0.4s ease forwards ${0.1 + index * 0.1}s`, cursor: 'pointer', transition: 'all 0.3s'
                             } as React.CSSProperties}
                             onMouseOver={(e) => {
                                 e.currentTarget.style.color = 'var(--color-accent-neon)';
@@ -151,29 +88,13 @@ const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                                 e.currentTarget.style.transform = 'translateX(0)';
                             }}
                         >
-                            <span style={{ 
-                                fontSize: '0.4em', color: 'var(--color-accent-teal)', 
-                                position: 'absolute', left: '-40px', top: '18px',
+                            <span style={{ fontSize: '0.4em', color: 'var(--color-accent-teal)', position: 'absolute', left: '-40px', top: '18px',
                                 // @ts-ignore
-                                WebkitTextStroke: '0px'
-                            }}>
-                                0{index + 1}
-                            </span>
-                            {link}
+                                WebkitTextStroke: '0px' }}>0{index + 1}</span>{link}
                         </a>
                     ))}
                 </nav>
-
-                <div style={{ 
-                    marginTop: 'auto',
-                    marginBottom: '50px',
-                    color: 'var(--color-interface-dark)', 
-                    fontFamily: 'var(--font-title)',
-                    fontSize: '0.7em',
-                }}>
-                    SYSTEM STATUS: ONLINE <br/>
-                    SECURITY: ENCRYPTED
-                </div>
+                <div style={{ marginTop: 'auto', marginBottom: '50px', color: 'var(--color-interface-dark)', fontFamily: 'var(--font-title)', fontSize: '0.7em', }}>SYSTEM STATUS: ONLINE <br/> SECURITY: ENCRYPTED</div>
             </div>
         </>
     );
@@ -182,52 +103,19 @@ const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 // --- Composant : Barre de Navigation ---
 const NavigationBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
     <>
-        <div
-            style={{
-                position: 'fixed', 
-                top: 0, 
-                width: '100%',
-                height: '90px', 
-                backgroundColor: 'rgba(0, 2, 22, 0.9)', 
-                backdropFilter: 'blur(5px)',
-                zIndex: 200, 
-                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '0 50px'
-            }}
-        >
-            <div style={{ 
-                fontFamily: 'var(--font-title)', 
-                fontSize: '22px', 
-                color: 'var(--color-accent-neon)', 
-                letterSpacing: '0.15em',
-                fontWeight: 'bold',
-                textShadow: '0 0 10px rgba(0, 255, 255, 0.5)'
+        <div style={{
+                position: 'fixed', top: 0, width: '100%', height: '90px', backgroundColor: 'rgba(0, 2, 22, 0.9)', 
+                backdropFilter: 'blur(5px)', zIndex: 200, borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 50px'
             }}>
-                [ PROJECT AILURA ]
-            </div>
-            
+            <div style={{ fontFamily: 'var(--font-title)', fontSize: '22px', color: 'var(--color-accent-neon)', letterSpacing: '0.15em', fontWeight: 'bold', textShadow: '0 0 10px rgba(0, 255, 255, 0.5)' }}>[ PROJECT AILURA ]</div>
             <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
-                <span style={{ 
-                    fontFamily: 'var(--font-body)', 
-                    fontSize: '12px', 
-                    letterSpacing: '2px', 
-                    color: 'var(--color-text-primary)',
-                    cursor: 'pointer',
-                    opacity: 0.8
-                }}>
-                    FR / EN
-                </span>
-                
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', letterSpacing: '2px', color: 'var(--color-text-primary)', cursor: 'pointer', opacity: 0.8 }}>FR / EN</span>
                 <BurgerIcon isOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)} />
             </div>
         </div>
-
         <MobileMenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </>
   );
@@ -235,12 +123,15 @@ const NavigationBar: React.FC = () => {
 
 function App() {
   return (
-    <div className="App" style={{ minHeight: '100vh' }}>
+    // 2. AJOUT DU FOND TRANSPARENT ICI
+    <div className="App" style={{ minHeight: '100vh', backgroundColor: 'transparent' }}>
       
-      {/* 🖱️ CURSEUR ACTIVÉ ET IMPORTÉ */}
-      <CustomCursor />
+      {/* 3. L'APPEL DU COMPOSANT BACKGROUND */}
+      <BackgroundManager />
 
+      <CustomCursor />
       <NavigationBar />
+      
       <main style={{ padding: '0px 40px', maxWidth: '1400px', margin: '0 auto', paddingTop: '120px' }}>
         <HomePage /> 
         <ProjectsPage /> 
