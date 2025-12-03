@@ -40,17 +40,6 @@ const ExperiencePage: React.FC = () => {
               <li style={{ marginBottom: '5px' }}>[{'>'}] Accompagnement des publics éloignés du numérique.</li>
             </ul>
           </div>
-
-          <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-             {['GoLang', 'React', 'Pedagogy', 'Coaching', 'Node.js'].map(tech => (
-               <span key={tech} style={{ 
-                 fontSize: '0.8em', padding: '5px 15px', border: '1px solid #39ff14', background: 'rgba(57, 255, 20, 0.1)',
-                 color: '#39ff14', fontFamily: 'var(--font-title)', letterSpacing: '1px'
-               }}>
-                 {tech}
-               </span>
-             ))}
-          </div>
         </>
       )
     },
