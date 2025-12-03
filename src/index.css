@@ -54,3 +54,9 @@ a:hover { color: var(--color-accent-secondary); }
 ::-webkit-scrollbar-track { background: var(--color-bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--color-interface-dark); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-accent-teal); }
+
+@media (min-width: 992px) {
+  * {
+    cursor: none !important;
+  }
+}

@@ -7,13 +7,19 @@ import ProjectsPage from './pages/Projects.tsx';
 import ExperiencePage from './pages/Experience.tsx';
 import SkillsPage from './pages/Skills.tsx';
 import ContactPage from './pages/Contact.tsx';
+// 👇 L'IMPORT MANQUANT ÉTAIT ICI 👇
+import CustomCursor from './components/CustomCursor.tsx'; 
 
 // --- ANIMATIONS CSS ---
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
-  @keyframes menuReveal {
-    0% { opacity: 0; transform: translateY(20px); filter: blur(10px); }
-    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+  @keyframes slideInRight {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes linkFadeIn {
+    0% { opacity: 0; transform: translateX(20px); }
+    100% { opacity: 1; transform: translateX(0); }
   }
 `;
 document.head.appendChild(styleSheet);
@@ -24,7 +30,7 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
       onClick={onClick}
       style={{ 
         width: '40px', 
-        height: '20px', 
+        height: '24px', 
         cursor: 'pointer', 
         display: 'flex', 
         flexDirection: 'column', 
@@ -33,15 +39,12 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
         position: 'relative'
       }}
     >
-        {/* Ligne Haut */}
         <div style={{ 
             height: '2px', width: '100%',
             backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', 
             transition: 'all 0.4s ease',
             transform: isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none'
         }}></div>
-        
-        {/* Ligne Milieu */}
         <div style={{ 
             height: '2px', width: isOpen ? '0%' : '100%',
             backgroundColor: 'var(--color-text-primary)', 
@@ -49,8 +52,6 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
             opacity: isOpen ? 0 : 1,
             marginLeft: 'auto'
         }}></div>
-        
-        {/* Ligne Bas */}
         <div style={{ 
             height: '2px', width: isOpen ? '100%' : '70%',
             backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', 
@@ -61,96 +62,120 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
     </div>
 );
 
-// --- Composant : Menu Overlay ---
+// --- Composant : Menu Latéral ---
 const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     const links = ['HOME', 'PROJECTS', 'EXPERIENCE', 'SKILLS', 'CONTACT'];
 
     return (
-        <div style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100vh',
-            backgroundColor: 'rgba(0, 2, 10, 0.98)',
-            zIndex: 150,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backdropFilter: 'blur(10px)'
-        }}>
-            
+        <>
+            <div 
+                onClick={onClose}
+                style={{
+                    position: 'fixed', 
+                    top: '90px', 
+                    left: 0,
+                    width: '100%',
+                    height: 'calc(100vh - 90px)',
+                    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+                    backdropFilter: 'blur(3px)',
+                    zIndex: 149,
+                }}
+            />
+
             <div style={{
-                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                backgroundImage: 'linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px)',
-                backgroundSize: '50px 50px',
-                pointerEvents: 'none', zIndex: -1
-            }}></div>
-
-            <nav style={{ display: 'flex', flexDirection: 'column', gap: '30px', textAlign: 'center' }}>
-                {links.map((link, index) => (
-                    <a 
-                        key={link} 
-                        href={`#${link.toLowerCase()}`} 
-                        onClick={onClose} 
-                        style={{ 
-                            fontFamily: 'var(--font-title)', 
-                            fontSize: '3em', 
-                            color: 'transparent', 
-                            // Ici on force le type pour éviter l'erreur TS sur la propriété style inline
-                            WebkitTextStroke: '1px var(--color-text-primary)',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.1em',
-                            textDecoration: 'none',
-                            position: 'relative',
-                            opacity: 0, 
-                            animation: `menuReveal 0.5s ease forwards ${index * 0.1}s`, 
-                            cursor: 'pointer',
-                            transition: 'all 0.3s'
-                        } as React.CSSProperties} // <-- Cast pour rassurer TypeScript
-                        onMouseOver={(e) => {
-                            e.currentTarget.style.color = 'var(--color-accent-neon)';
-                            // CORRECTION DE L'ERREUR ICI : On utilise 'as any' pour la propriété non standard
-                            (e.currentTarget.style as any).webkitTextStroke = '0px'; 
-                            e.currentTarget.style.textShadow = '0 0 20px var(--color-accent-neon)';
-                        }}
-                        onMouseOut={(e) => {
-                            e.currentTarget.style.color = 'transparent';
-                            // CORRECTION DE L'ERREUR ICI
-                            (e.currentTarget.style as any).webkitTextStroke = '1px var(--color-text-primary)';
-                            e.currentTarget.style.textShadow = 'none';
-                        }}
-                    >
-                        <span style={{ 
-                            position: 'absolute', 
-                            left: '-40px', top: '50%', transform: 'translateY(-50%)',
-                            fontSize: '0.3em', color: 'var(--color-accent-teal)',
-                            fontFamily: 'var(--font-body)',
-                            // @ts-ignore
-                            WebkitTextStroke: '0px'
-                        }}>
-                            0{index + 1}
-                        </span>
-                        {link}
-                    </a>
-                ))}
-            </nav>
-
-            <div style={{ 
-                marginTop: '60px',
-                color: 'var(--color-accent-teal)', 
-                fontFamily: 'var(--font-body)',
-                fontSize: '0.8em',
-                letterSpacing: '0.2em',
-                opacity: 0,
-                animation: 'menuReveal 0.5s ease forwards 0.6s' 
+                position: 'fixed',
+                top: '90px', 
+                right: 0, 
+                width: '100%',
+                maxWidth: '600px', 
+                height: 'calc(100vh - 90px)', 
+                backgroundColor: 'rgba(0, 2, 22, 0.98)', 
+                borderLeft: '2px solid var(--color-accent-neon)', 
+                boxShadow: '-10px 0 40px rgba(0, 255, 255, 0.15)',
+                zIndex: 150, 
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                paddingLeft: '80px', 
+                animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)' 
             }}>
-                // SYSTEM NAVIGATION READY
+                <div style={{
+                    position: 'absolute', top: 0, right: 0, width: '100px', height: '100%',
+                    borderLeft: '1px dashed var(--color-interface-dark)',
+                    pointerEvents: 'none', opacity: 0.3
+                }}></div>
+
+                <div style={{ 
+                    color: 'var(--color-accent-teal)', 
+                    fontFamily: 'var(--font-body)', 
+                    fontSize: '0.8em', 
+                    letterSpacing: '0.2em',
+                    marginBottom: '40px',
+                    opacity: 0.8
+                }}>
+                    // NAVIGATION PROTOCOLS
+                </div>
+
+                <nav style={{ display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'flex-start' }}>
+                    {links.map((link, index) => (
+                        <a 
+                            key={link} 
+                            href={`#${link.toLowerCase()}`} 
+                            onClick={onClose} 
+                            style={{ 
+                                fontFamily: 'var(--font-title)', 
+                                fontSize: '2.5em', 
+                                color: 'transparent', 
+                                WebkitTextStroke: '1px var(--color-text-primary)',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.1em',
+                                textDecoration: 'none',
+                                position: 'relative',
+                                opacity: 0, 
+                                animation: `linkFadeIn 0.4s ease forwards ${0.1 + index * 0.1}s`, 
+                                cursor: 'pointer',
+                                transition: 'all 0.3s'
+                            } as React.CSSProperties}
+                            onMouseOver={(e) => {
+                                e.currentTarget.style.color = 'var(--color-accent-neon)';
+                                (e.currentTarget.style as any).webkitTextStroke = '0px'; 
+                                e.currentTarget.style.textShadow = '0 0 15px var(--color-accent-neon)';
+                                e.currentTarget.style.transform = 'translateX(15px)'; 
+                            }}
+                            onMouseOut={(e) => {
+                                e.currentTarget.style.color = 'transparent';
+                                (e.currentTarget.style as any).webkitTextStroke = '1px var(--color-text-primary)';
+                                e.currentTarget.style.textShadow = 'none';
+                                e.currentTarget.style.transform = 'translateX(0)';
+                            }}
+                        >
+                            <span style={{ 
+                                fontSize: '0.4em', color: 'var(--color-accent-teal)', 
+                                position: 'absolute', left: '-40px', top: '18px',
+                                // @ts-ignore
+                                WebkitTextStroke: '0px'
+                            }}>
+                                0{index + 1}
+                            </span>
+                            {link}
+                        </a>
+                    ))}
+                </nav>
+
+                <div style={{ 
+                    marginTop: 'auto',
+                    marginBottom: '50px',
+                    color: 'var(--color-interface-dark)', 
+                    fontFamily: 'var(--font-title)',
+                    fontSize: '0.7em',
+                }}>
+                    SYSTEM STATUS: ONLINE <br/>
+                    SECURITY: ENCRYPTED
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
@@ -184,7 +209,7 @@ const NavigationBar: React.FC = () => {
                 fontWeight: 'bold',
                 textShadow: '0 0 10px rgba(0, 255, 255, 0.5)'
             }}>
-                [ MAJOR AILURA ]
+                [ PROJECT AILURA ]
             </div>
             
             <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
@@ -211,6 +236,10 @@ const NavigationBar: React.FC = () => {
 function App() {
   return (
     <div className="App" style={{ minHeight: '100vh' }}>
+      
+      {/* 🖱️ CURSEUR ACTIVÉ ET IMPORTÉ */}
+      <CustomCursor />
+
       <NavigationBar />
       <main style={{ padding: '0px 40px', maxWidth: '1400px', margin: '0 auto', paddingTop: '120px' }}>
         <HomePage /> 
