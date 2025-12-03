@@ -1,164 +1,220 @@
+// src/pages/Experience.tsx
 import React from 'react';
-
-interface Experience {
-  id: number;
-  role: string;
-  company: string;
-  date: string;
-  location: string;
-  description: string;
-  skills: string[];
-  type: 'active' | 'archived';
-}
-
-const EXPERIENCE_DATA: Experience[] = [
-  {
-    id: 1,
-    role: "Coach Pédagogique & Développeuse Full Stack",
-    company: "ZONE01 NORMANDIE",
-    date: "2024 - PRÉSENT",
-    location: "Rouen, France",
-    description: "Alternance & Formation. Rôle hybride combinant développement technique intensif et accompagnement humain. En tant que Coach, je guide mes pairs dans la résolution de problèmes complexes (debugging, logique), simulant un rôle de Lead Dev junior. Développement de projets Full Stack en méthodologie Agile et Peer-learning.",
-    skills: ['Go / JS / Java', 'Coaching Pair-à-Pair', 'Revue de Code', 'Leadership Technique'],
-    type: 'active'
-  },
-  {
-    id: 2,
-    role: "Conseillère Clientèle (Support)",
-    company: "BCI (Banque Calédonienne d'Investissement)",
-    date: "OCT 2022 - JAN 2024",
-    location: "Nouméa, Nouvelle-Calédonie",
-    description: "Gestion des incidents clients et support utilisateur. Capacité à diagnostiquer un problème et à fournir une solution claire à un public non-technique (vulgarisation). Gestion du stress et des priorités en environnement centre d'appel.",
-    skills: ['Résolution de Problèmes', 'Communication Client', 'Support Utilisateur', 'Outils Bancaires'],
-    type: 'archived'
-  },
-  {
-    id: 3,
-    role: "Responsable Adjointe & Team Lead",
-    company: "BILLABONG GROUP",
-    date: "MAR 2019 - AVR 2022",
-    location: "Nouméa & Australie",
-    description: "Gestion opérationnelle d'une unité commerciale. Management d'équipe, formation des nouveaux collaborateurs (onboarding) et pilotage des objectifs de vente (KPI). Expérience internationale démontrant une forte adaptabilité.",
-    skills: ['Management d\'Équipe', 'Anglais Professionnel', 'Analyse KPI', 'Formation'],
-    type: 'archived'
-  },
-  {
-    id: 4,
-    role: "Conseillère Clientèle",
-    company: "BNP PARIBAS",
-    date: "2015 - 2018",
-    location: "France",
-    description: "Gestion de portefeuille clients et analyse des besoins. Développement d'une rigueur administrative et d'une approche orientée 'Solution' pour répondre aux attentes précises des clients.",
-    skills: ['Relation Client', 'Analyse de Besoin', 'Conformité', 'Vente'],
-    type: 'archived'
-  }
-];
+import TacticalTabs, { type TabData } from '../components/TacticalTabs';
 
 const ExperiencePage: React.FC = () => {
-  return (
-    <section id="experience" style={{ minHeight: '100vh', paddingTop: '100px', paddingBottom: '100px' }}>
-      
-      <h2 style={{ fontSize: '3em', color: 'var(--color-text-title)', marginBottom: '50px' }}>
-        [ JOURNAL D'INTERACTIONS / EXPÉRIENCE ]
-      </h2>
 
-      <div style={{ 
-        borderLeft: '2px solid var(--color-interface-dark)', 
-        marginLeft: '20px', 
-        paddingLeft: '40px',
-        position: 'relative'
-      }}>
-        
-        {EXPERIENCE_DATA.map((exp) => (
-          <div key={exp.id} style={{ marginBottom: '60px', position: 'relative' }}>
-            
-            {/* Point Timeline */}
-            <div style={{
-              position: 'absolute',
-              left: '-49px', top: '0',
-              width: '16px', height: '16px',
-              borderRadius: '50%',
-              backgroundColor: exp.type === 'active' ? 'var(--color-accent-neon)' : 'var(--color-bg-primary)',
-              border: `2px solid ${exp.type === 'active' ? 'var(--color-accent-neon)' : 'var(--color-interface-dark)'}`,
-              boxShadow: exp.type === 'active' ? '0 0 10px var(--color-accent-neon)' : 'none'
-            }}></div>
-
-            {/* Titre et Badge */}
-            <div style={{ marginBottom: '10px' }}>
-              <h3 style={{ 
-                color: exp.type === 'active' ? 'var(--color-accent-neon)' : 'var(--color-text-title)', 
-                fontSize: '1.5em',
-                display: 'inline-block',
-                marginRight: '15px'
-              }}>
-                {exp.role}
-              </h3>
-              <span style={{ 
-                color: exp.type === 'active' ? 'var(--color-bg-primary)' : 'var(--color-interface-light)', 
-                backgroundColor: exp.type === 'active' ? 'var(--color-accent-secondary)' : 'transparent',
-                fontFamily: 'var(--font-title)',
-                fontWeight: 'bold',
-                fontSize: '0.7em',
-                border: `1px solid ${exp.type === 'active' ? 'var(--color-accent-secondary)' : 'var(--color-interface-dark)'}`,
-                padding: '4px 8px',
-                borderRadius: '2px'
-              }}>
-                {exp.type === 'active' ? ':: CONNEXION ACTIVE ::' : ':: ARCHIVÉ ::'}
-              </span>
-            </div>
-
-            {/* Détails */}
-            <div style={{ 
-              color: 'var(--color-accent-teal)', 
-              fontFamily: 'var(--font-title)', 
-              fontSize: '0.9em', 
-              marginBottom: '15px',
-              letterSpacing: '0.05em'
-            }}>
-              [{exp.company}] // {exp.date} // {exp.location.toUpperCase()}
-            </div>
-
-            {/* Description */}
-            <p style={{ 
-              color: 'var(--color-text-primary)', 
-              marginBottom: '15px', 
-              maxWidth: '800px',
-              borderLeft: exp.type === 'active' ? '2px solid var(--color-accent-teal)' : 'none',
-              paddingLeft: exp.type === 'active' ? '15px' : '0'
-            }}>
-              {exp.description}
-            </p>
-
-            {/* Tags Compétences */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              {exp.skills.map(skill => (
-                <span key={skill} style={{
-                  fontSize: '0.75em',
-                  color: exp.type === 'active' ? 'var(--color-bg-primary)' : 'var(--color-text-primary)',
-                  backgroundColor: exp.type === 'active' ? 'var(--color-accent-neon)' : 'var(--color-interface-dark)',
-                  padding: '4px 8px',
-                  fontWeight: 'bold',
-                  fontFamily: 'var(--font-title)'
-                }}>
-                  {skill}
-                </span>
-              ))}
-            </div>
-
+  const missions: TabData[] = [
+    {
+      id: 'mission-active',
+      label: 'ZONE01 / STREET CODER',
+      role: 'FULL STACK & COACH',
+      date: 'JUN 2024 - PRESENT',
+      isOngoing: true, // Mode Vert "Matrix" / "Ghost"
+      content: (
+        <>
+          <p style={{ marginBottom: '20px', fontFamily: 'var(--font-title)', color: '#39ff14' }}>
+            <strong>{'>'} CURRENT SYNC: DUAL PROCESSING...</strong>
+          </p>
+          <p>
+            Position hybride combinant l'acquisition intensive de compétences techniques et le mentoring pédagogique.
+          </p>
+          
+          <br/>
+          <strong style={{ fontFamily: 'var(--font-title)', color: 'var(--color-accent-teal)' }}>// MISSION LOGS:</strong>
+          
+          {/* Section Zone01 */}
+          <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid #39ff14' }}>
+            <strong style={{ color: '#39ff14' }}>@ ZONE01 NORMANDIE :</strong>
+            <ul style={{ listStyle: 'none', marginTop: '5px' }}>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] Développement d'architectures résilientes (Go, JS, Rust).</li>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] Travail en méthode Agile/Peer-learning.</li>
+            </ul>
           </div>
-        ))}
 
-        <div style={{
-           position: 'absolute', left: '-50px', bottom: '-10px',
-           color: 'var(--color-interface-dark)', fontSize: '20px'
-        }}>▼</div>
+          {/* Section Street Coder */}
+          <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid #39ff14' }}>
+            <strong style={{ color: '#39ff14' }}>@ STREET CODER :</strong>
+            <ul style={{ listStyle: 'none', marginTop: '5px' }}>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] <strong>Coach Pédagogique :</strong> Transmission de savoirs numériques.</li>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] Accompagnement des publics éloignés du numérique.</li>
+            </ul>
+          </div>
 
-      </div>
+          <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+             {['GoLang', 'React', 'Pedagogy', 'Coaching', 'Node.js'].map(tech => (
+               <span key={tech} style={{ 
+                 fontSize: '0.8em', padding: '5px 15px', border: '1px solid #39ff14', background: 'rgba(57, 255, 20, 0.1)',
+                 color: '#39ff14', fontFamily: 'var(--font-title)', letterSpacing: '1px'
+               }}>
+                 {tech}
+               </span>
+             ))}
+          </div>
+        </>
+      )
+    },
+    // --- ARCHIVES ---
+    {
+      id: 'archive-bci',
+      label: 'BCI BANK',
+      role: 'TÉLÉCONSEILLÈRE',
+      date: 'OCT 2022 - JAN 2024',
+      content: (
+        <>
+           <div style={{ fontFamily: 'var(--font-title)', color: 'var(--color-interface-light)', marginBottom: '10px' }}>
+             // LOCATION: NOUMÉA, NEW CALEDONIA
+           </div>
+           <p style={{ marginBottom: '20px' }}>
+            <strong>// ARCHIVED MEMORY:</strong> Gestion des flux de communication bancaire et résolution de requêtes clients critiques.
+          </p>
+          <ul style={{ listStyle: 'none', paddingLeft: '20px', borderLeft: '1px solid var(--color-interface-dark)' }}>
+            <li style={{ marginBottom: '10px' }}>[+] Gestion de la relation client à distance (Centre d'appel).</li>
+            <li style={{ marginBottom: '10px' }}>[+] Analyse des besoins et proposition de solutions financières.</li>
+            <li style={{ marginBottom: '10px' }}>[+] Respect strict des protocoles de sécurité bancaire.</li>
+          </ul>
+           <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+             {['Service Client', 'Finance', 'Communication', 'CRM'].map(tech => (
+               <span key={tech} style={{ 
+                 fontSize: '0.8em', padding: '5px 10px', border: '1px solid var(--color-interface-dark)', 
+                 color: 'var(--color-interface-light)', fontFamily: 'var(--font-title)' 
+               }}>
+                 {tech}
+               </span>
+             ))}
+          </div>
+        </>
+      )
+    },
+    {
+      id: 'archive-billabong-mgr',
+      label: 'BILLABONG GRP',
+      role: 'RESPONSABLE ADJOINTE',
+      date: 'NOV 2021 - APR 2022',
+      content: (
+        <>
+           <div style={{ fontFamily: 'var(--font-title)', color: 'var(--color-interface-light)', marginBottom: '10px' }}>
+             // LOCATION: NOUMÉA, NEW CALEDONIA
+           </div>
+           <p style={{ marginBottom: '20px' }}>
+            <strong>// RANK: SQUAD LEADER.</strong> Supervision des opérations de terrain et gestion des ressources humaines.
+          </p>
+          <ul style={{ listStyle: 'none', paddingLeft: '20px', borderLeft: '1px solid var(--color-interface-dark)' }}>
+            <li style={{ marginBottom: '10px' }}>[+] Management d'équipe et planification des shifts.</li>
+            <li style={{ marginBottom: '10px' }}>[+] Suivi des KPIs (Indicateurs Clés de Performance).</li>
+            <li style={{ marginBottom: '10px' }}>[+] Gestion des stocks et inventaires (Asset Management).</li>
+          </ul>
+           <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+             {['Management', 'Leadership', 'KPI Analysis', 'Logistics'].map(tech => (
+               <span key={tech} style={{ 
+                 fontSize: '0.8em', padding: '5px 10px', border: '1px solid var(--color-interface-dark)', 
+                 color: 'var(--color-interface-light)', fontFamily: 'var(--font-title)' 
+               }}>
+                 {tech}
+               </span>
+             ))}
+          </div>
+        </>
+      )
+    },
+    {
+      id: 'archive-billabong-sales',
+      label: 'BILLABONG OPS',
+      role: 'VENDEUSE',
+      date: 'MAR 2019 - NOV 2021',
+      content: (
+        <>
+           <div style={{ fontFamily: 'var(--font-title)', color: 'var(--color-interface-light)', marginBottom: '10px' }}>
+             // LOCATION: NEW CALEDONIA
+           </div>
+           <p style={{ marginBottom: '20px' }}>
+            <strong>// FIELD OPERATIVE:</strong> Interface directe avec la clientèle et maintenance de l'espace opérationnel.
+          </p>
+          <ul style={{ listStyle: 'none', paddingLeft: '20px', borderLeft: '1px solid var(--color-interface-dark)' }}>
+            <li style={{ marginBottom: '10px' }}>[+] Conseil client et vente (Direct Interface).</li>
+            <li style={{ marginBottom: '10px' }}>[+] Gestion du merchandising visuel.</li>
+            <li style={{ marginBottom: '10px' }}>[+] Soft Skills : Prise de parole en public & Gestion du temps.</li>
+          </ul>
+           <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+             {['Vente', 'Merchandising', 'Teamwork', 'Time Mgmt'].map(tech => (
+               <span key={tech} style={{ 
+                 fontSize: '0.8em', padding: '5px 10px', border: '1px solid var(--color-interface-dark)', 
+                 color: 'var(--color-interface-light)', fontFamily: 'var(--font-title)' 
+               }}>
+                 {tech}
+               </span>
+             ))}
+          </div>
+        </>
+      )
+    },
+    {
+      id: 'archive-bnp',
+      label: 'BNP PARIBAS',
+      role: 'CONSEILLÈRE CLIENTÈLE',
+      date: 'AUG 2015 - JUL 2018',
+      content: (
+        <>
+           <div style={{ fontFamily: 'var(--font-title)', color: 'var(--color-interface-light)', marginBottom: '10px' }}>
+             // LOCATION: FRANCE (ANGERS / ST-BARTH)
+           </div>
+           <p style={{ marginBottom: '20px' }}>
+            <strong>// INITIAL DEPLOYMENT:</strong> Gestion de portefeuille client et objectifs commerciaux.
+          </p>
+          <ul style={{ listStyle: 'none', paddingLeft: '20px', borderLeft: '1px solid var(--color-interface-dark)' }}>
+            <li style={{ marginBottom: '10px' }}>[+] Gestion de portefeuille clients (particuliers).</li>
+            <li style={{ marginBottom: '10px' }}>[+] Atteinte des objectifs de vente (Targets acquired).</li>
+            <li style={{ marginBottom: '10px' }}>[+] Conformité et gestion des risques.</li>
+          </ul>
+           <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+             {['Banking', 'Sales', 'Risk Mgmt', 'Portfolio'].map(tech => (
+               <span key={tech} style={{ 
+                 fontSize: '0.8em', padding: '5px 10px', border: '1px solid var(--color-interface-dark)', 
+                 color: 'var(--color-interface-light)', fontFamily: 'var(--font-title)' 
+               }}>
+                 {tech}
+               </span>
+             ))}
+          </div>
+        </>
+      )
+    }
+  ];
 
-      <p style={{ marginTop: '50px', color: 'var(--color-interface-light)', textAlign: 'center' }}>
-        // FIN DU JOURNAL D'INTERACTIONS //
+  return (
+    <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
+      
+      {/* TITRE STYLE GHOST IN THE SHELL */}
+      <h2 style={{ 
+        fontSize: '3.5em', 
+        marginBottom: '10px',
+        fontFamily: 'var(--font-title)',
+        textTransform: 'uppercase',
+        letterSpacing: '5px',
+        background: 'linear-gradient(to right, var(--color-accent-neon), transparent)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        borderLeft: '5px solid var(--color-accent-neon)',
+        paddingLeft: '20px'
+      }}>
+        PERSONNEL FILE
+      </h2>
+      
+      {/* SOUS-TITRE STYLE TERMINAL BOOT SEQUENCE */}
+      <p style={{ 
+        color: 'var(--color-interface-light)', 
+        maxWidth: '600px', 
+        marginBottom: '60px',
+        paddingLeft: '25px',
+        fontFamily: 'var(--font-code)',
+        fontSize: '0.9em'
+      }}>
+        {'>'} ESTABLISHING CYBERBRAIN CONNECTION... <br/>
+        {'>'} DOWNLOADING SUBJECT HISTORY: AILURA.
       </p>
-    </section>
+
+      <TacticalTabs tabs={missions} />
+    </div>
   );
 };
 
