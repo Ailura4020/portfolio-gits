@@ -1,61 +1,131 @@
+// src/components/ProjectCard.tsx
 import React from 'react';
-import type { Project } from '../types/project.ts';
 
-interface ProjectCardProps {
-  project: Project;
+export interface ProjectData {
+  id: string;
+  codename: string;
+  title: string;
+  status: 'COMPLETE' | 'IN PROGRESS' | 'ARCHIVED';
+  description: string;
+  stack: string[];
+  repoLink: string;
+  image?: string; 
+  type: 'SCHOOL' | 'PERSONAL' | 'PRO'; 
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+// Ajout de la prop onClick
+interface CardProps {
+  project: ProjectData;
+  onClick: () => void;
+}
+
+const ProjectCard: React.FC<CardProps> = ({ project, onClick }) => {
   return (
     <div 
+      className="project-card"
+      onClick={onClick} // Rend la carte cliquable
       style={{
-        backgroundColor: 'var(--color-bg-secondary)',
-        border: `1px solid var(--color-accent-teal)`,
-        padding: '25px',
-        margin: '15px 0',
-        borderRadius: '5px',
-        transition: 'all 0.3s ease',
-        boxShadow: `0 0 5px rgba(0, 0, 0, 0.5)`
+        minWidth: '450px',
+        maxWidth: '450px',
+        height: '600px',
+        backgroundColor: 'rgba(10, 10, 10, 0.9)',
+        border: '1px solid var(--color-interface-dark)',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'all 0.4s ease',
+        cursor: 'pointer', // Curseur main pour indiquer le clic
+        clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)',
       }}
-      onMouseOver={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--color-accent-neon)';
-        (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 15px var(--color-accent-neon)`;
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'scale(1.02)';
+        e.currentTarget.style.borderColor = 'var(--color-accent-neon)';
+        e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 204, 0, 0.2)';
+        e.currentTarget.style.zIndex = '10';
       }}
-      onMouseOut={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--color-accent-teal)';
-        (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 5px rgba(0, 0, 0, 0.5)`;
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'scale(1)';
+        e.currentTarget.style.borderColor = 'var(--color-interface-dark)';
+        e.currentTarget.style.boxShadow = 'none';
+        e.currentTarget.style.zIndex = '1';
       }}
     >
-      <h3 style={{ color: 'var(--color-accent-neon)', marginBottom: '10px' }}>
-        {project.title}
-      </h3>
-      <p style={{ color: 'var(--color-interface-light)', fontSize: '0.8em', marginBottom: '15px' }}>
-        Codename: <span style={{ fontFamily: 'var(--font-title)' }}>[{project.codename}]</span>
-      </p>
+      {/* ... (LE RESTE DU CONTENU RESTE EXACTEMENT LE MÊME) ... */}
       
-      {/* CORRECTION ICI : "SYSTEM ARCHITECTURE" au lieu de "Stack Matrix" */}
-      <p style={{ color: 'var(--color-text-primary)', marginBottom: '10px' }}>
-        <strong style={{ color: 'var(--color-accent-teal)' }}>[ SYSTEM ARCHITECTURE ]</strong> {project.stack.join(' | ')}
-      </p>
+      {/* HEADER */}
+      <div style={{ 
+        display: 'flex', justifyContent: 'space-between', padding: '15px 20px', 
+        borderBottom: '1px solid var(--color-interface-dark)', fontSize: '0.7em', color: 'var(--color-accent-neon)',
+        fontFamily: 'var(--font-title)'
+      }}>
+        <span>[{project.codename}]</span>
+        <span>STATUS: {project.status}</span>
+      </div>
 
-      <p style={{ marginBottom: '20px', fontSize: '0.9em' }}>
-        {project.summary}
-      </p>
-      
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <a href={project.githubLink} target="_blank" rel="noopener noreferrer" 
-           style={{ color: 'var(--color-accent-neon)' }}>
-          [ View Source Code ]
-        </a>
-        
-        {/* Le statut utilisera maintenant le vert défini dans accent-secondary */}
-        <span style={{ 
-          color: project.status === 'Complete' ? 'var(--color-accent-secondary)' : 'var(--color-accent-teal)',
-          fontFamily: 'var(--font-title)',
-          fontSize: '0.8em'
+      {/* IMAGE */}
+      <div style={{ 
+        height: '220px', width: '100%', position: 'relative', overflow: 'hidden',
+        borderBottom: '1px solid var(--color-accent-neon)'
+      }}>
+        {project.image ? (
+          <img 
+            src={project.image} 
+            alt={project.title} 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(60%) sepia(20%)' }}
+          />
+        ) : (
+          <div style={{ 
+            width: '100%', height: '100%', backgroundColor: '#050505', 
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 204, 0, 0.05) 3px)'
+          }}>
+            <div style={{ fontSize: '3em', color: 'var(--color-interface-dark)' }}>⚠</div>
+            <div style={{ fontFamily: 'var(--font-title)', color: 'var(--color-interface-light)', marginTop: '10px', letterSpacing: '2px' }}>
+              NO VISUAL DATA
+            </div>
+          </div>
+        )}
+        <div style={{
+          position: 'absolute', top: '10px', right: '10px',
+          backgroundColor: 'var(--color-accent-neon)', color: '#000',
+          padding: '2px 8px', fontSize: '0.7em', fontWeight: 'bold', fontFamily: 'var(--font-title)'
         }}>
-          STATUS: {project.status.toUpperCase()}
-        </span>
+          {project.type} PROJECT
+        </div>
+      </div>
+
+      {/* CONTENU */}
+      <div style={{ padding: '30px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <h3 style={{ fontSize: '1.6em', color: '#fff', marginBottom: '15px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+          {project.title}
+        </h3>
+        <div style={{ marginBottom: '20px', flex: 1 }}>
+          <strong style={{ color: 'var(--color-accent-neon)', fontSize: '0.8em', display: 'block', marginBottom: '5px' }}>
+            // MISSION BRIEFING
+          </strong>
+          <p style={{ fontSize: '0.9em', lineHeight: '1.6', color: 'var(--color-text-primary)' }}>
+            {project.description}
+          </p>
+        </div>
+        <div style={{ marginBottom: '25px' }}>
+          <strong style={{ color: 'var(--color-accent-neon)', fontSize: '0.8em', display: 'block', marginBottom: '10px' }}>
+            // SYSTEM ARCHITECTURE
+          </strong>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {project.stack.map(tech => (
+              <span key={tech} style={{ border: '1px solid var(--color-interface-dark)', padding: '4px 8px', fontSize: '0.75em', color: '#ccc' }}>
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '12px',
+            border: '1px solid var(--color-accent-neon)', color: 'var(--color-accent-neon)',
+            fontFamily: 'var(--font-title)', fontSize: '0.9em', letterSpacing: '2px'
+          }}>
+          {'>'} INSPECT DATA
+        </div>
       </div>
     </div>
   );
