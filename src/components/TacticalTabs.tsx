@@ -44,7 +44,7 @@ const TacticalTabs: React.FC<TacticalTabsProps> = ({ tabs }) => {
             : (isActive ? '#00ffff' : 'var(--color-interface-light)');
 
           const borderColor = isActive ? statusColor : 'var(--color-interface-dark)';
-          const bgColor = isActive ? 'rgba(0, 20, 30, 0.9)' : 'rgba(0, 10, 20, 0.5)';
+          const bgColor = isActive ? 'rgba(0, 20, 30, 0.95)' : 'rgba(5, 15, 25, 0.85)';
 
           return (
             <button
