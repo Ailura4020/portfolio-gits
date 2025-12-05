@@ -221,7 +221,7 @@ const SkillsPage: React.FC = () => {
             <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center', zIndex: 5, marginTop: '-5px' }}>
               <HexSkill label="DOCKER" color="#2496ed" />
               <HexSkill label="GIT" color="#f05032" />
-              <HexSkill label="POSTGRESQL" color="#336791" />
+              <HexSkill label="SQL" color="#336791" />
             </div>
 
           </div>
