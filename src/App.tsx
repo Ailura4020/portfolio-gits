@@ -9,6 +9,7 @@ import SkillsPage from './pages/Skills.tsx';
 import ContactPage from './pages/Contact.tsx';
 import CustomCursor from './components/CustomCursor.tsx'; 
 import BackgroundManager from './components/BackgroundManager.tsx';
+import Logo from './components/Logo';
 
 /* --- GARDER TES KEYFRAMES CSS --- */
 const styleSheet = document.createElement("style");
@@ -126,8 +127,10 @@ const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }>
                 backdropFilter: 'blur(5px)', zIndex: 200, borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 50px'
             }}>
-            <div style={{ fontFamily: 'var(--font-title)', fontSize: '22px', color: 'var(--color-accent-neon)', letterSpacing: '0.15em', fontWeight: 'bold', textShadow: '0 0 10px rgba(0, 255, 255, 0.5)' }}>[ PROJECT AILURA ]</div>
-            <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
+<div style={{ color: 'var(--color-accent-neon)', display: 'flex', alignItems: 'center', height: '100%' }}>
+            {/* Le logo aura une largeur fixe pour être bien visible */}
+            <Logo style={{ width: '400px', height: 'auto' }} />
+        </div>            <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
                 <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', letterSpacing: '2px', color: 'var(--color-text-primary)', cursor: 'pointer', opacity: 0.8 }}>FR / EN</span>
                 <BurgerIcon isOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)} />
             </div>
