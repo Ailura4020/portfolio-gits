@@ -1,8 +1,8 @@
 // src/pages/Projects.tsx
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import ProjectCard, { type ProjectData } from '../components/ProjectCard';
 
-// Données mises à jour avec "Lets Play"
+// --- DONNÉES DES PROJETS ---
 const projects: ProjectData[] = [
   {
     id: 'p1',
@@ -13,7 +13,7 @@ const projects: ProjectData[] = [
     description: "Développement Full Stack d'un système d'authentification robuste et d'une API REST sécurisée. Gestion complexe de l'état front-end.",
     stack: ['Java Spring Boot', 'Angular', 'PostgreSQL', 'JWT', 'Docker'],
     repoLink: 'https://github.com/Ailura4020/angul-it',
-    image: '/projects/angul-it-screen.png' 
+    image: '/projects/angulit.jpg' 
   },
   {
     id: 'p2',
@@ -24,7 +24,6 @@ const projects: ProjectData[] = [
     description: "Plateforme sociale pour gamers. Création de profils, organisation de tournois et matching de joueurs. Architecture modulaire basée sur des composants réutilisables.",
     stack: ['JavaScript', 'HTML5', 'CSS3', 'Framework MVC (Custom)'], 
     repoLink: 'https://github.com/Ailura4020/lets-play.git',
-    // Pas d'image
   },
   {
     id: 'p3',
@@ -58,23 +57,87 @@ const projects: ProjectData[] = [
   }
 ];
 
+// --- BOUTON DE NAVIGATION LATÉRAL ---
+const NavButton: React.FC<{ direction: 'left' | 'right'; onClick: () => void }> = ({ direction, onClick }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        background: 'rgba(0, 0, 0, 0.8)',
+        border: '1px solid var(--color-accent-neon)',
+        color: 'var(--color-accent-neon)',
+        width: '60px',
+        height: '100px', 
+        cursor: 'pointer',
+        
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: '2em', fontFamily: 'var(--font-title)',
+        
+        clipPath: direction === 'left' 
+          ? 'polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%)' 
+          : 'polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%)',
+          
+        transition: 'all 0.3s ease',
+        
+        boxShadow: isHovered 
+          ? '0 0 30px var(--color-accent-neon), inset 0 0 10px var(--color-accent-neon)' 
+          : '0 0 10px var(--color-accent-neon)',
+        
+        transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+        opacity: isHovered ? 1 : 0.9,
+        
+        animation: !isHovered ? 'pulse-btn-intense 2s infinite' : 'none'
+      }}
+    >
+      {direction === 'left' ? '<' : '>'}
+    </button>
+  );
+};
+
 const ProjectsPage: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
+  
+  const [showLeftBtn, setShowLeftBtn] = useState(false);
+  const [showRightBtn, setShowRightBtn] = useState(true);
+
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setShowLeftBtn(scrollLeft > 10);
+      setShowRightBtn(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
 
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
-      const handleWheel = (evt: WheelEvent) => {
-        if (evt.deltaY !== 0) {
-          evt.preventDefault();
-          container.scrollLeft += evt.deltaY;
-        }
+      checkScroll();
+      container.addEventListener('scroll', checkScroll);
+      window.addEventListener('resize', checkScroll);
+      return () => {
+        container.removeEventListener('scroll', checkScroll);
+        window.removeEventListener('resize', checkScroll);
       };
-      container.addEventListener('wheel', handleWheel);
-      return () => container.removeEventListener('wheel', handleWheel);
     }
   }, []);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      // Défilement par page complète (largeur visible)
+      const viewWidth = scrollContainerRef.current.clientWidth;
+      const scrollAmount = viewWidth; 
+
+      scrollContainerRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <div style={{ 
@@ -83,10 +146,20 @@ const ProjectsPage: React.FC = () => {
       display: 'flex', 
       flexDirection: 'column',
       justifyContent: 'center',
-      position: 'relative' // Important pour le modal absolu
+      position: 'relative'
     }}>
       
-      <div style={{ paddingLeft: '20px', marginBottom: '30px' }}>
+      <style>{`
+        @keyframes pulse-btn-intense {
+          0% { opacity: 0.8; box-shadow: 0 0 10px var(--color-accent-neon); text-shadow: 0 0 5px var(--color-accent-neon); }
+          50% { opacity: 1; box-shadow: 0 0 25px var(--color-accent-neon), inset 0 0 5px var(--color-accent-neon); text-shadow: 0 0 15px var(--color-accent-neon); }
+          100% { opacity: 0.8; box-shadow: 0 0 10px var(--color-accent-neon); text-shadow: 0 0 5px var(--color-accent-neon); }
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+      `}</style>
+
+      {/* TITRE */}
+      <div style={{ paddingLeft: '20px', marginBottom: '10px' }}>
         <h2 style={{ 
           fontSize: '3em', color: '#fff', marginBottom: '5px',
           textShadow: '0 0 15px var(--color-accent-neon)'
@@ -98,49 +171,67 @@ const ProjectsPage: React.FC = () => {
         </p>
       </div>
 
-      {/* --- SCROLL CONTAINER --- */}
-      <div 
-        ref={scrollContainerRef}
-        style={{
-          display: 'flex',
-          gap: '40px', 
-          overflowX: 'auto', 
-          padding: '20px 20px 50px 20px', 
-          scrollbarWidth: 'none', 
-          msOverflowStyle: 'none',
-          // LE FIX POUR TON MAC EST ICI :
-          overscrollBehaviorX: 'contain', // Empêche de swiper la page entière
-        }}
-        className="hide-scrollbar"
-      >
-        {projects.map((proj) => (
-          <ProjectCard 
-            key={proj.id} 
-            project={proj} 
-            onClick={() => setSelectedProject(proj)} // Ouvre le modal
-          />
-        ))}
+      {/* --- STRUCTURE FLEX --- */}
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        width: '100%', 
+        position: 'relative'
+      }}>
         
-        <div style={{ minWidth: '50px' }}></div>
+        {/* BOUTON GAUCHE */}
+        <div style={{ width: '80px', display: 'flex', justifyContent: 'center', flexShrink: 0 }}>
+          {showLeftBtn && <NavButton direction="left" onClick={() => scroll('left')} />}
+        </div>
+
+        {/* --- RAIL DE CARTES --- */}
+        <div 
+          ref={scrollContainerRef}
+          style={{
+            flex: 1, 
+            display: 'flex',
+            gap: '40px', 
+            overflowX: 'hidden', // Scroll bloqué au pad
+            scrollBehavior: 'smooth',
+            padding: '20px 0px', // Pas de padding latéral pour que le calcul mathématique fonctionne
+            width: '100%',
+          }}
+          className="hide-scrollbar"
+        >
+          {projects.map((proj) => (
+            <ProjectCard 
+              key={proj.id} 
+              project={proj} 
+              onClick={() => setSelectedProject(proj)} 
+            />
+          ))}
+          <div style={{ minWidth: '10px' }}></div>
+        </div>
+
+        {/* BOUTON DROIT */}
+        <div style={{ width: '80px', display: 'flex', justifyContent: 'center', flexShrink: 0 }}>
+          {showRightBtn && <NavButton direction="right" onClick={() => scroll('right')} />}
+        </div>
+      
       </div>
 
       <div style={{ 
         textAlign: 'center', color: 'var(--color-interface-light)', 
-        fontSize: '0.8em', marginTop: '-20px', opacity: 0.6 
+        fontSize: '0.8em', marginTop: '10px', opacity: 0.5 
       }}>
-        <span>{'<'} SCROLL OR CLICK TO INSPECT {'>'}</span>
+        // CLICK CARD TO INSPECT
       </div>
 
-      {/* --- LE MODAL (POP-UP) --- */}
+      {/* --- MODAL --- */}
       {selectedProject && (
         <div style={{
           position: 'fixed', inset: 0, zIndex: 1000,
-          backgroundColor: 'rgba(0, 5, 10, 0.85)', // Fond sombre
-          backdropFilter: 'blur(8px)', // Le flou stylé
+          backgroundColor: 'rgba(0, 5, 10, 0.85)',
+          backdropFilter: 'blur(8px)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           animation: 'fadeIn 0.3s ease'
         }}
-        onClick={() => setSelectedProject(null)} // Ferme en cliquant dehors
+        onClick={() => setSelectedProject(null)}
         >
           <div style={{
             width: '90%', maxWidth: '800px', maxHeight: '90vh',
@@ -152,9 +243,8 @@ const ProjectsPage: React.FC = () => {
             overflowY: 'auto',
             clipPath: 'polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px)',
           }}
-          onClick={(e) => e.stopPropagation()} // Empêche la fermeture si on clique DANS le modal
+          onClick={(e) => e.stopPropagation()}
           >
-            {/* Bouton Fermer */}
             <button 
               onClick={() => setSelectedProject(null)}
               style={{
@@ -167,7 +257,6 @@ const ProjectsPage: React.FC = () => {
               CLOSE [X]
             </button>
 
-            {/* Contenu Modal */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <h2 style={{ fontSize: '2.5em', color: 'var(--color-accent-neon)', textTransform: 'uppercase' }}>
                 {selectedProject.title}
@@ -179,7 +268,6 @@ const ProjectsPage: React.FC = () => {
                 <span>TYPE: {selectedProject.type}</span>
               </div>
 
-              {/* Si Image existe, on l'affiche en grand */}
               {selectedProject.image && (
                 <img src={selectedProject.image} alt="" style={{ width: '100%', borderRadius: '4px', border: '1px solid var(--color-interface-dark)' }} />
               )}
@@ -187,9 +275,6 @@ const ProjectsPage: React.FC = () => {
               <div>
                 <h4 style={{ color: 'var(--color-accent-neon)', marginBottom: '10px' }}>// EXTENDED BRIEFING</h4>
                 <p style={{ lineHeight: '1.8', fontSize: '1.1em' }}>{selectedProject.description}</p>
-                <p style={{ marginTop: '10px', color: '#ccc' }}>
-                  Ce projet a permis de consolider les compétences en architecture logicielle et en gestion de projet complexe. L'accent a été mis sur la performance et la maintenabilité du code.
-                </p>
               </div>
 
               <div>
@@ -220,10 +305,6 @@ const ProjectsPage: React.FC = () => {
           </div>
         </div>
       )}
-
-      <style>{`
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-      `}</style>
     </div>
   );
 };

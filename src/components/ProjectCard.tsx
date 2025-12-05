@@ -1,6 +1,7 @@
 // src/components/ProjectCard.tsx
 import React from 'react';
 
+// --- DÉFINITION DES TYPES (IMPORTANT) ---
 export interface ProjectData {
   id: string;
   codename: string;
@@ -13,8 +14,7 @@ export interface ProjectData {
   type: 'SCHOOL' | 'PERSONAL' | 'PRO'; 
 }
 
-// Ajout de la prop onClick
-interface CardProps {
+export interface CardProps {
   project: ProjectData;
   onClick: () => void;
 }
@@ -23,19 +23,22 @@ const ProjectCard: React.FC<CardProps> = ({ project, onClick }) => {
   return (
     <div 
       className="project-card"
-      onClick={onClick} // Rend la carte cliquable
+      onClick={onClick}
       style={{
-        minWidth: '450px',
-        maxWidth: '450px',
-        height: '600px',
+        // TAILLE DYNAMIQUE (1/3 de l'écran - les marges)
+        minWidth: 'calc((100% - 80px) / 3)', 
+        maxWidth: 'calc((100% - 80px) / 3)',
+        height: '550px',
+        
         backgroundColor: 'rgba(10, 10, 10, 0.9)',
         border: '1px solid var(--color-interface-dark)',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         transition: 'all 0.4s ease',
-        cursor: 'pointer', // Curseur main pour indiquer le clic
+        cursor: 'pointer',
         clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)',
+        flexShrink: 0,
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'scale(1.02)';
@@ -50,8 +53,6 @@ const ProjectCard: React.FC<CardProps> = ({ project, onClick }) => {
         e.currentTarget.style.zIndex = '1';
       }}
     >
-      {/* ... (LE RESTE DU CONTENU RESTE EXACTEMENT LE MÊME) ... */}
-      
       {/* HEADER */}
       <div style={{ 
         display: 'flex', justifyContent: 'space-between', padding: '15px 20px', 
@@ -64,7 +65,7 @@ const ProjectCard: React.FC<CardProps> = ({ project, onClick }) => {
 
       {/* IMAGE */}
       <div style={{ 
-        height: '220px', width: '100%', position: 'relative', overflow: 'hidden',
+        height: '200px', width: '100%', position: 'relative', overflow: 'hidden',
         borderBottom: '1px solid var(--color-accent-neon)'
       }}>
         {project.image ? (
@@ -96,7 +97,7 @@ const ProjectCard: React.FC<CardProps> = ({ project, onClick }) => {
 
       {/* CONTENU */}
       <div style={{ padding: '30px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <h3 style={{ fontSize: '1.6em', color: '#fff', marginBottom: '15px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+        <h3 style={{ fontSize: '1.5em', color: '#fff', marginBottom: '15px', textTransform: 'uppercase', letterSpacing: '1px' }}>
           {project.title}
         </h3>
         <div style={{ marginBottom: '20px', flex: 1 }}>
