@@ -1,33 +1,33 @@
 // src/pages/Experience.tsx
 import React from 'react';
 import TacticalTabs, { type TabData } from '../components/TacticalTabs';
+import ExperienceMobile from '../components/ExperienceMobile'; // Import Mobile
+import useIsMobile from '../hooks/useIsMobile'; // Import Hook
 
 const ExperiencePage: React.FC = () => {
+  const isMobile = useIsMobile(1024); // Switch à 1024px
 
+  // --- TES DONNÉES (Inchangées) ---
   const missions: TabData[] = [
     {
       id: 'mission-active',
       label: 'ZONE01 / STREET CODER',
       role: 'FULL STACK & COACH',
-      date: 'JUN 2024 - PRESENT',
-      isOngoing: true, // Mode Vert "Matrix" / "Ghost"
+      date: '2023 - PRESENT',
+      isOngoing: true,
       content: (
         <>
-        <div style={{ fontFamily: 'var(--font-title)', color: 'rgba(57, 255, 20, 0.8)', marginBottom: '10px', fontSize: '0.9em' }}>
+           <div style={{ fontFamily: 'var(--font-title)', color: 'rgba(57, 255, 20, 0.8)', marginBottom: '10px', fontSize: '0.9em' }}>
              // LOCATION: ROUEN, NORMANDIE
            </div>
-           
           <p style={{ marginBottom: '20px', fontFamily: 'var(--font-title)', color: '#39ff14' }}>
             <strong>{'>'} CURRENT SYNC: DUAL PROCESSING...</strong>
           </p>
           <p>
             Position hybride combinant l'acquisition intensive de compétences techniques et le mentoring pédagogique.
           </p>
-          
           <br/>
           <strong style={{ fontFamily: 'var(--font-title)', color: 'var(--color-accent-teal)' }}>// MISSION LOGS:</strong>
-          
-          {/* Section Zone01 */}
           <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid #39ff14' }}>
             <strong style={{ color: '#39ff14' }}>@ ZONE01 NORMANDIE :</strong>
             <ul style={{ listStyle: 'none', marginTop: '5px' }}>
@@ -35,8 +35,6 @@ const ExperiencePage: React.FC = () => {
               <li style={{ marginBottom: '5px' }}>[{'>'}] Travail en méthode Agile/Peer-learning.</li>
             </ul>
           </div>
-
-          {/* Section Street Coder */}
           <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid #39ff14' }}>
             <strong style={{ color: '#39ff14' }}>@ STREET CODER :</strong>
             <ul style={{ listStyle: 'none', marginTop: '5px' }}>
@@ -44,10 +42,19 @@ const ExperiencePage: React.FC = () => {
               <li style={{ marginBottom: '5px' }}>[{'>'}] Accompagnement des publics éloignés du numérique.</li>
             </ul>
           </div>
+          <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+             {['GoLang', 'React', 'Pedagogy', 'Coaching', 'Node.js'].map(tech => (
+               <span key={tech} style={{ 
+                 fontSize: '0.8em', padding: '5px 15px', border: '1px solid #39ff14', background: 'rgba(57, 255, 20, 0.1)',
+                 color: '#39ff14', fontFamily: 'var(--font-title)', letterSpacing: '1px'
+               }}>
+                 {tech}
+               </span>
+             ))}
+          </div>
         </>
       )
     },
-    // --- ARCHIVES ---
     {
       id: 'archive-bci',
       label: 'BCI BANK',
@@ -177,23 +184,19 @@ const ExperiencePage: React.FC = () => {
   return (
     <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
       
-      {/* TITRE STYLE GHOST IN THE SHELL */}
       <h2 style={{ 
-        fontSize: '3.5em', 
+        fontSize: '3em', 
+        color: '#fff', // Blanc pur
         marginBottom: '10px',
         fontFamily: 'var(--font-title)',
         textTransform: 'uppercase',
-        letterSpacing: '5px',
-        background: 'linear-gradient(to right, var(--color-accent-neon), transparent)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        borderLeft: '5px solid var(--color-accent-neon)',
+        textShadow: '0 0 15px var(--color-accent-neon)', // Lueur colorée
+        borderLeft: '4px solid var(--color-accent-neon)',
         paddingLeft: '20px'
       }}>
         PERSONNEL FILE
       </h2>
       
-      {/* SOUS-TITRE STYLE TERMINAL BOOT SEQUENCE */}
       <p style={{ 
         color: 'var(--color-interface-light)', 
         maxWidth: '600px', 
@@ -206,7 +209,13 @@ const ExperiencePage: React.FC = () => {
         {'>'} DOWNLOADING SUBJECT HISTORY: AILURA.
       </p>
 
-      <TacticalTabs tabs={missions} />
+      {/* --- LE SWITCH PC / MOBILE --- */}
+      {isMobile ? (
+        <ExperienceMobile missions={missions} />
+      ) : (
+        <TacticalTabs tabs={missions} />
+      )}
+
     </div>
   );
 };

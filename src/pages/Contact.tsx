@@ -1,5 +1,6 @@
 // src/pages/Contact.tsx
 import React, { useState } from 'react';
+import useIsMobile from '../hooks/useIsMobile';
 
 const SocialCard: React.FC<{ 
   title: string; 
@@ -7,7 +8,8 @@ const SocialCard: React.FC<{
   link: string; 
   color: string; 
   iconLabel: string;
-}> = ({ title, role, link, color, iconLabel }) => {
+  isMobile: boolean;
+}> = ({ title, role, link, color, iconLabel, isMobile }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -18,70 +20,69 @@ const SocialCard: React.FC<{
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        // DIMENSIONS RÉDUITES (Plus élégant)
-        flex: '1 1 280px',
-        maxWidth: '350px', // On empêche les blocs de devenir énormes
-        height: '180px',   // Hauteur plus compacte (était 250px)
+        // DIMENSIONS MOBILES OPTIMISÉES
+        flex: isMobile ? '1 1 100%' : '1 1 280px', // Prend toute la largeur sur mobile
+        width: isMobile ? '100%' : 'auto',
+        maxWidth: '400px', // Max confortable
+        height: isMobile ? '100px' : '180px', // Beaucoup moins haut sur mobile (Bouton large)
         
         textDecoration: 'none',
         position: 'relative',
         cursor: 'pointer',
-        
-        // STYLE GLOBAL
         backgroundColor: 'rgba(5, 10, 20, 0.6)', 
         border: `1px solid ${isHovered ? color : 'rgba(255, 255, 255, 0.15)'}`, 
         backdropFilter: 'blur(10px)',
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
+        flexDirection: isMobile ? 'row' : 'column', // Ligne sur mobile (Icone à gauche, Texte à droite)
+        justifyContent: isMobile ? 'flex-start' : 'center',
         alignItems: 'center',
+        padding: isMobile ? '0 30px' : '0', // Padding latéral sur mobile
+        gap: isMobile ? '20px' : '0', // Espace entre icone et texte sur mobile
+        
         transition: 'all 0.4s ease',
-        boxShadow: isHovered ? `0 0 25px ${color}33` : 'none', // Lueur plus douce
-        clipPath: 'polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px)', // Coins un peu moins coupés
+        boxShadow: isHovered ? `0 0 25px ${color}33` : 'none',
+        clipPath: 'polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px)',
       }}
     >
-      {/* Icone / Label Central */}
+      {/* Icone */}
       <div style={{
-        fontSize: '3em', // Réduit (était 4em)
+        fontSize: isMobile ? '2.5em' : '3em', 
         color: isHovered ? color : 'rgba(255, 255, 255, 0.5)',
         transition: 'color 0.3s ease',
-        marginBottom: '5px',
+        marginBottom: isMobile ? '0' : '5px',
         fontFamily: 'var(--font-title)'
       }}>
         {iconLabel}
       </div>
 
-      {/* Titre */}
-      <h3 style={{ 
-        color: '#fff', fontSize: '1.3em', textTransform: 'uppercase', letterSpacing: '2px', margin: '0 0 5px 0',
-        textShadow: isHovered ? `0 0 10px ${color}` : 'none'
-      }}>
-        {title}
-      </h3>
-
-      {/* Rôle / Description */}
-      <div style={{ 
-        color: isHovered ? color : 'rgba(200, 200, 200, 0.6)', 
-        fontFamily: 'var(--font-code)', fontSize: '0.75em', letterSpacing: '1px' 
-      }}>
-        {role}
+      {/* Textes */}
+      <div style={{ textAlign: isMobile ? 'left' : 'center' }}>
+        <h3 style={{ 
+          color: '#fff', fontSize: '1.3em', textTransform: 'uppercase', letterSpacing: '2px', margin: '0',
+          textShadow: isHovered ? `0 0 10px ${color}` : 'none'
+        }}>
+          {title}
+        </h3>
+        
+        {/* On affiche le rôle même sur mobile maintenant car on a de la place à droite */}
+        <div style={{ 
+          color: isHovered ? color : 'rgba(200, 200, 200, 0.6)', 
+          fontFamily: 'var(--font-code)', fontSize: '0.75em', letterSpacing: '1px', marginTop: '5px'
+        }}>
+          {role}
+        </div>
       </div>
 
-      {/* Déco "Scan" au survol (Lignes Haut et Bas) */}
-      <div style={{
-        position: 'absolute', top: 0, left: 0, width: '100%', height: '1px',
-        background: color, opacity: isHovered ? 1 : 0, boxShadow: `0 0 10px ${color}`, transition: 'opacity 0.3s ease'
-      }}></div>
-       <div style={{
-        position: 'absolute', bottom: 0, right: 0, width: '100%', height: '1px',
-        background: color, opacity: isHovered ? 1 : 0, boxShadow: `0 0 10px ${color}`, transition: 'opacity 0.3s ease'
-      }}></div>
-
+      {/* Déco Lignes */}
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '1px', background: color, opacity: isHovered ? 1 : 0, boxShadow: `0 0 10px ${color}`, transition: 'opacity 0.3s ease' }}></div>
+      <div style={{ position: 'absolute', bottom: 0, right: 0, width: '100%', height: '1px', background: color, opacity: isHovered ? 1 : 0, boxShadow: `0 0 10px ${color}`, transition: 'opacity 0.3s ease' }}></div>
     </a>
   );
 };
 
 const ContactPage: React.FC = () => {
+  const isMobile = useIsMobile(); 
+
   return (
     <div style={{ 
       paddingTop: '50px', 
@@ -91,8 +92,8 @@ const ContactPage: React.FC = () => {
       justifyContent: 'space-between'
     }}>
       
-      {/* --- HEADER --- */}
-      <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+      {/* HEADER */}
+      <div style={{ textAlign: 'center', marginBottom: isMobile ? '30px' : '50px' }}>
         <h2 style={{ 
           fontSize: '3.5em', color: '#fff', marginBottom: '15px',
           textShadow: '0 0 20px rgba(255, 255, 255, 0.5)'
@@ -100,13 +101,11 @@ const ContactPage: React.FC = () => {
           CANAL DE COMMUNICATION
         </h2>
         
-        {/* BOUTON STATUS (VIOLET GIVRÉ) */}
         <div style={{ 
           display: 'inline-block',
           padding: '8px 20px',
-          // Couleur Violette "Givrée" (#e0aaff)
           border: '1px solid #e0aaff',
-          backgroundColor: 'rgba(224, 170, 255, 0.08)', // Fond très léger
+          backgroundColor: 'rgba(224, 170, 255, 0.08)',
           color: '#e0aaff',
           fontFamily: 'var(--font-code)',
           fontSize: '0.85em',
@@ -123,37 +122,23 @@ const ContactPage: React.FC = () => {
         </p>
       </div>
 
-      {/* --- CARTES DE LIAISON (TAILLE RÉDUITE) --- */}
+      {/* CARTES */}
       <div style={{ 
         display: 'flex', 
-        gap: '30px', 
+        flexDirection: isMobile ? 'column' : 'row', // Colonne sur mobile
+        alignItems: 'center',
+        gap: isMobile ? '20px' : '30px', 
         justifyContent: 'center', 
         flexWrap: 'wrap',
         padding: '0 20px',
-        marginBottom: '60px'
+        marginBottom: isMobile ? '40px' : '60px',
+        width: '100%'
       }}>
-        
-        {/* LINKEDIN - Bleu Cyber */}
-        <SocialCard 
-          title="LINKEDIN" 
-          role="> PROFESSIONAL UPLINK" 
-          link="https://www.linkedin.com/in/ton-profil" 
-          color="#0077b5" 
-          iconLabel="[IN]"
-        />
-
-        {/* GITHUB - Violet/Blanc */}
-        <SocialCard 
-          title="GITHUB" 
-          role="> SOURCE REPOSITORY" 
-          link="https://github.com/Ailura4020" 
-          color="#9f7aea" 
-          iconLabel="[GIT]"
-        />
-
+        <SocialCard title="LINKEDIN" role="> PROFESSIONAL UPLINK" link="https://www.linkedin.com/in/ton-profil" color="#0077b5" iconLabel="[IN]" isMobile={isMobile} />
+        <SocialCard title="GITHUB" role="> SOURCE REPOSITORY" link="https://github.com/Ailura4020" color="#9f7aea" iconLabel="[GIT]" isMobile={isMobile} />
       </div>
 
-      {/* --- FOOTER SYSTÈME --- */}
+      {/* FOOTER */}
       <footer style={{ 
         borderTop: '1px solid rgba(255, 255, 255, 0.1)', 
         padding: '40px 20px', 
@@ -162,29 +147,39 @@ const ContactPage: React.FC = () => {
         background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)'
       }}>
         
-        {/* Bouton CV (Placeholder) */}
+        {/* BOUTON CV AMÉLIORÉ */}
         <div style={{ marginBottom: '30px' }}>
           <a 
             href="/cv-ailura.pdf" 
-            download // Indique au navigateur de télécharger
+            download
             style={{
-              color: '#bbb', textDecoration: 'none', border: '1px solid #444', 
-              padding: '12px 25px', fontSize: '0.8em', fontFamily: 'var(--font-code)',
+              color: '#fff', 
+              textDecoration: 'none', 
+              border: '1px solid #fff', 
+              padding: '15px 30px',     
+              fontSize: '0.9em', 
+              fontFamily: 'var(--font-code)',
               transition: 'all 0.3s',
-              backgroundColor: 'rgba(0,0,0,0.3)'
+              backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+              display: 'inline-block',
+              letterSpacing: '1px',
+              fontWeight: 'bold',
+              boxShadow: '0 0 15px rgba(255,255,255,0.1)',
+              width: isMobile ? '100%' : 'auto', // Pleine largeur sur mobile
+              textAlign: 'center'
             }}
             onMouseOver={(e) => { 
-              e.currentTarget.style.borderColor = '#fff'; 
-              e.currentTarget.style.color = '#fff'; 
-              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
+              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)';
+              e.currentTarget.style.boxShadow = '0 0 25px rgba(255,255,255,0.3)';
+              if(!isMobile) e.currentTarget.style.transform = 'scale(1.05)'; // Pas de zoom sur mobile
             }}
             onMouseOut={(e) => { 
-              e.currentTarget.style.borderColor = '#444'; 
-              e.currentTarget.style.color = '#bbb';
-              e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.3)';
+              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
+              e.currentTarget.style.boxShadow = '0 0 15px rgba(255,255,255,0.1)';
+              if(!isMobile) e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            [ DOWNLOAD DATA_SHEET (CV.PDF) ]
+            [ ⬇ DOWNLOAD DATA_SHEET (CV.PDF) ]
           </a>
         </div>
 
