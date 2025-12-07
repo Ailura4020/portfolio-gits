@@ -153,47 +153,84 @@ const ProjectsPage: React.FC = () => {
       )}
 
       {/* --- LE MODAL (Commun aux deux versions) --- */}
+      // src/pages/Projects.tsx (Partie Modal uniquement)
+
+      {/* --- LE MODAL ADAPTATIF --- */}
       {selectedProject && (
         <div style={{
-          position: 'fixed', inset: 0, zIndex: 1000,
-          backgroundColor: 'rgba(0, 5, 10, 0.9)', backdropFilter: 'blur(8px)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeIn 0.3s ease',
-          padding: isMobile ? '10px' : '0' // Marge sur mobile pour pas coller aux bords
+          position: 'fixed', inset: 0, zIndex: 2000, // ZIndex très haut pour passer au dessus de tout
+          backgroundColor: 'rgba(0, 0, 0, 0.95)', // Fond quasi opaque pour focus
+          backdropFilter: 'blur(10px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          animation: 'fadeIn 0.3s ease',
+          padding: isMobile ? '0' : '20px' // Pas de marge autour sur mobile
         }}
         onClick={() => setSelectedProject(null)}
         >
           <div style={{
-            width: '100%', maxWidth: '800px', maxHeight: '90vh',
-            backgroundColor: 'rgba(10, 15, 20, 0.95)', border: '2px solid var(--color-accent-neon)',
-            boxShadow: '0 0 50px rgba(255, 204, 0, 0.3)', padding: isMobile ? '20px' : '40px',
-            position: 'relative', overflowY: 'auto',
-            clipPath: 'polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px)',
+            width: isMobile ? '100%' : '90%', 
+            height: isMobile ? '100%' : 'auto', // Pleine hauteur sur mobile
+            maxHeight: isMobile ? '100vh' : '90vh',
+            maxWidth: '800px',
+            
+            backgroundColor: 'rgba(10, 15, 20, 1)', // Fond opaque
+            border: isMobile ? 'none' : '2px solid var(--color-accent-neon)', // Pas de bordure externe sur mobile
+            boxShadow: '0 0 50px rgba(255, 204, 0, 0.2)',
+            
+            padding: isMobile ? '80px 20px 40px 20px' : '40px', // Gros padding haut sur mobile pour éviter que le bouton Close ne soit gênant
+            
+            position: 'relative', 
+            overflowY: 'auto', // Scroll interne activé
+            
+            // Coins carrés sur mobile pour remplir l'écran
+            clipPath: isMobile ? 'none' : 'polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px)',
           }}
           onClick={(e) => e.stopPropagation()}
           >
+          
+            {/* --- BOUTON CLOSE AMÉLIORÉ --- */}
             <button 
               onClick={() => setSelectedProject(null)}
               style={{
-                position: 'absolute', top: '20px', right: '20px',
-                background: 'transparent', border: '1px solid var(--color-accent-neon)',
-                color: 'var(--color-accent-neon)', padding: '5px 15px', cursor: 'pointer', fontFamily: 'var(--font-title)'
+                position: 'fixed', // Toujours visible même si on scrolle
+                top: '20px', 
+                right: '20px',
+                background: 'rgba(0, 0, 0, 0.9)', // Fond noir pour être lisible sur l'image
+                border: '2px solid var(--color-accent-neon)', // Bordure épaisse
+                color: 'var(--color-accent-neon)', 
+                padding: '10px 15px', 
+                cursor: 'pointer', 
+                fontFamily: 'var(--font-title)',
+                fontWeight: 'bold',
+                fontSize: '1em',
+                zIndex: 2001, // Au-dessus de tout
+                boxShadow: '0 0 15px rgba(0,0,0,0.5)'
               }}
-            >CLOSE [X]</button>
+            >
+              CLOSE [X]
+            </button>
 
+            {/* Contenu du Modal */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <h2 style={{ fontSize: isMobile ? '1.8em' : '2.5em', color: 'var(--color-accent-neon)', textTransform: 'uppercase', marginTop: isMobile ? '30px' : '0' }}>{selectedProject.title}</h2>
+              <h2 style={{ fontSize: isMobile ? '1.8em' : '2.5em', color: 'var(--color-accent-neon)', textTransform: 'uppercase', marginTop: isMobile ? '10px' : '0', lineHeight: 1.2 }}>
+                {selectedProject.title}
+              </h2>
+              
               <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '5px' : '20px', fontSize: '0.9em', color: 'var(--color-interface-light)', borderBottom: '1px solid var(--color-interface-dark)', paddingBottom: '20px' }}>
                 <span>CODE: {selectedProject.codename}</span>
                 <span>STATUS: <span style={{ color: '#39ff14' }}>{selectedProject.status}</span></span>
                 <span>TYPE: {selectedProject.type}</span>
               </div>
+
               {selectedProject.image && (
                 <img src={selectedProject.image} alt="" style={{ width: '100%', borderRadius: '4px', border: '1px solid var(--color-interface-dark)' }} />
               )}
+
               <div>
                 <h4 style={{ color: 'var(--color-accent-neon)', marginBottom: '10px' }}>// EXTENDED BRIEFING</h4>
                 <p style={{ lineHeight: '1.8', fontSize: isMobile ? '1em' : '1.1em' }}>{selectedProject.description}</p>
               </div>
+
               <div>
                 <h4 style={{ color: 'var(--color-accent-neon)', marginBottom: '10px' }}>// TECH STACK</h4>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
@@ -202,12 +239,24 @@ const ProjectsPage: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <a href={selectedProject.repoLink} target="_blank" rel="noreferrer" style={{
+
+              <a 
+                href={selectedProject.repoLink}
+                target="_blank"
+                rel="noreferrer"
+                style={{
                   marginTop: '20px', padding: '15px', textAlign: 'center',
                   backgroundColor: 'var(--color-accent-neon)', color: '#000',
                   fontWeight: 'bold', letterSpacing: '2px', textDecoration: 'none',
+                  display: 'block',
                   clipPath: 'polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)',
-                }}>ACCESS SOURCE CODE : GITHUB</a>
+                }}
+              >
+                ACCESS SOURCE CODE : GITHUB
+              </a>
+              
+              {/* Espace vide en bas pour que le scroll aille jusqu'au bout */}
+              <div style={{ height: '50px' }}></div>
             </div>
           </div>
         </div>

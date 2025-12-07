@@ -8,7 +8,8 @@ import SkillsPage from './pages/Skills.tsx';
 import ContactPage from './pages/Contact.tsx';
 import CustomCursor from './components/CustomCursor.tsx'; 
 import BackgroundManager from './components/BackgroundManager.tsx';
-import Logo from './components/Logo'; 
+import Logo from './components/Logo';
+import useIsMobile from './hooks/useIsMobile'; // IMPORT DU HOOK
 
 // --- ANIMATIONS CSS ---
 const styleSheet = document.createElement("style");
@@ -28,7 +29,7 @@ styleSheet.innerText = `
 `;
 document.head.appendChild(styleSheet);
 
-// --- COMPOSANT : BURGER ICON ---
+// --- COMPOSANTS NAVIGATION ---
 const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen, onClick }) => (
     <div onClick={onClick} style={{ width: '40px', height: '20px', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 200, position: 'relative' }}>
         <div style={{ height: '2px', width: '100%', backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', transition: 'all 0.4s ease', transform: isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none' }}></div>
@@ -37,7 +38,6 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
     </div>
 );
 
-// --- COMPOSANT : MENU OVERLAY ---
 interface MenuProps {
   isOpen: boolean;
   onClose: () => void;
@@ -47,7 +47,6 @@ interface MenuProps {
 const MobileMenuOverlay: React.FC<MenuProps> = ({ isOpen, onClose, setHoveredSection }) => {
     if (!isOpen) return null;
     const links = ['HOME', 'PROJECTS', 'EXPERIENCE', 'SKILLS', 'CONTACT'];
-
     return (
         <>
             <div onClick={onClose} style={{ position: 'fixed', top: '90px', left: 0, width: '100%', height: 'calc(100vh - 90px)', backgroundColor: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(3px)', zIndex: 149 }} />
@@ -64,31 +63,46 @@ const MobileMenuOverlay: React.FC<MenuProps> = ({ isOpen, onClose, setHoveredSec
     );
 };
 
-// --- COMPOSANT : NAVIGATION BAR ---
+// --- LA BARRE DE NAV MODIFIÉE ---
 const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }> = ({ setHoveredSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isMobile = useIsMobile(); 
+
   return (
     <>
         <div 
           className="nav-header"
-          style={{ position: 'fixed', top: 0, width: '100%', height: '90px', backgroundColor: 'rgba(0, 2, 22, 0.9)', backdropFilter: 'blur(5px)', zIndex: 200, borderBottom: '1px solid rgba(255, 255, 255, 0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 50px' }}>
+          style={{ 
+            position: 'fixed', top: 0, width: '100%', height: '90px', 
+            backgroundColor: 'rgba(0, 2, 22, 0.9)', backdropFilter: 'blur(5px)', zIndex: 200, 
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)', 
+            display: 'flex', 
+            // MODIFICATION ICI : Sur mobile, on centre tout. Sur PC, on espace (Space Between).
+            justifyContent: isMobile ? 'center' : 'space-between', 
+            alignItems: 'center', 
+            padding: '0 50px' 
+          }}>
             
-            {/* LOGO SVG DYNAMIQUE */}
             <div style={{ color: 'var(--color-accent-neon)', display: 'flex', alignItems: 'center', height: '100%' }}>
-                <Logo style={{ width: '250px', height: 'auto' }} />
+                {/* MODIFICATION ICI : Taille augmentée sur mobile (220px) */}
+                <Logo style={{ width: isMobile ? '220px' : '250px', height: 'auto' }} />
             </div>
 
-            <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', letterSpacing: '2px', color: 'var(--color-text-primary)', cursor: 'pointer', opacity: 0.8 }}>FR / EN</span>
-                <BurgerIcon isOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)} />
-            </div>
+            {!isMobile && (
+                <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
+                    <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', letterSpacing: '2px', color: 'var(--color-text-primary)', cursor: 'pointer', opacity: 0.8 }}>FR / EN</span>
+                    <BurgerIcon isOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)} />
+                </div>
+            )}
         </div>
+        
+        {/* Le menu overlay ne s'affichera que si isMenuOpen est true (donc impossible sur mobile vu qu'on a caché le bouton) */}
         <MobileMenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} setHoveredSection={setHoveredSection} />
     </>
   );
 };
 
-// --- COMPOSANT PRINCIPAL : APP ---
+// --- APP ---
 function App() {
   const [menuHoveredSection, setMenuHoveredSection] = useState<string | null>(null);
   const [currentTheme, setCurrentTheme] = useState('home');
