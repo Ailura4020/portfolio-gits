@@ -11,7 +11,7 @@ const projects: ProjectData[] = [
     description: "Développement Full Stack d'un système d'authentification robuste et d'une API REST sécurisée. Gestion complexe de l'état front-end.",
     stack: ['Java Spring Boot', 'Angular', 'PostgreSQL', 'JWT', 'Docker'],
     repoLink: 'https://github.com/Ailura4020/angul-it',
-    image: '/projects/angulit.jpg' 
+    image: '/projects/angul-it-screen.png' 
   },
   {
     id: 'p2', codename: 'SOC-GAMING-HUB', title: 'LETS PLAY', status: 'COMPLETE', type: 'SCHOOL',

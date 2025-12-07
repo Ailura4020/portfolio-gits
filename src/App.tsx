@@ -8,8 +8,8 @@ import SkillsPage from './pages/Skills.tsx';
 import ContactPage from './pages/Contact.tsx';
 import CustomCursor from './components/CustomCursor.tsx'; 
 import BackgroundManager from './components/BackgroundManager.tsx';
-import Logo from './components/Logo';
-import useIsMobile from './hooks/useIsMobile'; // IMPORT DU HOOK
+import Logo from './components/Logo'; 
+import useIsMobile from './hooks/useIsMobile'; // Import du hook
 
 // --- ANIMATIONS CSS ---
 const styleSheet = document.createElement("style");
@@ -29,7 +29,7 @@ styleSheet.innerText = `
 `;
 document.head.appendChild(styleSheet);
 
-// --- COMPOSANTS NAVIGATION ---
+// --- COMPOSANT : BURGER ICON ---
 const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen, onClick }) => (
     <div onClick={onClick} style={{ width: '40px', height: '20px', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 200, position: 'relative' }}>
         <div style={{ height: '2px', width: '100%', backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', transition: 'all 0.4s ease', transform: isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none' }}></div>
@@ -38,6 +38,7 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
     </div>
 );
 
+// --- COMPOSANT : MENU OVERLAY ---
 interface MenuProps {
   isOpen: boolean;
   onClose: () => void;
@@ -47,6 +48,7 @@ interface MenuProps {
 const MobileMenuOverlay: React.FC<MenuProps> = ({ isOpen, onClose, setHoveredSection }) => {
     if (!isOpen) return null;
     const links = ['HOME', 'PROJECTS', 'EXPERIENCE', 'SKILLS', 'CONTACT'];
+
     return (
         <>
             <div onClick={onClose} style={{ position: 'fixed', top: '90px', left: 0, width: '100%', height: 'calc(100vh - 90px)', backgroundColor: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(3px)', zIndex: 149 }} />
@@ -63,7 +65,7 @@ const MobileMenuOverlay: React.FC<MenuProps> = ({ isOpen, onClose, setHoveredSec
     );
 };
 
-// --- LA BARRE DE NAV MODIFIÉE ---
+// --- COMPOSANT : NAVIGATION BAR ---
 const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }> = ({ setHoveredSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile(); 
@@ -77,17 +79,24 @@ const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }>
             backgroundColor: 'rgba(0, 2, 22, 0.9)', backdropFilter: 'blur(5px)', zIndex: 200, 
             borderBottom: '1px solid rgba(255, 255, 255, 0.1)', 
             display: 'flex', 
-            // MODIFICATION ICI : Sur mobile, on centre tout. Sur PC, on espace (Space Between).
             justifyContent: isMobile ? 'center' : 'space-between', 
             alignItems: 'center', 
             padding: '0 50px' 
           }}>
             
-            <div style={{ color: 'var(--color-accent-neon)', display: 'flex', alignItems: 'center', height: '100%' }}>
-                {/* MODIFICATION ICI : Taille augmentée sur mobile (220px) */}
-                <Logo style={{ width: isMobile ? '350px' : '250px', height: 'auto' }} />
+            <div style={{ 
+                color: 'var(--color-accent-neon)', 
+                display: 'flex', 
+                alignItems: 'center', 
+                height: '100%',
+                // FIX ICI : Sur mobile, on s'assure que le conteneur est centré et flexible
+                justifyContent: 'center',
+                width: isMobile ? '100%' : 'auto' 
+            }}>
+                <Logo style={{ width: isMobile ? '350px' : '250px', height: 'auto' }} /> 
             </div>
 
+            {/* LE BLOC DE DROITE EST CACHÉ SUR MOBILE */}
             {!isMobile && (
                 <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
                     <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', letterSpacing: '2px', color: 'var(--color-text-primary)', cursor: 'pointer', opacity: 0.8 }}>FR / EN</span>
@@ -96,22 +105,27 @@ const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }>
             )}
         </div>
         
-        {/* Le menu overlay ne s'affichera que si isMenuOpen est true (donc impossible sur mobile vu qu'on a caché le bouton) */}
         <MobileMenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} setHoveredSection={setHoveredSection} />
     </>
   );
 };
 
-// --- APP ---
+// --- COMPOSANT PRINCIPAL : APP ---
 function App() {
   const [menuHoveredSection, setMenuHoveredSection] = useState<string | null>(null);
   const [currentTheme, setCurrentTheme] = useState('home');
   const activeTheme = menuHoveredSection || currentTheme;
+  
+  // --- CORRECTION ICI : ON DÉCLARE LE HOOK ---
+  const isMobile = useIsMobile(); 
 
   return (
     <div className="App" data-theme={activeTheme} style={{ minHeight: '100vh', backgroundColor: 'transparent', overflowX: 'hidden', width: '100%' }}>
       <BackgroundManager hoveredSection={menuHoveredSection} onSectionChange={setCurrentTheme} />
-      <CustomCursor />
+      
+      {/* Condition pour cacher le curseur sur mobile */}
+      {!isMobile && <CustomCursor />}
+      
       <NavigationBar setHoveredSection={setMenuHoveredSection} />
       
       <main className="responsive-padding" style={{ padding: '0 40px', maxWidth: '1400px', margin: '0 auto', paddingTop: '120px', position: 'relative', zIndex: 1 }}>
