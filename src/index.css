@@ -1,22 +1,15 @@
 /* src/index.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap');
 
 :root {
-  --color-bg-primary: #050505;      
-  --color-bg-secondary: #0e1216;
-  --color-text-primary: #f0f0f0;     
-  --color-text-title: #ffffff;      
-  --color-accent-neon: #00ffff;
-  --color-accent-teal: #008cba;      
-  --color-accent-secondary: #afff00; 
-  --color-interface-dark: #333333;   
-  --color-interface-light: #8899a6;  
-  --font-title: 'Orbitron', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --color-bg-primary: #050505; --color-bg-secondary: #0e1216;
+  --color-text-primary: #f0f0f0; --color-text-title: #ffffff;
+  --color-accent-neon: #00ffff; --color-accent-teal: #008cba; --color-accent-secondary: #afff00;
+  --color-interface-dark: #333333; --color-interface-light: #8899a6;
+  --font-title: 'Orbitron', sans-serif; --font-body: 'Inter', sans-serif;
 }
 
-/* THEME OVERRIDES */
+/* THEMES */
 [data-theme="projects"] { --color-accent-neon: #ffcc00; }
 [data-theme="experience"] { --color-accent-neon: #39ff14; }
 [data-theme="skills"] { --color-accent-neon: #ff2a2a; }
@@ -24,27 +17,27 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* --- FIX DU SCROLL HORIZONTAL & FOND BLANC --- */
+html {
+  overflow-x: hidden;
+  width: 100%;
+  background-color: #050505;
+}
+
 body {
   font-family: var(--font-body);
-  background-color: #050505; /* Fond noir forcé */
+  background-color: #050505;
   color: var(--color-text-primary);
   min-height: 100vh;
   transition: color 0.5s ease;
   cursor: none;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-title);
-  color: var(--color-text-title);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-a {
-  color: var(--color-accent-neon);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-title); color: var(--color-text-title); text-transform: uppercase; letter-spacing: 0.1em; }
+a { color: var(--color-accent-neon); text-decoration: none; transition: color 0.3s ease; }
 a:hover { color: var(--color-accent-secondary); }
 
 ::-webkit-scrollbar { width: 8px; }
@@ -52,7 +45,6 @@ a:hover { color: var(--color-accent-secondary); }
 ::-webkit-scrollbar-thumb { background: var(--color-interface-dark); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-accent-neon); }
 
-/* CURSOR ANIMATIONS */
 @keyframes cursor-glitch {
   0% { transform: translate(0, 0) scale(1); opacity: 1; }
   20% { transform: translate(-2px, 2px) scale(0.9); opacity: 0.8; }
@@ -63,71 +55,28 @@ a:hover { color: var(--color-accent-secondary); }
 }
 
 /* ========================================= */
-/* SYSTEME RESPONSIVE (MEDIA QUERIES)        */
+/* SYSTEME RESPONSIVE (MOBILE)               */
 /* ========================================= */
 
-/* TABLETTES ET MOBILES (Max 1024px) */
 @media (max-width: 1024px) {
-  .responsive-padding {
-    padding: 0 20px !important;
-    padding-top: 80px !important;
-  }
-  .nav-header {
-    padding: 0 20px !important;
-  }
+  .responsive-padding { padding: 0 20px !important; padding-top: 80px !important; }
+  .nav-header { padding: 0 20px !important; }
 }
 
-/* MOBILES UNIQUEMENT (Max 768px) */
 @media (max-width: 768px) {
-  
-  /* --- 1. PALETTE COULEURS MOBILE --- */
+  /* COULEURS ADAPTÉES AUX IMAGES VERTICALES */
   [data-theme="home"] { --color-accent-neon: #00ff9d; }
   [data-theme="projects"] { --color-accent-neon: #ffcc00; } 
   [data-theme="experience"] { --color-accent-neon: #00ffff; }
   [data-theme="skills"] { --color-accent-neon: #ff2a2a; }
   [data-theme="contact"] { --color-accent-neon: #d8b4fe; }
 
-  /* --- 2. LAYOUT MOBILE --- */
+  /* BACKGROUND SOMBRE */
+  .background-overlay { background-color: rgba(0, 0, 0, 0.6) !important; }
+
+  /* TITRES */
+  h2 { font-size: 1.8em !important; line-height: 1.2 !important; word-wrap: break-word; }
   
-  /* Background plus sombre */
-  .background-overlay {
-    background-color: rgba(0, 0, 0, 0.6) !important;
-  }
-
-  /* Titres réduits */
-  h2 {
-    font-size: 1.8em !important;
-    line-height: 1.2 !important;
-    word-wrap: break-word;
-  }
-
-  /* Modal Projets */
-  .responsive-padding {
-    padding: 0 15px !important;
-  }
-
-  /* Projets Carrousel */
-  .projects-scroll-container {
-    overflow-x: scroll !important;
-    scroll-snap-type: x mandatory;
-    padding-right: 20px !important;
-    gap: 20px !important;
-  }
-
-  .project-card {
-    min-width: 85vw !important; 
-    max-width: 85vw !important;
-    height: auto !important;
-    min-height: 450px;
-    scroll-snap-align: center;
-    margin-right: 0 !important;
-  }
-
-  .nav-button { display: none !important; }
-
-  /* Skills empilés */
-  .skills-container {
-    flex-direction: column !important;
-    align-items: center !important;
-  }
+  /* MODAL */
+  .responsive-padding { padding: 0 15px !important; }
 }
