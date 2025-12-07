@@ -85,7 +85,7 @@ const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }>
             
             <div style={{ color: 'var(--color-accent-neon)', display: 'flex', alignItems: 'center', height: '100%' }}>
                 {/* MODIFICATION ICI : Taille augmentée sur mobile (220px) */}
-                <Logo style={{ width: isMobile ? '220px' : '250px', height: 'auto' }} />
+                <Logo style={{ width: isMobile ? '350px' : '250px', height: 'auto' }} />
             </div>
 
             {!isMobile && (

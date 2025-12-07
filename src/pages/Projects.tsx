@@ -1,8 +1,8 @@
 // src/pages/Projects.tsx
 import React, { useRef, useState, useEffect } from 'react';
 import ProjectCard, { type ProjectData } from '../components/ProjectCard';
-import ProjectsMobile from '../components/ProjectsMobile'; // Import de la vue mobile
-import useIsMobile from '../hooks/useIsMobile'; // Import du hook
+import ProjectsMobile from '../components/ProjectsMobile';
+import useIsMobile from '../hooks/useIsMobile';
 
 // --- DONNÉES ---
 const projects: ProjectData[] = [
@@ -11,7 +11,7 @@ const projects: ProjectData[] = [
     description: "Développement Full Stack d'un système d'authentification robuste et d'une API REST sécurisée. Gestion complexe de l'état front-end.",
     stack: ['Java Spring Boot', 'Angular', 'PostgreSQL', 'JWT', 'Docker'],
     repoLink: 'https://github.com/Ailura4020/angul-it',
-    image: '/projects/angul-it-screen.png' 
+    image: '/projects/angulit.jpg' 
   },
   {
     id: 'p2', codename: 'SOC-GAMING-HUB', title: 'LETS PLAY', status: 'COMPLETE', type: 'SCHOOL',
@@ -39,13 +39,12 @@ const projects: ProjectData[] = [
   }
 ];
 
-// --- VUE DESKTOP (L'ancien code, encapsulé) ---
+// --- VUE DESKTOP ---
 const ProjectsDesktop: React.FC<{ projects: ProjectData[], onSelect: (p: ProjectData) => void }> = ({ projects, onSelect }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftBtn, setShowLeftBtn] = useState(false);
   const [showRightBtn, setShowRightBtn] = useState(true);
 
-  // Bouton Nav Interne
   const NavButton: React.FC<{ direction: 'left' | 'right'; onClick: () => void }> = ({ direction, onClick }) => {
     const [isHovered, setIsHovered] = useState(false);
     return (
@@ -104,19 +103,19 @@ const ProjectsDesktop: React.FC<{ projects: ProjectData[], onSelect: (p: Project
   );
 };
 
-// --- COMPOSANT PRINCIPAL (LE SWITCHER) ---
+// --- COMPOSANT PRINCIPAL ---
 const ProjectsPage: React.FC = () => {
-  const isMobile = useIsMobile(1024); // Détecte si on est sur un écran < 1024px
+  const isMobile = useIsMobile(1024); 
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
 
   return (
     <div style={{ 
       paddingTop: '50px', 
-      minHeight: '80vh', // Hauteur min sur mobile pour éviter que ça coupe
-      height: isMobile ? 'auto' : '80vh', // Hauteur auto sur mobile (scroll)
+      minHeight: '80vh', 
+      height: isMobile ? 'auto' : '80vh', 
       display: 'flex', 
-      flexDirection: 'column',
-      justifyContent: 'center',
+      flexDirection: 'column', 
+      justifyContent: 'center', 
       position: 'relative'
     }}>
       
@@ -138,79 +137,66 @@ const ProjectsPage: React.FC = () => {
         </p>
       </div>
 
-      {/* --- LE SWITCH --- */}
       {isMobile ? (
         <ProjectsMobile projects={projects} onSelectProject={setSelectedProject} />
       ) : (
         <ProjectsDesktop projects={projects} onSelect={setSelectedProject} />
       )}
 
-      {/* Indication Desktop uniquement */}
       {!isMobile && (
         <div style={{ textAlign: 'center', color: 'var(--color-interface-light)', fontSize: '0.8em', marginTop: '10px', opacity: 0.5 }}>
           // USE CONTROLS TO NAVIGATE DATABASE
         </div>
       )}
 
-      {/* --- LE MODAL (Commun aux deux versions) --- */}
-      // src/pages/Projects.tsx (Partie Modal uniquement)
-
-      {/* --- LE MODAL ADAPTATIF --- */}
+      {/* --- MODAL POP-UP --- */}
       {selectedProject && (
         <div style={{
-          position: 'fixed', inset: 0, zIndex: 2000, // ZIndex très haut pour passer au dessus de tout
-          backgroundColor: 'rgba(0, 0, 0, 0.95)', // Fond quasi opaque pour focus
+          position: 'fixed', inset: 0, zIndex: 2000,
+          backgroundColor: 'rgba(0, 0, 0, 0.95)', // Fond noir très opaque
           backdropFilter: 'blur(10px)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          animation: 'fadeIn 0.3s ease',
-          padding: isMobile ? '0' : '20px' // Pas de marge autour sur mobile
+          display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeIn 0.3s ease',
+          padding: isMobile ? '0' : '20px'
         }}
         onClick={() => setSelectedProject(null)}
         >
+          
+          {/* BOUTON FERMER (FLOTTANT - HAUT DROITE) */}
+          {/* Je le sors du contenu pour qu'il soit toujours visible par dessus tout */}
+          <button 
+            onClick={() => setSelectedProject(null)}
+            style={{
+              position: 'fixed', // Fixe par rapport à l'écran
+              top: '20px', right: '20px',
+              background: '#000', // Fond noir solide pour cacher ce qu'il y a derrière
+              border: '2px solid var(--color-accent-neon)',
+              color: 'var(--color-accent-neon)', 
+              padding: '10px 20px', 
+              cursor: 'pointer', 
+              fontFamily: 'var(--font-title)',
+              fontSize: '1em',
+              fontWeight: 'bold',
+              zIndex: 2005, // Au dessus du modal
+              boxShadow: '0 0 20px rgba(0,0,0,0.8)'
+            }}
+          >
+            CLOSE [X]
+          </button>
+
           <div style={{
             width: isMobile ? '100%' : '90%', 
-            height: isMobile ? '100%' : 'auto', // Pleine hauteur sur mobile
+            height: isMobile ? '100%' : 'auto', 
             maxHeight: isMobile ? '100vh' : '90vh',
-            maxWidth: '800px',
-            
-            backgroundColor: 'rgba(10, 15, 20, 1)', // Fond opaque
-            border: isMobile ? 'none' : '2px solid var(--color-accent-neon)', // Pas de bordure externe sur mobile
-            boxShadow: '0 0 50px rgba(255, 204, 0, 0.2)',
-            
-            padding: isMobile ? '80px 20px 40px 20px' : '40px', // Gros padding haut sur mobile pour éviter que le bouton Close ne soit gênant
-            
-            position: 'relative', 
-            overflowY: 'auto', // Scroll interne activé
-            
-            // Coins carrés sur mobile pour remplir l'écran
+            backgroundColor: 'rgba(10, 15, 20, 1)', 
+            border: isMobile ? 'none' : '2px solid var(--color-accent-neon)',
+            boxShadow: '0 0 50px rgba(255, 204, 0, 0.3)',
+            padding: isMobile ? '80px 20px 40px 20px' : '40px', // Gros padding haut pour ne pas être caché par le bouton Close
+            position: 'relative', overflowY: 'auto',
             clipPath: isMobile ? 'none' : 'polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px)',
           }}
           onClick={(e) => e.stopPropagation()}
           >
-          
-            {/* --- BOUTON CLOSE AMÉLIORÉ --- */}
-            <button 
-              onClick={() => setSelectedProject(null)}
-              style={{
-                position: 'fixed', // Toujours visible même si on scrolle
-                top: '20px', 
-                right: '20px',
-                background: 'rgba(0, 0, 0, 0.9)', // Fond noir pour être lisible sur l'image
-                border: '2px solid var(--color-accent-neon)', // Bordure épaisse
-                color: 'var(--color-accent-neon)', 
-                padding: '10px 15px', 
-                cursor: 'pointer', 
-                fontFamily: 'var(--font-title)',
-                fontWeight: 'bold',
-                fontSize: '1em',
-                zIndex: 2001, // Au-dessus de tout
-                boxShadow: '0 0 15px rgba(0,0,0,0.5)'
-              }}
-            >
-              CLOSE [X]
-            </button>
 
-            {/* Contenu du Modal */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <h2 style={{ fontSize: isMobile ? '1.8em' : '2.5em', color: 'var(--color-accent-neon)', textTransform: 'uppercase', marginTop: isMobile ? '10px' : '0', lineHeight: 1.2 }}>
                 {selectedProject.title}
@@ -254,9 +240,28 @@ const ProjectsPage: React.FC = () => {
               >
                 ACCESS SOURCE CODE : GITHUB
               </a>
-              
-              {/* Espace vide en bas pour que le scroll aille jusqu'au bout */}
-              <div style={{ height: '50px' }}></div>
+
+              {/* BOUTON FERMER SECONDAIRE EN BAS DE PAGE (UX MOBILE) */}
+              {isMobile && (
+                <button 
+                  onClick={() => setSelectedProject(null)}
+                  style={{
+                    marginTop: '30px', 
+                    padding: '15px', 
+                    width: '100%',
+                    background: 'transparent',
+                    border: '1px solid #555',
+                    color: '#888',
+                    fontFamily: 'var(--font-title)',
+                    cursor: 'pointer',
+                    textTransform: 'uppercase',
+                    marginBottom: '50px' // Espace en bas
+                  }}
+                >
+                  [ CLOSE PROJECT FILE ]
+                </button>
+              )}
+
             </div>
           </div>
         </div>
