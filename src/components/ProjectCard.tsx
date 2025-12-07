@@ -1,7 +1,6 @@
 // src/components/ProjectCard.tsx
 import React from 'react';
 
-// --- DÉFINITION DES TYPES (IMPORTANT) ---
 export interface ProjectData {
   id: string;
   codename: string;
@@ -14,21 +13,27 @@ export interface ProjectData {
   type: 'SCHOOL' | 'PERSONAL' | 'PRO'; 
 }
 
-export interface CardProps {
+interface CardProps {
   project: ProjectData;
   onClick: () => void;
+  isMobile?: boolean; // Nouvelle option pour forcer la largeur
 }
 
-const ProjectCard: React.FC<CardProps> = ({ project, onClick }) => {
+const ProjectCard: React.FC<CardProps> = ({ project, onClick, isMobile }) => {
   return (
     <div 
       className="project-card"
       onClick={onClick}
       style={{
-        // TAILLE DYNAMIQUE (1/3 de l'écran - les marges)
-        minWidth: 'calc((100% - 80px) / 3)', 
-        maxWidth: 'calc((100% - 80px) / 3)',
+        // LOGIQUE INTELLIGENTE :
+        // Si Mobile -> 100% de largeur
+        // Si Desktop -> Calcul mathématique pour faire 3 colonnes
+        minWidth: isMobile ? '100%' : 'calc((100% - 80px) / 3)', 
+        maxWidth: isMobile ? '100%' : 'calc((100% - 80px) / 3)',
+        
         height: '550px',
+        // Ajout d'une marge en bas uniquement sur mobile pour espacer les cartes
+        marginBottom: isMobile ? '40px' : '0',
         
         backgroundColor: 'rgba(10, 10, 10, 0.9)',
         border: '1px solid var(--color-interface-dark)',
@@ -41,18 +46,24 @@ const ProjectCard: React.FC<CardProps> = ({ project, onClick }) => {
         flexShrink: 0,
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'scale(1.02)';
-        e.currentTarget.style.borderColor = 'var(--color-accent-neon)';
-        e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 204, 0, 0.2)';
-        e.currentTarget.style.zIndex = '10';
+        if (!isMobile) { // On désactive l'effet de zoom sur mobile (gênant au touch)
+            e.currentTarget.style.transform = 'scale(1.02)';
+            e.currentTarget.style.borderColor = 'var(--color-accent-neon)';
+            e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 204, 0, 0.2)';
+            e.currentTarget.style.zIndex = '10';
+        }
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'scale(1)';
-        e.currentTarget.style.borderColor = 'var(--color-interface-dark)';
-        e.currentTarget.style.boxShadow = 'none';
-        e.currentTarget.style.zIndex = '1';
+        if (!isMobile) {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.borderColor = 'var(--color-interface-dark)';
+            e.currentTarget.style.boxShadow = 'none';
+            e.currentTarget.style.zIndex = '1';
+        }
       }}
     >
+      {/* ... Le reste du contenu ne change pas ... */}
+      
       {/* HEADER */}
       <div style={{ 
         display: 'flex', justifyContent: 'space-between', padding: '15px 20px', 

@@ -122,7 +122,7 @@ const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }>
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <>
-        <div style={{
+        <div className="nav-header" style={{
                 position: 'fixed', top: 0, width: '100%', height: '90px', backgroundColor: 'rgba(0, 2, 22, 0.9)', 
                 backdropFilter: 'blur(5px)', zIndex: 200, borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 50px'
@@ -165,8 +165,17 @@ function App() {
       <CustomCursor />
       <NavigationBar setHoveredSection={setMenuHoveredSection} />
       
-      <main style={{ padding: '0px 40px', maxWidth: '1400px', margin: '0 auto', paddingTop: '120px' }}>
-        <section id="home"><HomePage /></section>
+<main 
+        className="responsive-padding" // <--- CLASSE AJOUTÉE ICI
+        style={{ 
+          maxWidth: '1400px', 
+          margin: '0 auto', 
+          // On garde le padding par défaut pour le Desktop, le CSS l'écrasera sur mobile
+          padding: '0 40px', 
+          paddingTop: '120px' 
+        }}
+      >        
+      <section id="home"><HomePage /></section>
         <section id="projects"><ProjectsPage /></section>
         <section id="experience"><ExperiencePage /></section>
         <section id="skills"><SkillsPage /></section>
