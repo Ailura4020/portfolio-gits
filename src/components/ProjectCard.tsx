@@ -16,7 +16,7 @@ export interface ProjectData {
 interface CardProps {
   project: ProjectData;
   onClick: () => void;
-  isMobile?: boolean; // Nouvelle option pour forcer la largeur
+  isMobile?: boolean; // On accepte la prop isMobile
 }
 
 const ProjectCard: React.FC<CardProps> = ({ project, onClick, isMobile }) => {
@@ -25,15 +25,14 @@ const ProjectCard: React.FC<CardProps> = ({ project, onClick, isMobile }) => {
       className="project-card"
       onClick={onClick}
       style={{
-        // LOGIQUE INTELLIGENTE :
-        // Si Mobile -> 100% de largeur
-        // Si Desktop -> Calcul mathématique pour faire 3 colonnes
+        // LOGIQUE HYBRIDE SÉCURISÉE :
+        // Si Mobile (via prop) -> 100% largeur
+        // Sinon (PC) -> Calcul précis pour 3 colonnes
         minWidth: isMobile ? '100%' : 'calc((100% - 80px) / 3)', 
         maxWidth: isMobile ? '100%' : 'calc((100% - 80px) / 3)',
         
         height: '550px',
-        // Ajout d'une marge en bas uniquement sur mobile pour espacer les cartes
-        marginBottom: isMobile ? '40px' : '0',
+        marginBottom: isMobile ? '40px' : '0', // Marge en bas seulement sur mobile
         
         backgroundColor: 'rgba(10, 10, 10, 0.9)',
         border: '1px solid var(--color-interface-dark)',
@@ -46,7 +45,7 @@ const ProjectCard: React.FC<CardProps> = ({ project, onClick, isMobile }) => {
         flexShrink: 0,
       }}
       onMouseEnter={(e) => {
-        if (!isMobile) { // On désactive l'effet de zoom sur mobile (gênant au touch)
+        if (!isMobile) {
             e.currentTarget.style.transform = 'scale(1.02)';
             e.currentTarget.style.borderColor = 'var(--color-accent-neon)';
             e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 204, 0, 0.2)';
@@ -62,8 +61,6 @@ const ProjectCard: React.FC<CardProps> = ({ project, onClick, isMobile }) => {
         }
       }}
     >
-      {/* ... Le reste du contenu ne change pas ... */}
-      
       {/* HEADER */}
       <div style={{ 
         display: 'flex', justifyContent: 'space-between', padding: '15px 20px', 

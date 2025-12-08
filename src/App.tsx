@@ -9,9 +9,10 @@ import ContactPage from './pages/Contact.tsx';
 import CustomCursor from './components/CustomCursor.tsx'; 
 import BackgroundManager from './components/BackgroundManager.tsx';
 import Logo from './components/Logo'; 
-import useIsMobile from './hooks/useIsMobile'; // Import du hook
+import useIsMobile from './hooks/useIsMobile';
+import CyberIntro from './components/CyberIntro'; // <--- NOUVEL IMPORT ICI
 
-// --- ANIMATIONS CSS ---
+// --- ANIMATIONS CSS (Ton code existant) ---
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
   @keyframes slideInRight {
@@ -29,7 +30,7 @@ styleSheet.innerText = `
 `;
 document.head.appendChild(styleSheet);
 
-// --- COMPOSANT : BURGER ICON ---
+// --- COMPOSANT : BURGER ICON (Ton code existant) ---
 const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen, onClick }) => (
     <div onClick={onClick} style={{ width: '40px', height: '20px', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 200, position: 'relative' }}>
         <div style={{ height: '2px', width: '100%', backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', transition: 'all 0.4s ease', transform: isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none' }}></div>
@@ -38,7 +39,7 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
     </div>
 );
 
-// --- COMPOSANT : MENU OVERLAY ---
+// --- COMPOSANT : MENU OVERLAY (Ton code existant) ---
 interface MenuProps {
   isOpen: boolean;
   onClose: () => void;
@@ -65,7 +66,7 @@ const MobileMenuOverlay: React.FC<MenuProps> = ({ isOpen, onClose, setHoveredSec
     );
 };
 
-// --- COMPOSANT : NAVIGATION BAR ---
+// --- COMPOSANT : NAVIGATION BAR (Ton code existant) ---
 const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }> = ({ setHoveredSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile(); 
@@ -89,14 +90,12 @@ const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }>
                 display: 'flex', 
                 alignItems: 'center', 
                 height: '100%',
-                // FIX ICI : Sur mobile, on s'assure que le conteneur est centré et flexible
                 justifyContent: 'center',
                 width: isMobile ? '100%' : 'auto' 
             }}>
                 <Logo style={{ width: isMobile ? '350px' : '250px', height: 'auto' }} /> 
             </div>
 
-            {/* LE BLOC DE DROITE EST CACHÉ SUR MOBILE */}
             {!isMobile && (
                 <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
                     <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', letterSpacing: '2px', color: 'var(--color-text-primary)', cursor: 'pointer', opacity: 0.8 }}>FR / EN</span>
@@ -114,27 +113,41 @@ const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }>
 function App() {
   const [menuHoveredSection, setMenuHoveredSection] = useState<string | null>(null);
   const [currentTheme, setCurrentTheme] = useState('home');
+  // --- NOUVEL ÉTAT POUR L'INTRO ---
+  const [initialized, setInitialized] = useState(false);
+
   const activeTheme = menuHoveredSection || currentTheme;
-  
-  // --- CORRECTION ICI : ON DÉCLARE LE HOOK ---
   const isMobile = useIsMobile(); 
 
   return (
     <div className="App" data-theme={activeTheme} style={{ minHeight: '100vh', backgroundColor: 'transparent', overflowX: 'hidden', width: '100%' }}>
-      <BackgroundManager hoveredSection={menuHoveredSection} onSectionChange={setCurrentTheme} />
       
-      {/* Condition pour cacher le curseur sur mobile */}
-      {!isMobile && <CustomCursor />}
-      
-      <NavigationBar setHoveredSection={setMenuHoveredSection} />
-      
-      <main className="responsive-padding" style={{ padding: '0 40px', maxWidth: '1400px', margin: '0 auto', paddingTop: '120px', position: 'relative', zIndex: 1 }}>
-        <section id="home"><HomePage /></section>
-        <section id="projects"><ProjectsPage /></section>
-        <section id="experience"><ExperiencePage /></section>
-        <section id="skills"><SkillsPage /></section>
-        <section id="contact"><ContactPage /></section>
-      </main>
+      {/* 1. L'INTRO CYBERPUNK (S'affiche tant que initialized est faux) */}
+      {!initialized && <CyberIntro onComplete={() => setInitialized(true)} />}
+
+      {/* 2. LE CONTENU DU SITE (S'affiche une fois l'intro finie) */}
+      {/* On utilise un conteneur pour gérer l'apparition en douceur (Fade In) */}
+      <div style={{ 
+          opacity: initialized ? 1 : 0, 
+          transition: 'opacity 1s ease-in-out',
+          height: initialized ? 'auto' : '100vh', // Empêche le scroll pendant l'intro
+          overflow: initialized ? 'visible' : 'hidden'
+      }}>
+          <BackgroundManager hoveredSection={menuHoveredSection} onSectionChange={setCurrentTheme} />
+          
+          {!isMobile && <CustomCursor />}
+          
+          <NavigationBar setHoveredSection={setMenuHoveredSection} />
+          
+          <main className="responsive-padding" style={{ padding: '0 40px', maxWidth: '1400px', margin: '0 auto', paddingTop: '120px', position: 'relative', zIndex: 1 }}>
+            <section id="home"><HomePage /></section>
+            <section id="projects"><ProjectsPage /></section>
+            <section id="experience"><ExperiencePage /></section>
+            <section id="skills"><SkillsPage /></section>
+            <section id="contact"><ContactPage /></section>
+          </main>
+      </div>
+
     </div>
   );
 };

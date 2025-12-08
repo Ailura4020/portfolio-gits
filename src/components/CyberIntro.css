@@ -1,0 +1,226 @@
+/* src/components/CyberIntro.css */
+
+.cyber-screen {
+    position: fixed;
+    inset: 0;
+    background-color: #000;
+    z-index: 9999;
+    overflow: hidden;
+    font-family: 'Orbitron', monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #0ff;
+    cursor: default;
+}
+
+/* --- VIDEO BACKGROUND (CORRIGÉ) --- */
+.video-bg-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.cyber-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8; /* PLUS VISIBLE (Avant: 0.6) */
+    filter: contrast(1.1) brightness(0.9);
+}
+
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    /* VIGNETTE PLUS LÉGÈRE pour voir le fond */
+    background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
+    z-index: 1;
+}
+
+/* Scanlines */
+.cyber-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(0, 0, 0, 0.3) 3px);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* --- PARTIE 1 : IDLE --- */
+.cyber-idle {
+    z-index: 10;
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 40px;
+    background: rgba(0, 10, 20, 0.6); /* Un peu plus sombre pour lire le texte */
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.triangle-logo {
+    width: 0; height: 0; 
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 86px solid rgba(0, 255, 255, 0.4);
+    margin: 0 auto 30px auto;
+    position: relative;
+    filter: drop-shadow(0 0 15px #0ff);
+}
+.triangle-logo::after {
+    content: "9"; position: absolute; top: 25px; left: -15px;
+    font-size: 3rem; color: #fff; font-weight: bold;
+}
+
+.police-header {
+    font-size: 1.2em; letter-spacing: 6px; color: #0ff; margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(0,255,255,0.5); border-bottom: 1px solid #0ff; display: inline-block;
+}
+
+.system-title {
+    font-size: 3.5em; margin-bottom: 10px; color: #fff; text-transform: uppercase;
+    text-shadow: 0 0 20px #0ff; letter-spacing: 4px; line-height: 1;
+}
+
+.sub-title {
+    font-size: 1.2em; color: rgba(0, 255, 255, 0.8); margin-bottom: 40px; font-family: 'Consolas', monospace;
+    text-shadow: 0 0 5px #000;
+}
+
+.entry-btn {
+    background: rgba(0, 255, 255, 0.1); border: 1px solid #0ff; color: #0ff;
+    padding: 15px 50px; font-size: 1.2em; font-family: 'Orbitron', monospace; cursor: pointer;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2); text-transform: uppercase; letter-spacing: 4px;
+    transition: all 0.3s;
+}
+.entry-btn:hover { background: #0ff; color: #000; box-shadow: 0 0 40px #0ff; }
+
+/* --- PARTIE 2 : DATABASE UI --- */
+.database-container {
+    width: 90%; max-width: 900px; height: 500px;
+    border: 2px solid #0ff;
+    background: rgba(0, 10, 20, 0.9);
+    position: relative; z-index: 10;
+    display: flex;
+    /* IMPORTANT : On force la direction en LIGNE sur PC */
+    flex-direction: row; 
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+}
+
+.mugshot-zone {
+    width: 40%; border-right: 2px solid #0ff;
+    position: relative; overflow: hidden; background: #000;
+    display: flex; justify-content: center; alignItems: center;
+    flex-shrink: 0; /* Empêche l'image de s'écraser */
+}
+
+.mugshot-img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center top;
+    filter: grayscale(100%) sepia(100%) hue-rotate(180deg) saturate(200%) contrast(1.2);
+}
+
+.scan-line {
+    position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+    background: #0ff; box-shadow: 0 0 15px #0ff;
+    animation: scanMove 0.2s linear infinite; z-index: 5; opacity: 0.5;
+}
+@keyframes scanMove { 0% { top: 0%; } 100% { top: 100%; } }
+
+/* --- CORRECTION TEXTE ICI --- */
+.data-zone {
+    width: 60%; 
+    padding: 40px;
+    display: flex; 
+    flex-direction: column; /* Force l'empilement vertical */
+    justify-content: center;
+    gap: 20px; /* Espace entre les lignes */
+    font-family: 'Consolas', monospace;
+    background: repeating-linear-gradient(45deg, rgba(0,0,0,0), rgba(0,0,0,0) 10px, rgba(0, 255, 255, 0.02) 10px, rgba(0, 255, 255, 0.02) 20px);
+}
+
+.data-row {
+    display: grid; 
+    grid-template-columns: 150px 1fr; /* 150px pour le label, le reste pour la valeur */
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2); 
+    padding-bottom: 5px;
+}
+
+.data-label { 
+    color: rgba(0, 255, 255, 0.5); 
+    font-size: 0.9em; 
+    text-transform: uppercase; 
+    text-align: left; 
+}
+
+.data-value { 
+    color: #fff; 
+    font-size: 1.1em; 
+    letter-spacing: 1px; 
+    font-weight: bold; 
+    text-align: right; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+
+/* VERIFIED */
+.database-container.verified { border-color: #39ff14; box-shadow: 0 0 50px rgba(57, 255, 20, 0.5); }
+.database-container.verified .mugshot-zone { border-right-color: #39ff14; }
+.database-container.verified .data-zone { color: #39ff14; }
+.database-container.verified .mugshot-img { filter: none; }
+.database-container.verified .scan-line { background: #39ff14; animation: none; top: 50%; width: 100%; opacity: 1; height: 2px; }
+
+.alert-box { margin-top: 30px; padding: 15px; text-align: center; font-size: 1.4em; font-weight: bold; border: 2px solid transparent; }
+.database-container.verified .alert-box { background: rgba(57, 255, 20, 0.2); border-color: #39ff14; color: #39ff14; animation: pulseGreen 0.5s infinite alternate; }
+@keyframes pulseGreen { 0% { opacity: 0.7; } 100% { opacity: 1; } }
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+    .database-container { 
+        flex-direction: column; /* Vertical sur mobile */
+        width: 95%; 
+        height: auto; 
+        max-height: 90vh; 
+        border-width: 1px; 
+    }
+    
+    .mugshot-zone { 
+        width: 100%; 
+        height: 250px; 
+        border-right: none; 
+        border-bottom: 1px solid #0ff; 
+    }
+    
+    .data-zone { 
+        width: 100%; 
+        padding: 20px; 
+        gap: 15px;
+    }
+    
+    /* Correction Texte Mobile : On casse la grille pour passer en Flex vertical */
+    .data-row { 
+        display: flex; 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 5px; 
+        margin-bottom: 0;
+    }
+    
+    .data-label { font-size: 0.7em; width: 100%; }
+    .data-value { 
+        font-size: 1em; 
+        text-align: left; 
+        white-space: normal; 
+        width: 100%; 
+    }
+    
+    .system-title { font-size: 2em; }
+    .triangle-logo { transform: scale(0.7); margin-bottom: 10px; }
+    .entry-btn { padding: 15px 30px; font-size: 1em; }
+}
