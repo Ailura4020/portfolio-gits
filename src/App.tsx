@@ -10,9 +10,9 @@ import CustomCursor from './components/CustomCursor.tsx';
 import BackgroundManager from './components/BackgroundManager.tsx';
 import Logo from './components/Logo'; 
 import useIsMobile from './hooks/useIsMobile';
-import CyberIntro from './components/CyberIntro'; // <--- NOUVEL IMPORT ICI
+import CyberIntro from './components/CyberIntro';
 
-// --- ANIMATIONS CSS (Ton code existant) ---
+// --- ANIMATIONS CSS ---
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
   @keyframes slideInRight {
@@ -30,124 +30,107 @@ styleSheet.innerText = `
 `;
 document.head.appendChild(styleSheet);
 
-// --- COMPOSANT : BURGER ICON (Ton code existant) ---
+// --- COMPOSANT : BURGER ICON (Mobile Only) ---
 const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen, onClick }) => (
-    <div onClick={onClick} style={{ width: '40px', height: '20px', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 200, position: 'relative' }}>
-        <div style={{ height: '2px', width: '100%', backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', transition: 'all 0.4s ease', transform: isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none' }}></div>
-        <div style={{ height: '2px', width: isOpen ? '0%' : '100%', backgroundColor: 'var(--color-text-primary)', transition: 'all 0.2s ease', opacity: isOpen ? 0 : 1, marginLeft: 'auto' }}></div>
-        <div style={{ height: '2px', width: isOpen ? '100%' : '70%', backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', transition: 'all 0.4s ease', transform: isOpen ? 'rotate(-45deg) translate(5px, -7px)' : 'none', marginLeft: 'auto' }}></div>
+    <div onClick={onClick} style={{ width: '30px', height: '20px', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', zIndex: 200 }}>
+        <div style={{ height: '2px', width: '100%', backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', transition: 'all 0.3s', transform: isOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }}></div>
+        <div style={{ height: '2px', width: '100%', backgroundColor: 'var(--color-text-primary)', opacity: isOpen ? 0 : 1, transition: 'all 0.3s' }}></div>
+        <div style={{ height: '2px', width: '100%', backgroundColor: isOpen ? 'var(--color-accent-neon)' : 'var(--color-text-primary)', transition: 'all 0.3s', transform: isOpen ? 'rotate(-45deg) translate(5px, -6px)' : 'none' }}></div>
     </div>
 );
 
-// --- COMPOSANT : MENU OVERLAY (Ton code existant) ---
-interface MenuProps {
-  isOpen: boolean;
-  onClose: () => void;
-  setHoveredSection: (section: string | null) => void;
-}
-
-const MobileMenuOverlay: React.FC<MenuProps> = ({ isOpen, onClose, setHoveredSection }) => {
+// --- COMPOSANT : MENU OVERLAY (Mobile) ---
+const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
     const links = ['HOME', 'PROJECTS', 'EXPERIENCE', 'SKILLS', 'CONTACT'];
 
     return (
-        <>
-            <div onClick={onClose} style={{ position: 'fixed', top: '90px', left: 0, width: '100%', height: 'calc(100vh - 90px)', backgroundColor: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(3px)', zIndex: 149 }} />
-            <div style={{ position: 'fixed', top: '90px', right: 0, width: '100%', maxWidth: '600px', height: 'calc(100vh - 90px)', backgroundColor: 'rgba(0, 2, 22, 0.98)', borderLeft: '2px solid var(--color-accent-neon)', boxShadow: '-10px 0 40px rgba(0, 255, 255, 0.15)', zIndex: 150, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', paddingTop: '15vh', paddingLeft: '80px', animation: 'slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-                <nav style={{ display: 'flex', flexDirection: 'column', gap: '30px', alignItems: 'flex-start' }}>
-                    {links.map((link, index) => (
-                        <a key={link} href={`#${link.toLowerCase()}`} onClick={onClose} onMouseEnter={() => setHoveredSection(link.toLowerCase())} onMouseLeave={() => setHoveredSection(null)} style={{ fontFamily: 'var(--font-title)', fontSize: '2.5em', color: 'transparent', WebkitTextStroke: '1px var(--color-text-primary)', textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none', position: 'relative', opacity: 0, animation: `linkFadeIn 0.4s ease forwards ${0.1 + index * 0.1}s`, cursor: 'pointer', transition: 'all 0.3s' }}>
-                            <span style={{ fontSize: '0.4em', color: 'var(--color-accent-teal)', position: 'absolute', left: '-40px', top: '18px' }}>0{index + 1}</span>{link}
-                        </a>
-                    ))}
-                </nav>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 150 }}>
+            <div onClick={onClose} style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(5px)' }} />
+            <div style={{ position: 'absolute', top: 0, right: 0, width: '80%', maxWidth: '300px', height: '100%', backgroundColor: '#050a10', borderLeft: '2px solid var(--color-accent-neon)', padding: '100px 40px', display: 'flex', flexDirection: 'column', gap: '30px', animation: 'slideInRight 0.3s ease' }}>
+                {links.map((link, i) => (
+                    <a key={link} href={`#${link.toLowerCase()}`} onClick={onClose} style={{ fontSize: '1.5em', fontFamily: 'var(--font-title)', color: '#fff', textDecoration: 'none', animation: `linkFadeIn 0.5s ease forwards ${i * 0.1}s`, opacity: 0 }}>
+                        <span style={{ color: 'var(--color-accent-neon)', marginRight: '10px', fontSize: '0.6em' }}>0{i + 1}</span>
+                        {link}
+                    </a>
+                ))}
             </div>
-        </>
+        </div>
     );
 };
 
-// --- COMPOSANT : NAVIGATION BAR (Ton code existant) ---
-const NavigationBar: React.FC<{ setHoveredSection: (s: string | null) => void }> = ({ setHoveredSection }) => {
+// --- COMPOSANT : NAVIGATION BAR (Desktop & Mobile) ---
+const NavigationBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile(); 
+  const links = ['HOME', 'PROJECTS', 'EXPERIENCE', 'SKILLS', 'CONTACT'];
 
   return (
     <>
-        <div 
-          className="nav-header"
-          style={{ 
-            position: 'fixed', top: 0, width: '100%', height: '90px', 
-            backgroundColor: 'rgba(0, 2, 22, 0.9)', backdropFilter: 'blur(5px)', zIndex: 200, 
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)', 
-            display: 'flex', 
-            justifyContent: isMobile ? 'center' : 'space-between', 
-            alignItems: 'center', 
-            padding: '0 50px' 
-          }}>
+        <nav style={{ 
+            position: 'fixed', top: 0, width: '100%', height: '80px', 
+            backgroundColor: 'rgba(0, 5, 16, 0.9)', backdropFilter: 'blur(10px)', zIndex: 100,
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            padding: isMobile ? '0 20px' : '0 50px'
+        }}>
             
-            <div style={{ 
-                color: 'var(--color-accent-neon)', 
-                display: 'flex', 
-                alignItems: 'center', 
-                height: '100%',
-                justifyContent: 'center',
-                width: isMobile ? '100%' : 'auto' 
-            }}>
-                <Logo style={{ width: isMobile ? '350px' : '250px', height: 'auto' }} /> 
+            {/* LOGO */}
+            <div style={{ width: isMobile ? '120px' : '150px' }}>
+                <Logo />
             </div>
 
-            {!isMobile && (
-                <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
-                    <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', letterSpacing: '2px', color: 'var(--color-text-primary)', cursor: 'pointer', opacity: 0.8 }}>FR / EN</span>
-                    <BurgerIcon isOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)} />
+            {/* NAVIGATION DESKTOP */}
+            {!isMobile ? (
+                <div style={{ display: 'flex', gap: '40px' }}>
+                    {links.map(link => (
+                        <a key={link} href={`#${link.toLowerCase()}`} style={{ 
+                            fontFamily: 'var(--font-title)', fontSize: '0.9em', letterSpacing: '2px', 
+                            color: 'var(--color-text-primary)', textDecoration: 'none', position: 'relative'
+                        }} className="nav-link">
+                            {link}
+                        </a>
+                    ))}
                 </div>
+            ) : (
+                /* BURGER MOBILE */
+                <BurgerIcon isOpen={isMenuOpen} onClick={() => setIsMenuOpen(true)} />
             )}
-        </div>
+        </nav>
         
-        <MobileMenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} setHoveredSection={setHoveredSection} />
+        <MobileMenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </>
   );
 };
 
-// --- COMPOSANT PRINCIPAL : APP ---
-function App() {
-  const [menuHoveredSection, setMenuHoveredSection] = useState<string | null>(null);
+// --- MAIN APP ---
+const App: React.FC = () => {
   const [currentTheme, setCurrentTheme] = useState('home');
-  // --- NOUVEL ÉTAT POUR L'INTRO ---
   const [initialized, setInitialized] = useState(false);
-
-  const activeTheme = menuHoveredSection || currentTheme;
   const isMobile = useIsMobile(); 
 
   return (
-    <div className="App" data-theme={activeTheme} style={{ minHeight: '100vh', backgroundColor: 'transparent', overflowX: 'hidden', width: '100%' }}>
+    <div className="App" data-theme={currentTheme} style={{ minHeight: '100vh', backgroundColor: '#000', overflowX: 'hidden' }}>
       
-      {/* 1. L'INTRO CYBERPUNK (S'affiche tant que initialized est faux) */}
+      {/* INTRO */}
       {!initialized && <CyberIntro onComplete={() => setInitialized(true)} />}
 
-      {/* 2. LE CONTENU DU SITE (S'affiche une fois l'intro finie) */}
-      {/* On utilise un conteneur pour gérer l'apparition en douceur (Fade In) */}
-      <div style={{ 
-          opacity: initialized ? 1 : 0, 
-          transition: 'opacity 1s ease-in-out',
-          height: initialized ? 'auto' : '100vh', // Empêche le scroll pendant l'intro
-          overflow: initialized ? 'visible' : 'hidden'
-      }}>
-          <BackgroundManager hoveredSection={menuHoveredSection} onSectionChange={setCurrentTheme} />
+      {/* CONTENU DU SITE */}
+      <div style={{ opacity: initialized ? 1 : 0, transition: 'opacity 1.5s ease' }}>
           
+          <BackgroundManager hoveredSection={null} onSectionChange={setCurrentTheme} />
           {!isMobile && <CustomCursor />}
+          <NavigationBar />
           
-          <NavigationBar setHoveredSection={setMenuHoveredSection} />
-          
-          <main className="responsive-padding" style={{ padding: '0 40px', maxWidth: '1400px', margin: '0 auto', paddingTop: '120px', position: 'relative', zIndex: 1 }}>
+          <main style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
             <section id="home"><HomePage /></section>
             <section id="projects"><ProjectsPage /></section>
             <section id="experience"><ExperiencePage /></section>
             <section id="skills"><SkillsPage /></section>
             <section id="contact"><ContactPage /></section>
           </main>
-      </div>
 
+      </div>
     </div>
   );
 };

@@ -2,103 +2,97 @@
 import React, { useState, useEffect } from 'react';
 import useIsMobile from '../hooks/useIsMobile';
 
-// --- COMPOSANT TYPEWRITER (Boucle infinie + Start Delay) ---
-const Typewriter: React.FC<{ text: string; delay?: number; startDelay?: number; loopInterval?: number }> = ({ 
+// --- COMPOSANT TYPEWRITER ---
+const Typewriter: React.FC<{ text: string; startDelay?: number; loopInterval?: number }> = ({ 
   text, 
-  delay = 50, 
   startDelay = 1000,
-  loopInterval = 4000 
+  loopInterval = 20000 // MODIFIÉ : 20 secondes
 }) => {
-  const [currentText, setCurrentText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [display, setDisplay] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isWaiting, setIsWaiting] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false); // Nouvel état pour le délai initial
+  const [hasStarted, setHasStarted] = useState(false);
 
-  // 1. GESTION DU DÉLAI INITIAL (Le fameux startDelay)
+  // Délai initial
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setHasStarted(true);
-    }, startDelay);
-    return () => clearTimeout(timeout);
+    const t = setTimeout(() => setHasStarted(true), startDelay);
+    return () => clearTimeout(t);
   }, [startDelay]);
 
-  // 2. LOGIQUE D'ÉCRITURE
+  // Boucle d'écriture
   useEffect(() => {
-    // Si on n'a pas encore passé le délai initial, on ne fait rien
     if (!hasStarted) return;
 
-    const timeout = setTimeout(() => {
-      if (isWaiting) return;
-
-      if (!isDeleting && currentIndex < text.length) {
-        // ÉCRITURE
-        setCurrentText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      } 
-      else if (!isDeleting && currentIndex === text.length) {
-        // FIN D'ÉCRITURE -> ATTENTE AVANT RESET
-        setIsWaiting(true);
-        setTimeout(() => {
-          setIsDeleting(true);
-          setIsWaiting(false);
-        }, loopInterval);
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        // Écriture
+        if (display.length < text.length) {
+          setDisplay(text.slice(0, display.length + 1));
+        } else {
+          // Fin écriture -> Attente avant effacement
+          setTimeout(() => setIsDeleting(true), loopInterval);
+        }
+      } else {
+        // Effacement rapide
+        if (display.length > 0) {
+          setDisplay(text.slice(0, display.length - 1));
+        } else {
+          // Fin effacement -> Repartir
+          setIsDeleting(false);
+        }
       }
-      else if (isDeleting) {
-        // RESET INSTANTANÉ
-        setCurrentText('');
-        setCurrentIndex(0);
-        setIsDeleting(false);
-      }
-    }, isDeleting ? 0 : delay);
+    }, isDeleting ? 50 : 100); // Vitesse : 100ms écriture, 50ms effacement
 
-    return () => clearTimeout(timeout);
-  }, [currentIndex, delay, text, isDeleting, isWaiting, loopInterval, hasStarted]);
+    return () => clearTimeout(timer);
+  }, [display, isDeleting, hasStarted, text, loopInterval]);
 
-  return (
-    <span style={{ fontFamily: 'var(--font-code)', color: 'var(--color-accent-neon)', letterSpacing: '2px' }}>
-      {currentText}
-      <span className="cursor-blink">_</span>
-    </span>
-  );
+  return <span style={{ fontFamily: 'var(--font-code)', color: 'var(--color-accent-neon)' }}>{display}<span className="cursor-blink">_</span></span>;
 };
 
-// --- COMPOSANT SCROLL INDICATOR ---
+// --- SCROLL INDICATOR MODIFIÉ ---
 const ScrollIndicator: React.FC = () => (
-  <div style={{
-    position: 'absolute',
-    bottom: '40px',
-    left: '50%',
-    transform: 'translateX(-50%)',
+  <div style={{ 
+    position: 'absolute', 
+    bottom: '60px', // REMONTÉ (était 30px)
+    left: '50%', 
+    transform: 'translateX(-50%)', 
+    opacity: 0.8, 
+    animation: 'fadeIn 2s 3s forwards',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    opacity: 0,
-    animation: 'fadeIn 2s ease 3s forwards', 
+    gap: '10px',
     zIndex: 10
   }}>
-    <div style={{
-      width: '24px',
-      height: '40px',
-      border: '2px solid var(--color-accent-neon)',
-      borderRadius: '12px',
-      position: 'relative',
-      marginBottom: '10px',
-      boxShadow: '0 0 10px var(--color-accent-neon)'
+    {/* TEXTE AU DESSUS */}
+    <span style={{ 
+        fontFamily: 'var(--font-code)', 
+        fontSize: '0.8em', 
+        letterSpacing: '2px', 
+        color: 'var(--color-accent-neon)' 
     }}>
-      <div style={{
-        width: '4px',
-        height: '8px',
-        background: 'var(--color-accent-neon)',
-        borderRadius: '2px',
-        position: 'absolute',
-        top: '6px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        animation: 'scroll-wheel 2s infinite'
-      }}></div>
+        SCROLL
+    </span>
+
+    {/* SOURIS / ANIMATION */}
+    <div className="scroll-bounce" style={{ 
+        border: '2px solid var(--color-accent-neon)', 
+        width: '24px', 
+        height: '40px', 
+        borderRadius: '12px', 
+        position: 'relative',
+        boxShadow: '0 0 10px var(--color-accent-neon)'
+    }}>
+        <div style={{ 
+            width: '4px', 
+            height: '6px', 
+            background: 'var(--color-accent-neon)', 
+            borderRadius: '2px', 
+            position: 'absolute', 
+            top: '6px', 
+            left: '50%', 
+            transform: 'translateX(-50%)' 
+        }}></div>
     </div>
-    <span style={{ fontSize: '0.7em', color: 'var(--color-accent-neon)', letterSpacing: '2px', fontFamily: 'var(--font-code)' }}>SCROLL</span>
   </div>
 );
 
@@ -107,87 +101,81 @@ const HomePage: React.FC = () => {
 
   return (
     <div style={{ 
-      height: isMobile ? '90vh' : '80vh', 
+      height: '100vh', 
       display: 'flex', 
       flexDirection: 'column', 
       justifyContent: 'center',
       alignItems: isMobile ? 'center' : 'flex-start', 
-      textAlign: isMobile ? 'center' : 'left',
-      paddingLeft: isMobile ? '0' : '5vw', 
+      paddingLeft: isMobile ? '20px' : '80px', 
+      paddingRight: isMobile ? '20px' : '0',
       position: 'relative'
     }}>
       
-      <style>{`
-        @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
-        .cursor-blink { animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .glitch-text { position: relative; color: white; }
-        .glitch-text::before, .glitch-text::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8; }
-        .glitch-text::before { color: #0ff; z-index: -1; animation: glitch-anim-1 3s infinite linear alternate-reverse; }
-        .glitch-text::after { color: #f0f; z-index: -2; animation: glitch-anim-2 2.5s infinite linear alternate-reverse; }
-        @keyframes glitch-anim-1 { 0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 1px); } 20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); } 40% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 2px); } 60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); } 80% { clip-path: inset(10% 0 60% 0); transform: translate(-1px, 1px); } 100% { clip-path: inset(30% 0 30% 0); transform: translate(1px, -1px); } }
-        @keyframes glitch-anim-2 { 0% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -1px); } 20% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 2px); } 40% { clip-path: inset(30% 0 20% 0); transform: translate(2px, 1px); } 60% { clip-path: inset(10% 0 80% 0); transform: translate(-1px, -2px); } 80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, 2px); } 100% { clip-path: inset(70% 0 10% 0); transform: translate(-2px, -1px); } }
-      `}</style>
-
-      {/* SOUS-TITRE IDENTITÉ */}
       <div style={{ 
-        color: 'var(--color-accent-teal)', 
-        fontSize: isMobile ? '0.8em' : '1em', 
-        fontFamily: 'var(--font-code)', 
-        marginBottom: '10px',
-        letterSpacing: '3px'
+          maxWidth: isMobile ? '100%' : '50%', 
+          textAlign: isMobile ? 'center' : 'left',
+          zIndex: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: isMobile ? 'center' : 'flex-start'
       }}>
-        // SYSTEM IDENTITY_
+          
+          <div style={{ 
+            color: 'var(--color-accent-teal)', 
+            fontSize: '0.9em', 
+            fontFamily: 'var(--font-code)', 
+            letterSpacing: '3px', 
+            marginBottom: '10px' 
+          }}>
+            // SYSTEM IDENTITY_
+          </div>
+
+          {/* TITRE SÉPARÉ POUR GLITCH PARFAIT */}
+          <div style={{ marginBottom: '20px' }}>
+            <h1 className="glitch" data-text="PROJECT" style={{ 
+              fontSize: isMobile ? '3em' : '5.5em', 
+              margin: 0,
+              fontFamily: 'var(--font-title)',
+              color: '#fff',
+              lineHeight: 1,
+              textShadow: '0 0 20px rgba(0, 255, 255, 0.3)'
+            }}>
+              PROJECT
+            </h1>
+            <h1 className="glitch" data-text="AILURA" style={{ 
+              fontSize: isMobile ? '3em' : '5.5em', 
+              margin: 0,
+              fontFamily: 'var(--font-title)',
+              color: '#fff',
+              lineHeight: 1,
+              textShadow: '0 0 20px rgba(0, 255, 255, 0.3)'
+            }}>
+              AILURA
+            </h1>
+          </div>
+
+          <div style={{ minHeight: '30px', fontSize: isMobile ? '0.9em' : '1.1em', marginBottom: '30px' }}>
+            <span style={{ color: '#555', marginRight: '10px' }}>{'>'}</span>
+            <Typewriter text="INITIALIZING FULL STACK ARCHITECT PROTOCOL..." />
+          </div>
+
+          <p style={{
+            color: 'var(--color-text-primary)',
+            fontSize: isMobile ? '0.9em' : '1em',
+            lineHeight: 1.6,
+            maxWidth: '500px',
+            opacity: 0.8,
+            margin: isMobile ? '0 auto' : '0' 
+          }}>
+            Développeuse Full Stack & Coach Pédagogique.<br/>
+            Bridging the gap between human intuition and machine logic.
+          </p>
+
+          {/* BOUTON SUPPRIMÉ ICI */}
+
       </div>
 
-      {/* TITRE GLITCHÉ */}
-      <h1 
-        className="glitch-text" 
-        data-text="[ PROJECT AILURA ]"
-        style={{ 
-          fontSize: isMobile ? '2.8em' : '5.5em', 
-          margin: '0 0 20px 0',
-          fontFamily: 'var(--font-title)',
-          textShadow: '0 0 20px var(--color-accent-neon)',
-          lineHeight: 1.1
-        }}
-      >
-        [ PROJECT AILURA ]
-      </h1>
-
-      {/* TYPEWRITER (Boucle) */}
-      <div style={{ 
-        fontSize: isMobile ? '1em' : '1.5em', 
-        height: '60px', 
-        marginBottom: '20px',
-        maxWidth: isMobile ? '100%' : '650px', 
-        minHeight: '3em' 
-      }}>
-        <span style={{ color: 'var(--color-interface-light)', marginRight: '10px' }}>{'>'}</span>
-        <Typewriter 
-          text="INITIALIZING FULL STACK ARCHITECT PROTOCOL..." 
-          startDelay={500} 
-          loopInterval={5000} 
-        />
-      </div>
-
-      {/* DESCRIPTION */}
-      <p style={{
-        color: '#ccc',
-        maxWidth: isMobile ? '100%' : '550px', 
-        fontSize: isMobile ? '0.9em' : '1.1em',
-        lineHeight: 1.6,
-        opacity: 0,
-        animation: 'fadeIn 1s ease 2.5s forwards'
-      }}>
-        Bridging the gap between human intuition and machine logic. 
-        <br/>
-        Développeuse Full Stack & Coach Pédagogique.
-      </p>
-
-      {/* INDICATEUR SCROLL */}
       <ScrollIndicator />
-
     </div>
   );
 };

@@ -169,17 +169,63 @@
     text-overflow: ellipsis; 
 }
 
-/* VERIFIED */
-.database-container.verified { border-color: #39ff14; box-shadow: 0 0 50px rgba(57, 255, 20, 0.5); }
-.database-container.verified .mugshot-zone { border-right-color: #39ff14; }
-.database-container.verified .data-zone { color: #39ff14; }
-.database-container.verified .mugshot-img { filter: none; }
-.database-container.verified .scan-line { background: #39ff14; animation: none; top: 50%; width: 100%; opacity: 1; height: 2px; }
+/* --- ÉTAT : VERIFIED (VERT TOTAL & FORCÉ) --- */
+.database-container.verified {
+    border-color: #39ff14;
+    box-shadow: 0 0 50px rgba(57, 255, 20, 0.5);
+}
 
-.alert-box { margin-top: 30px; padding: 15px; text-align: center; font-size: 1.4em; font-weight: bold; border: 2px solid transparent; }
-.database-container.verified .alert-box { background: rgba(57, 255, 20, 0.2); border-color: #39ff14; color: #39ff14; animation: pulseGreen 0.5s infinite alternate; }
-@keyframes pulseGreen { 0% { opacity: 0.7; } 100% { opacity: 1; } }
+.database-container.verified .mugshot-zone {
+    border-right-color: #39ff14;
+}
 
+/* 1. Force la couleur du conteneur de texte */
+.database-container.verified .data-zone {
+    color: #39ff14;
+}
+
+/* 2. FORCE les libellés (Identity, Serial...) à passer en vert (un peu plus sombre pour le contraste) */
+.database-container.verified .data-label {
+    color: rgba(57, 255, 20, 0.7) !important; /* !important pour écraser le bleu précédent */
+    text-shadow: none;
+}
+
+/* 3. FORCE les valeurs (Ailura, 4020...) à passer en vert fluo */
+.database-container.verified .data-value {
+    color: #39ff14 !important; /* !important pour écraser le blanc précédent */
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.6);
+}
+
+/* L'image devient nette */
+.database-container.verified .mugshot-img {
+    filter: none; 
+}
+
+/* La ligne de scan devient verte et se fige */
+.database-container.verified .scan-line {
+    background: #39ff14;
+    box-shadow: 0 0 15px #39ff14;
+    animation: none;
+    top: 50%;
+    width: 100%;
+    opacity: 1;
+    height: 2px;
+}
+
+/* Le petit badge ID_VERIFIED en bas de la photo */
+.database-container.verified .mugshot-zone div {
+    color: #000 !important;
+    background: #39ff14 !important;
+}
+
+/* Alert Box VERTE */
+.database-container.verified .alert-box {
+    background: rgba(57, 255, 20, 0.1);
+    border-color: #39ff14;
+    color: #39ff14;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+    animation: pulseGreen 0.5s infinite alternate;
+}
 /* --- RESPONSIVE MOBILE --- */
 @media (max-width: 768px) {
     .database-container { 
