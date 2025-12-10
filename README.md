@@ -111,15 +111,3 @@ src/
 -----
 
 *© 2025 PUBLIC SECURITY SECTION 9. SYSTEM INTEGRITY VERIFIED.*
-
-```
-
----
-
-### Ce que ça apporte :
-1.  **Badges colorés** : Ça fait pro tout de suite.
-2.  **Storytelling** : On explique que le design n'est pas un hasard, c'est un choix artistique ("Mission Briefing").
-3.  **Technique** : On montre que tu sais utiliser TypeScript, les Hooks personnalisés et faire du CSS sans Bootstrap (ce qui est une compétence très recherchée).
-
-C'est validé ? Si oui, tu peux créer ce fichier, faire ton `git add README.md`, commit et **MERGE** ! 🎉
-```
