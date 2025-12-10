@@ -4,54 +4,108 @@ import ProjectCard, { type ProjectData } from '../components/ProjectCard';
 import ProjectsMobile from '../components/ProjectsMobile';
 import useIsMobile from '../hooks/useIsMobile';
 
-// --- DONNÉES (Inchangées) ---
+// --- DONNÉES PROJETS ---
 const projects: ProjectData[] = [
-  { id: 'p1', codename: 'SPRING-ANGULAR', title: 'ANGUL-IT', status: 'COMPLETE', type: 'SCHOOL', description: "Full Stack auth system & secure REST API.", stack: ['Java Spring', 'Angular', 'PostgreSQL', 'Docker'], repoLink: 'https://github.com', image: '/projects/angul-it-screen.png' },
-  { id: 'p2', codename: 'SOC-GAMING', title: 'LETS PLAY', status: 'COMPLETE', type: 'SCHOOL', description: "Social platform for gamers & tournament management.", stack: ['JS', 'HTML5', 'CSS3'], repoLink: 'https://github.com' },
-  { id: 'p3', codename: 'JS-ENGINE', title: 'MAKE YOUR GAME', status: 'COMPLETE', type: 'SCHOOL', description: "Vanilla JS Game Engine from scratch.", stack: ['JS (ES6+)', 'Canvas', 'OOP'], repoLink: 'https://github.com' },
-  { id: 'p4', codename: 'RT-CHAT', title: 'REAL TIME FORUM', status: 'COMPLETE', type: 'SCHOOL', description: "SPA Chat application with WebSockets.", stack: ['Go', 'SQLite', 'WebSockets'], repoLink: 'https://github.com' },
-  { id: 'p5', codename: 'NET-PROTO', title: 'NET-CAT', status: 'COMPLETE', type: 'SCHOOL', description: "TCP Server implementation (NetCat clone).", stack: ['Go', 'TCP/IP', 'Linux'], repoLink: 'https://github.com' }
+  {
+    id: 'p1', codename: 'SPRING-ANGULAR-24', title: 'ANGUL-IT', status: 'COMPLETE', type: 'SCHOOL',
+    description: "Développement Full Stack d'un système d'authentification robuste et d'une API REST sécurisée. Gestion complexe de l'état front-end.",
+    stack: ['Java Spring Boot', 'Angular', 'PostgreSQL', 'JWT', 'Docker'],
+    repoLink: 'https://github.com/Ailura4020/angul-it',
+    image: '/projects/angul-it-screen.png' 
+  },
+  {
+    id: 'p2', codename: 'SOC-GAMING-HUB', title: 'LETS PLAY', status: 'COMPLETE', type: 'SCHOOL',
+    description: "Plateforme sociale pour gamers. Création de profils, organisation de tournois et matching de joueurs. Architecture modulaire basée sur des composants réutilisables.",
+    stack: ['JavaScript', 'HTML5', 'CSS3', 'Framework MVC (Custom)'], 
+    repoLink: 'https://github.com/Ailura4020/lets-play.git',
+  },
+  {
+    id: 'p3', codename: 'VANILLA-JS-ENGINE', title: 'MAKE YOUR GAME', status: 'COMPLETE', type: 'SCHOOL',
+    description: "Création d'un moteur de jeu from scratch en JavaScript pur (Vanilla). Gestion de la physique, des collisions et du rendu graphique sans framework.",
+    stack: ['JavaScript (ES6+)', 'HTML5 Canvas', 'CSS3', 'OOP Pattern'],
+    repoLink: 'https://github.com/Ailura4020/make-your-game',
+  },
+  {
+    id: 'p4', codename: 'REAL-TIME-COMMS', title: 'REAL TIME FORUM', status: 'COMPLETE', type: 'SCHOOL',
+    description: "Plateforme de discussion instantanée. Architecture SPA (Single Page App) avec gestion des WebSockets pour la communication bidirectionnelle en temps réel.",
+    stack: ['Go (Golang)', 'SQLite', 'Docker', 'WebSockets', 'JS'],
+    repoLink: 'https://github.com/Ailura4020/real-time-forum.git'
+  },
+  {
+    id: 'p5', codename: 'TCP-NET-PROTOCOL', title: 'NET-CAT', status: 'COMPLETE', type: 'SCHOOL',
+    description: "Re-création de l'outil NetCat. Implémentation d'un serveur TCP en Go capable de gérer plusieurs connexions clients simultanées (Chat Room) en mode CLI.",
+    stack: ['Go (Golang)', 'TCP/IP', 'Linux', 'Concurrency', 'Mutex'],
+    repoLink: 'https://github.com/Ailura4020/net-cat.git'
+  }
 ];
 
-// --- VUE DESKTOP (Grille 3 colonnes) ---
+// --- VUE DESKTOP ---
 const ProjectsDesktop: React.FC<{ projects: ProjectData[], onSelect: (p: ProjectData) => void }> = ({ projects, onSelect }) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(true);
 
-  const scroll = (offset: number) => {
-    if (scrollRef.current) scrollRef.current.scrollBy({ left: offset, behavior: 'smooth' });
+  const checkScrollPosition = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setShowLeft(scrollLeft > 0);
+      setShowRight(scrollLeft + clientWidth < scrollWidth - 5);
+    }
+  };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', checkScrollPosition);
+      checkScrollPosition();
+      return () => container.removeEventListener('scroll', checkScrollPosition);
+    }
+  }, []);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 410; 
+      scrollContainerRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '30px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', position: 'relative', marginTop: '20px' }}>
       
-      {/* Bouton Gauche */}
-      <button onClick={() => scroll(-400)} className="neon-border" style={{
-          background: 'rgba(0,0,0,0.8)', color: '#0ff', width: '50px', height: '100px', cursor: 'pointer',
-          fontSize: '2em', border: 'none', marginRight: '20px', zIndex: 10
-      }}>{'<'}</button>
+      {/* BOUTON GAUCHE */}
+      <div style={{ width: '80px', display: 'flex', justifyContent: 'center', opacity: showLeft ? 1 : 0, transition: 'opacity 0.3s' }}>
+          <button onClick={() => scroll('left')} className="neon-border" style={{
+            background: 'rgba(0, 5, 10, 0.9)', color: 'var(--color-accent-neon)', width: '50px', height: '100px', 
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2em', 
+            fontFamily: 'var(--font-title)', clipPath: 'polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%)', transition: 'all 0.2s'
+          }}>
+            {'<'}
+          </button>
+      </div>
 
-      {/* CONTENEUR CARROUSEL : Largeur fixe pour 3 cartes */}
-      <div ref={scrollRef} className="hide-scrollbar" style={{
-          display: 'flex', 
-          gap: '20px', // Espace entre les cartes
-          overflowX: 'auto', 
-          scrollBehavior: 'smooth',
-          width: '1100px', // 3 cartes de 350px + gaps
-          padding: '10px'
-      }}>
+      {/* CONTENEUR CARROUSEL */}
+      <div ref={scrollContainerRef} className="hide-scrollbar" style={{
+          display: 'flex', gap: '30px', overflowX: 'auto', scrollBehavior: 'smooth', 
+          padding: '20px 10px', width: '1250px', maxWidth: '90vw'
+        }}>
         {projects.map((proj) => (
-            <div key={proj.id} style={{ flex: '0 0 340px', height: '500px' }}>
+            <div key={proj.id} style={{ flex: '0 0 380px', height: '550px', display: 'flex' }}> 
                 <ProjectCard project={proj} onClick={() => onSelect(proj)} />
             </div>
         ))}
+        <div style={{ minWidth: '20px' }}></div>
       </div>
 
-      {/* Bouton Droite */}
-      <button onClick={() => scroll(400)} className="neon-border" style={{
-          background: 'rgba(0,0,0,0.8)', color: '#0ff', width: '50px', height: '100px', cursor: 'pointer',
-          fontSize: '2em', border: 'none', marginLeft: '20px', zIndex: 10
-      }}>{'>'}</button>
-
+      {/* BOUTON DROIT */}
+      <div style={{ width: '80px', display: 'flex', justifyContent: 'center', opacity: showRight ? 1 : 0, transition: 'opacity 0.3s' }}>
+          <button onClick={() => scroll('right')} className="neon-border" style={{
+            background: 'rgba(0, 5, 10, 0.9)', color: 'var(--color-accent-neon)', width: '50px', height: '100px', 
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2em', 
+            fontFamily: 'var(--font-title)', clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%)', transition: 'all 0.2s'
+          }}>
+            {'>'}
+          </button>
+      </div>
     </div>
   );
 };
@@ -62,16 +116,21 @@ const ProjectsPage: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
 
   return (
-    <div style={{ paddingTop: '50px', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <div style={{ paddingTop: '50px', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
+      
       <style>{` .hide-scrollbar::-webkit-scrollbar { display: none; } `}</style>
 
-      {/* HEADER */}
-      <div style={{ paddingLeft: isMobile ? '20px' : '10vw', marginBottom: '20px' }}>
-        <h2 style={{ fontSize: isMobile ? '2.5em' : '3.5em', color: '#fff', textShadow: '0 0 15px #0ff' }}>
+      {/* --- HEADER SECTION (ALIGNEMENT CORRIGÉ) --- */}
+      <div style={{ 
+          marginBottom: '40px', 
+          paddingLeft: '20px', // Standardisé à 20px comme Skills/Experience
+          borderLeft: '4px solid var(--color-accent-neon)' // Ajout de la bordure comme les autres
+      }}>
+        <h2 style={{ fontSize: isMobile ? '2.5em' : '3em', color: '#fff', marginBottom: '10px', textShadow: '0 0 15px var(--color-accent-neon)' }}>
           TECHNICAL ARTIFACTS
         </h2>
-        <p style={{ fontFamily: 'monospace', color: '#0ff' }}>
-          {'>'} ARCHIVE ACCESS... {projects.length} FILES FOUND.
+        <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>
+          {'>'} LOADING PROJECT ARCHIVES... FOUND {projects.length} ENTRIES.
         </p>
       </div>
 
@@ -81,74 +140,60 @@ const ProjectsPage: React.FC = () => {
         <ProjectsDesktop projects={projects} onSelect={setSelectedProject} />
       )}
 
-      {/* --- MODAL OPTIMISÉ (TOUT SUR UNE PAGE) --- */}
+      {/* --- MODAL POP-UP --- */}
       {selectedProject && (
         <div style={{
           position: 'fixed', inset: 0, zIndex: 9999,
-          backgroundColor: 'rgba(0, 0, 0, 0.9)', backdropFilter: 'blur(5px)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeIn 0.2s'
+          backgroundColor: 'rgba(0, 0, 0, 0.85)', backdropFilter: 'blur(8px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeIn 0.2s ease'
         }} onClick={() => setSelectedProject(null)}>
           
           <div style={{
-            width: '800px', maxWidth: '95%',
-            backgroundColor: '#0a0a0a', 
-            border: '1px solid #ffcc00', 
-            boxShadow: '0 0 40px rgba(255, 204, 0, 0.1)',
-            display: 'flex', flexDirection: 'column',
-            position: 'relative'
+            width: '850px', maxWidth: '90%', height: 'auto', maxHeight: '85vh', marginTop: isMobile ? '0' : '80px',
+            overflowY: 'auto', backgroundColor: '#0a0a0a', border: '1px solid #ffcc00', 
+            boxShadow: '0 0 50px rgba(0,0,0,0.8)', position: 'relative', display: 'flex', flexDirection: 'column'
           }} onClick={(e) => e.stopPropagation()}>
             
-            {/* Header */}
-            <div style={{ padding: '15px 25px', borderBottom: '1px solid #ffcc00', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,204,0,0.05)' }}>
-                <h2 style={{ color: '#ffcc00', margin: 0, fontSize: '1.5em' }}>{selectedProject.title}</h2>
-                <button onClick={() => setSelectedProject(null)} style={{ background: 'transparent', border: '1px solid #ffcc00', color: '#ffcc00', padding: '5px 15px', cursor: 'pointer' }}>CLOSE [X]</button>
+            <div style={{ padding: '15px 30px', borderBottom: '1px solid #ffcc00', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255, 204, 0, 0.05)' }}>
+                <div>
+                    <h2 style={{ color: '#ffcc00', margin: 0, fontSize: '1.5em', textTransform: 'uppercase', fontFamily: 'var(--font-title)' }}>{selectedProject.title}</h2>
+                    <div style={{ fontSize: '0.7em', fontFamily: 'var(--font-code)', color: '#aaa', marginTop: '5px' }}>
+                        CODE: {selectedProject.codename}  //  STATUS: <span style={{ color: '#39ff14' }}>{selectedProject.status}</span>
+                    </div>
+                </div>
+                <button onClick={() => setSelectedProject(null)} style={{ background: 'transparent', border: '1px solid #ffcc00', color: '#ffcc00', padding: '8px 20px', fontFamily: 'var(--font-title)', fontSize: '0.8em', cursor: 'pointer', textTransform: 'uppercase', transition: 'all 0.2s' }} onMouseEnter={(e) => {e.currentTarget.style.background = '#ffcc00'; e.currentTarget.style.color = '#000'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#ffcc00'}}>
+                    CLOSE [X]
+                </button>
             </div>
 
-            <div style={{ padding: '25px', display: 'flex', gap: '25px' }}>
-                
-                {/* Colonne Gauche (Image) */}
-                <div style={{ width: '45%' }}>
-                    <div style={{ border: '1px solid #333', padding: '3px', height: '200px', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                        {selectedProject.image ? (
-                            <img src={selectedProject.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        ) : (
-                            <div style={{ color: '#444' }}>[NO DATA]</div>
-                        )}
+            <div style={{ padding: '30px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {selectedProject.image ? (
+                    <div style={{ border: '1px solid #333', padding: '5px', background: '#000' }}>
+                        <img src={selectedProject.image} alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
                     </div>
-                    
-                    {/* Liens sous l'image */}
-                    <a href={selectedProject.repoLink} target="_blank" rel="noreferrer" style={{
-                        display: 'block', marginTop: '15px', padding: '10px', textAlign: 'center',
-                        border: '1px solid #ffcc00', color: '#ffcc00', textDecoration: 'none', fontSize: '0.9em',
-                        transition: 'all 0.2s'
-                    }} onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,204,0,0.1)'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-                        ACCESS SOURCE CODE
+                ) : (
+                    <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#444', border: '1px dashed #333', fontFamily: 'var(--font-title)' }}>[ NO VISUAL DATA ]</div>
+                )}
+
+                <div>
+                    <h4 style={{ color: '#ffcc00', fontSize: '1em', marginBottom: '8px', fontFamily: 'var(--font-title)' }}>// MISSION BRIEFING</h4>
+                    <p style={{ lineHeight: '1.5', fontSize: '0.95em', color: '#ccc', fontFamily: 'sans-serif' }}>{selectedProject.description}</p>
+                </div>
+
+                <div>
+                    <h4 style={{ color: '#ffcc00', fontSize: '1em', marginBottom: '8px', fontFamily: 'var(--font-title)' }}>// SYSTEM ARCHITECTURE</h4>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                        {selectedProject.stack.map(t => (
+                            <span key={t} style={{ border: '1px solid #444', color: '#ddd', padding: '4px 12px', fontSize: '0.75em', fontFamily: 'var(--font-code)', background: '#111' }}>{t}</span>
+                        ))}
+                    </div>
+                </div>
+
+                <div style={{ borderTop: '1px solid #333', paddingTop: '20px', textAlign: 'center' }}>
+                    <a href={selectedProject.repoLink} target="_blank" rel="noreferrer" style={{ display: 'inline-block', border: '1px solid #ffcc00', color: '#ffcc00', textDecoration: 'none', padding: '12px 30px', fontFamily: 'var(--font-title)', fontSize: '0.9em', letterSpacing: '1px', transition: 'all 0.3s' }} onMouseEnter={(e) => {e.currentTarget.style.background = '#ffcc00'; e.currentTarget.style.color = '#000'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#ffcc00'}}>
+                        ACCESS SOURCE CODE :: GITHUB
                     </a>
                 </div>
-
-                {/* Colonne Droite (Infos) */}
-                <div style={{ width: '55%', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                    
-                    <div>
-                        <div style={{ fontSize: '0.7em', color: '#888', marginBottom: '5px' }}>// MISSION BRIEFING</div>
-                        <p style={{ fontSize: '0.9em', color: '#ccc', lineHeight: '1.5', margin: 0 }}>{selectedProject.description}</p>
-                    </div>
-
-                    <div>
-                        <div style={{ fontSize: '0.7em', color: '#888', marginBottom: '5px' }}>// TECH STACK</div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
-                            {selectedProject.stack.map(t => (
-                                <span key={t} style={{ border: '1px solid #444', color: '#ddd', padding: '2px 8px', fontSize: '0.75em', background: '#111' }}>{t}</span>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div style={{ marginTop: 'auto', borderTop: '1px solid #333', paddingTop: '10px', display: 'flex', justifyContent: 'space-between', fontSize: '0.8em', color: '#666', fontFamily: 'monospace' }}>
-                        <span>CODE: {selectedProject.codename}</span>
-                        <span>STATUS: <span style={{ color: '#39ff14' }}>{selectedProject.status}</span></span>
-                    </div>
-                </div>
-
             </div>
           </div>
         </div>
