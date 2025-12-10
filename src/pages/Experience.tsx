@@ -3,6 +3,7 @@ import React from 'react';
 import TacticalTabs, { type TabData } from '../components/TacticalTabs';
 import ExperienceMobile from '../components/ExperienceMobile'; // Import Mobile
 import useIsMobile from '../hooks/useIsMobile'; // Import Hook
+import DecryptedText from '../components/DecryptedText';
 
 const ExperiencePage: React.FC = () => {
   const isMobile = useIsMobile(1024); // Switch à 1024px
@@ -184,18 +185,20 @@ const ExperiencePage: React.FC = () => {
   return (
     <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
       
-      <h2 style={{ 
-        fontSize: '3em', 
-        color: '#fff', // Blanc pur
-        marginBottom: '10px',
-        fontFamily: 'var(--font-title)',
-        textTransform: 'uppercase',
-        textShadow: '0 0 15px var(--color-accent-neon)', // Lueur colorée
-        borderLeft: '4px solid var(--color-accent-neon)',
-        paddingLeft: '20px'
-      }}>
-        PERSONNEL FILE
-      </h2>
+      <DecryptedText 
+  text="PERSONNEL FILE"
+  interval={15000}
+  style={{ 
+    fontSize: '3em', 
+    color: '#fff', 
+    marginBottom: '5px',
+    fontFamily: 'var(--font-title)',
+    textTransform: 'uppercase',
+    textShadow: '0 0 15px var(--color-accent-neon)', 
+    borderLeft: '4px solid var(--color-accent-neon)',
+    paddingLeft: '20px'
+  }}
+/>
       
       <p style={{ 
         color: 'var(--color-interface-light)', 
