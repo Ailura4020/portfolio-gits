@@ -84,7 +84,7 @@ const TacticalTabs: React.FC<TacticalTabsProps> = ({ tabs }) => {
               }}
             >
               <div style={{ fontSize: '0.7em', marginBottom: '4px', opacity: isActive ? 1 : 0.6 }}>
-                {tab.isOngoing ? '● LIVE' : 'ARCHIVE'}
+                {tab.isOngoing ? '● EN POSTE' : 'ARCHIVÉ'}
               </div>
               {tab.label}
             </button>
@@ -156,7 +156,7 @@ const TacticalTabs: React.FC<TacticalTabsProps> = ({ tabs }) => {
                   marginTop: '40px', borderTop: '1px dashed #333', paddingTop: '10px', 
                   fontSize: '0.7em', color: '#555', fontFamily: 'monospace', textAlign: 'right' 
               }}>
-                  CONFIDENTIALITY LEVEL: 3 // EYES ONLY // SEC_9 ARCHIVES
+                  NIVEAU CONFIDENTIEL : 3 // ACCÈS RESTREINT // SEC_9 ARCHIVES
               </div>
 
             </div>

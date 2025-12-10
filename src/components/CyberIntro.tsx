@@ -22,21 +22,21 @@ const SUSPECT_IMAGES = [suspect1, suspect2, suspect3, suspect4, suspect5, suspec
 
 // --- NOUVEAUX TEXTES (MIX OPTION A + C) ---
 const RANDOM_CRIMES = [
-    "UNAUTHORIZED BRAIN DIVE", 
-    "CLASS-A THREAT DETECTED", 
-    "MILITARY PROXY HACK", 
-    "CORPORATE DATA THEFT", 
-    "AI LEVEL 4 BREACH", 
-    "MASSIVE NETWORK OUTAGE"
+    "PLONGÉE CYBERNÉTIQUE NON AUTORISÉE", 
+    "MENACE DE CLASSE A DÉTECTÉE", 
+    "PIRATAGE PROXY MILITAIRE", 
+    "VOL DE DONNÉES CORPORATISTES", 
+    "BRÈCHE IA NIVEAU 4", 
+    "PANNE RÉSEAU MASSIVE"
 ];
 
 const RANDOM_STATUS = [
-    "TERMINATE ON SIGHT", 
-    "CRITICAL ERROR", 
-    "WANTED: DEAD OR ALIVE", 
-    "FUGITIVE // ARMED", 
-    "TRACE FAILED...", 
-    "SYSTEM DISCONNECTED"
+    "ÉLIMINER À VUE",         // Ambiance Psycho-Pass
+    "ERREUR CRITIQUE", 
+    "RECHERCHÉ : MORT OU VIF", 
+    "FUGITIF // ARMÉ", 
+    "ÉCHEC DU TRAÇAGE...", 
+    "SYSTÈME DÉCONNECTÉ"
 ];
 
 const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
@@ -116,18 +116,18 @@ const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
       {phase === 'IDLE' && (
         <div className="cyber-idle">
             <div className="triangle-logo"></div>
-            <div className="police-header">PUBLIC SECURITY SECTION 9 <br /> // FUGITIVE SQUAD</div>
-            <h1 className="system-title">CRIMINAL DATABASE</h1>
-            <div className="sub-title">// LOCATING TARGET : AILURA_4020</div>
+            <div className="police-header">SÉCURITÉ PUBLIQUE SECTION 9 <br></br>// BRIGADE DES FUGITIFS</div>
+<h1 className="system-title">BASE DE DONNÉES CRIMINELLE</h1>
+<div className="sub-title">// LOCALISATION CIBLE : AILURA_4020</div>
             
             {/* Bouton avec saut de ligne */}
             <button className="entry-btn" onClick={startSequence}>
-                [ CLICK HERE <br /> TO ACCESS PERSONNEL FILE ]
-            </button>
+    [ CLIQUER ICI <br /> POUR ACCÉDER AU DOSSIER ]
+</button>
             
             <div style={{ marginTop: '40px', fontSize: '0.7em', color: 'rgba(0,255,255,0.6)', fontFamily: 'monospace', textShadow: '0 0 5px #000' }}>
-                WARNING: UNAUTHORIZED ACCESS IS A CLASS A FELONY<br/>
-                CYBERBRAIN SECURITY PROTOCOL ACTIVE
+                ATTENTION : L'ACCÈS NON AUTORISÉ EST UN CRIME DE CLASSE A<br/>
+    PROTOCOLE DE SÉCURITÉ CYBER-CERVEAU ACTIF
             </div>
         </div>
       )}
@@ -146,24 +146,24 @@ const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
 
             <div className="data-zone">
                 <div className="data-row">
-                    <span className="data-label">IDENTITY:</span>
+                    <span className="data-label">IDENTITÉ :</span>
                     <span className="data-value">{displayData.name}</span>
                 </div>
                 <div className="data-row">
-                    <span className="data-label">SERIAL_NO:</span>
+                    <span className="data-label">MATRICULE:</span>
                     <span className="data-value">{displayData.id}</span>
                 </div>
                 <div className="data-row">
-                    <span className="data-label">ROLE:</span>
+                    <span className="data-label">RÔLE:</span>
                     <span className="data-value">{displayData.status}</span>
                 </div>
                 <div className="data-row">
-                    <span className="data-label">CLEARANCE:</span>
+                    <span className="data-label">ACCRÉDITATION:</span>
                     <span className="data-value">{displayData.clearance}</span>
                 </div>
 
                 <div className="alert-box">
-                    {phase === 'VERIFIED' ? 'ACCESS GRANTED' : 'SCANNING DATABASE...'}
+                    {phase === 'VERIFIED' ? 'ACCESS ID_VÉRIFIÉE' : 'CORRESPONDANCE...'}
                 </div>
             </div>
         </div>

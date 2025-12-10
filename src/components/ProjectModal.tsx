@@ -46,7 +46,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'rgba(0, 255, 255, 0.1)')}
           onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
         >
-          Close [X]
+          FERMER [X]
         </button>
 
         <h2 style={{ 
@@ -85,21 +85,21 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                />
             </div>
              <div style={{ textAlign: 'right', fontSize: '0.7em', color: 'var(--color-accent-teal)', marginTop: '5px', fontFamily: 'var(--font-title)' }}>
-               // VISUAL EVIDENCE ATTACHED
+               // DONNÉES VISUELLES MANQUANTES
              </div>
           </div>
         )}
         {/* --------------------------------------- */}
 
         <div style={{ marginBottom: '30px' }}>
-          <h3 style={{ color: 'var(--color-text-title)', fontSize: '1.2em', marginBottom: '10px' }}>// MISSION BRIEFING</h3>
+          <h3 style={{ color: 'var(--color-text-title)', fontSize: '1.2em', marginBottom: '10px' }}>// BRIEFING DE MISSION</h3>
           <p style={{ lineHeight: '1.6', color: 'var(--color-text-primary)' }}>
             {project.summary}
           </p>
         </div>
 
         <div style={{ marginBottom: '30px' }}>
-          <h3 style={{ color: 'var(--color-text-title)', fontSize: '1.2em', marginBottom: '10px' }}>// SYSTEM ARCHITECTURE</h3>
+          <h3 style={{ color: 'var(--color-text-title)', fontSize: '1.2em', marginBottom: '10px' }}>// ARCHITECTURE SYSTÈME</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
             {project.stack.map((tech) => (
               <span key={tech} style={{ 
@@ -119,7 +119,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                color: 'var(--color-accent-neon)', fontFamily: 'var(--font-title)',
                fontSize: '0.9em', display: 'inline-block'
              }}>
-            ACCESS SOURCE CODE :: GITHUB
+            ACCÈS CODE SOURCE :: GITHUB
           </a>
         </div>
 

@@ -127,7 +127,7 @@ const HomePage: React.FC = () => {
             letterSpacing: '3px', 
             marginBottom: '10px' 
           }}>
-            // SYSTEM IDENTITY_
+            // IDENTITÉ SYSTÈME_
           </div>
 
           {/* TITRE SÉPARÉ POUR GLITCH PARFAIT */}
@@ -156,7 +156,7 @@ const HomePage: React.FC = () => {
 
           <div style={{ minHeight: '30px', fontSize: isMobile ? '0.9em' : '1.1em', marginBottom: '30px' }}>
             <span style={{ color: '#555', marginRight: '10px' }}>{'>'}</span>
-            <Typewriter text="INITIALIZING FULL STACK ARCHITECT PROTOCOL..." />
+            <Typewriter text="INITIALISATION PROTOCOLE ARCHITECTE FULL STACK..." />
           </div>
 
           <p style={{
@@ -167,12 +167,9 @@ const HomePage: React.FC = () => {
             opacity: 0.8,
             margin: isMobile ? '0 auto' : '0' 
           }}>
-            Développeuse Full Stack & Coach Pédagogique.<br/>
+            Développeuse Full Stack en formation & Coach Pédagogique en alternance.<br/>
             Bridging the gap between human intuition and machine logic.
           </p>
-
-          {/* BOUTON SUPPRIMÉ ICI */}
-
       </div>
 
       <ScrollIndicator />

@@ -59,7 +59,7 @@ const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ 
         ) : (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                 <div style={{ fontSize: '2em', color: '#333' }}>⚠</div>
-                <div style={{ color: '#444', fontFamily: 'var(--font-title)', fontSize: '0.8em', letterSpacing: '2px' }}>NO VISUAL DATA</div>
+                <div style={{ color: '#444', fontFamily: 'var(--font-title)', fontSize: '0.8em', letterSpacing: '2px' }}>AUCUNE DONNÉE VISUELLE</div>
             </div>
         )}
       </div>
@@ -96,7 +96,7 @@ const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ 
             transform: isHovered ? 'translateY(0)' : 'translateY(10px)',
             transition: 'all 0.3s'
         }}>
-            {'>'} INSPECT DATA
+            {'>'} INSPECTER DONNÉES
         </div>
       </div>
 

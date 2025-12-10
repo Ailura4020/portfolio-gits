@@ -8,7 +8,7 @@ import SkillsPage from './pages/Skills.tsx';
 import ContactPage from './pages/Contact.tsx';
 import CustomCursor from './components/CustomCursor.tsx'; 
 import BackgroundManager from './components/BackgroundManager.tsx';
-import Logo from './components/Logo'; 
+import Logo from './components/Logo'; // Assure-toi que ce composant existe ou retire-le si tu utilises du texte
 import useIsMobile from './hooks/useIsMobile';
 import CyberIntro from './components/CyberIntro';
 
@@ -42,16 +42,22 @@ const BurgerIcon: React.FC<{ isOpen: boolean; onClick: () => void }> = ({ isOpen
 // --- COMPOSANT : MENU OVERLAY (Mobile) ---
 const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
-    const links = ['HOME', 'PROJECTS', 'EXPERIENCE', 'SKILLS', 'CONTACT'];
+    const links = [
+      { id: 'home', label: 'ACCUEIL' }, 
+      { id: 'projects', label: 'PROJETS' }, 
+      { id: 'experience', label: 'EXPÉRIENCE' }, 
+      { id: 'skills', label: 'COMPÉTENCES' }, 
+      { id: 'contact', label: 'LIAISON' }
+    ];
 
     return (
         <div style={{ position: 'fixed', inset: 0, zIndex: 150 }}>
             <div onClick={onClose} style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(5px)' }} />
             <div style={{ position: 'absolute', top: 0, right: 0, width: '80%', maxWidth: '300px', height: '100%', backgroundColor: '#050a10', borderLeft: '2px solid var(--color-accent-neon)', padding: '100px 40px', display: 'flex', flexDirection: 'column', gap: '30px', animation: 'slideInRight 0.3s ease' }}>
                 {links.map((link, i) => (
-                    <a key={link} href={`#${link.toLowerCase()}`} onClick={onClose} style={{ fontSize: '1.5em', fontFamily: 'var(--font-title)', color: '#fff', textDecoration: 'none', animation: `linkFadeIn 0.5s ease forwards ${i * 0.1}s`, opacity: 0 }}>
+                    <a key={link.id} href={`#${link.id}`} onClick={onClose} style={{ fontSize: '1.5em', fontFamily: 'var(--font-title)', color: '#fff', textDecoration: 'none', animation: `linkFadeIn 0.5s ease forwards ${i * 0.1}s`, opacity: 0 }}>
                         <span style={{ color: 'var(--color-accent-neon)', marginRight: '10px', fontSize: '0.6em' }}>0{i + 1}</span>
-                        {link}
+                        {link.label}
                     </a>
                 ))}
             </div>
@@ -63,7 +69,13 @@ const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 const NavigationBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile(); 
-  const links = ['HOME', 'PROJECTS', 'EXPERIENCE', 'SKILLS', 'CONTACT'];
+  const links = [
+      { id: 'home', label: 'ACCUEIL' }, 
+      { id: 'projects', label: 'PROJETS' }, 
+      { id: 'experience', label: 'EXPÉRIENCE' }, 
+      { id: 'skills', label: 'COMPÉTENCES' }, 
+      { id: 'contact', label: 'LIAISON' }
+  ];
 
   return (
     <>
@@ -75,8 +87,8 @@ const NavigationBar: React.FC = () => {
             padding: isMobile ? '0 20px' : '0 50px'
         }}>
             
-            {/* LOGO */}
-            <div style={{ width: isMobile ? '120px' : '150px' }}>
+            {/* LOGO (Ajusté selon ta demande) */}
+            <div style={{ width: isMobile ? '160px' : '220px', transition: 'width 0.3s ease' }}>
                 <Logo />
             </div>
 
@@ -84,11 +96,11 @@ const NavigationBar: React.FC = () => {
             {!isMobile ? (
                 <div style={{ display: 'flex', gap: '40px' }}>
                     {links.map(link => (
-                        <a key={link} href={`#${link.toLowerCase()}`} style={{ 
+                        <a key={link.id} href={`#${link.id}`} style={{ 
                             fontFamily: 'var(--font-title)', fontSize: '0.9em', letterSpacing: '2px', 
                             color: 'var(--color-text-primary)', textDecoration: 'none', position: 'relative'
                         }} className="nav-link">
-                            {link}
+                            {link.label}
                         </a>
                     ))}
                 </div>
@@ -114,16 +126,14 @@ const App: React.FC = () => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
-    // Force le scroll en haut au chargement initial (au cas où)
     window.scrollTo(0, 0);
   }, []);
 
   // --- 2. FORCER LE SCROLL EN HAUT QUAND L'INTRO EST FINIE ---
   useEffect(() => {
     if (initialized) {
-      // Petit délai pour être sûr que le DOM est prêt
       setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'instant' }); // 'instant' pour ne pas voir le défilement
+        window.scrollTo({ top: 0, behavior: 'instant' }); 
       }, 50);
     }
   }, [initialized]);

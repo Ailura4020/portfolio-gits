@@ -8,32 +8,32 @@ import DecryptedText from '../components/DecryptedText';
 // --- DONNÉES PROJETS ---
 const projects: ProjectData[] = [
   {
-    id: 'p1', codename: 'SPRING-ANGULAR-24', title: 'ANGUL-IT', status: 'COMPLETE', type: 'SCHOOL',
+    id: 'p1', codename: 'SPRING-ANGULAR-24', title: 'ANGUL-IT', status: 'TERMINÉ', type: 'ECOLE',
     description: "Développement Full Stack d'un système d'authentification robuste et d'une API REST sécurisée. Gestion complexe de l'état front-end.",
     stack: ['Java Spring Boot', 'Angular', 'PostgreSQL', 'JWT', 'Docker'],
     repoLink: 'https://github.com/Ailura4020/angul-it',
     image: '/projects/angul-it-screen.png' 
   },
   {
-    id: 'p2', codename: 'SOC-GAMING-HUB', title: 'LETS PLAY', status: 'COMPLETE', type: 'SCHOOL',
+    id: 'p2', codename: 'SOC-GAMING-HUB', title: 'LETS PLAY', status: 'TERMINÉ', type: 'ECOLE',
     description: "Plateforme sociale pour gamers. Création de profils, organisation de tournois et matching de joueurs. Architecture modulaire basée sur des composants réutilisables.",
     stack: ['JavaScript', 'HTML5', 'CSS3', 'Framework MVC (Custom)'], 
     repoLink: 'https://github.com/Ailura4020/lets-play.git',
   },
   {
-    id: 'p3', codename: 'VANILLA-JS-ENGINE', title: 'MAKE YOUR GAME', status: 'COMPLETE', type: 'SCHOOL',
+    id: 'p3', codename: 'VANILLA-JS-ENGINE', title: 'MAKE YOUR GAME', status: 'TERMINÉ', type: 'ECOLE',
     description: "Création d'un moteur de jeu from scratch en JavaScript pur (Vanilla). Gestion de la physique, des collisions et du rendu graphique sans framework.",
     stack: ['JavaScript (ES6+)', 'HTML5 Canvas', 'CSS3', 'OOP Pattern'],
     repoLink: 'https://github.com/Ailura4020/make-your-game',
   },
   {
-    id: 'p4', codename: 'REAL-TIME-COMMS', title: 'REAL TIME FORUM', status: 'COMPLETE', type: 'SCHOOL',
+    id: 'p4', codename: 'REAL-TIME-COMMS', title: 'REAL TIME FORUM', status: 'TERMINÉ', type: 'ECOLE',
     description: "Plateforme de discussion instantanée. Architecture SPA (Single Page App) avec gestion des WebSockets pour la communication bidirectionnelle en temps réel.",
     stack: ['Go (Golang)', 'SQLite', 'Docker', 'WebSockets', 'JS'],
     repoLink: 'https://github.com/Ailura4020/real-time-forum.git'
   },
   {
-    id: 'p5', codename: 'TCP-NET-PROTOCOL', title: 'NET-CAT', status: 'COMPLETE', type: 'SCHOOL',
+    id: 'p5', codename: 'TCP-NET-PROTOCOL', title: 'NET-CAT', status: 'TERMINÉ', type: 'ECOLE',
     description: "Re-création de l'outil NetCat. Implémentation d'un serveur TCP en Go capable de gérer plusieurs connexions clients simultanées (Chat Room) en mode CLI.",
     stack: ['Go (Golang)', 'TCP/IP', 'Linux', 'Concurrency', 'Mutex'],
     repoLink: 'https://github.com/Ailura4020/net-cat.git'
@@ -128,7 +128,7 @@ const ProjectsPage: React.FC = () => {
           borderLeft: '4px solid var(--color-accent-neon)' // Ajout de la bordure comme les autres
       }}>
      <DecryptedText 
-  text="TECHNICAL ARTIFACTS"
+  text="ARTEFACTS TECHNIQUES"
   interval={15000} // S'anime toutes les 15 secondes
   style={{ 
     fontSize: isMobile ? '2.5em' : '4em', 
@@ -140,7 +140,7 @@ const ProjectsPage: React.FC = () => {
   }}
 />
         <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>
-          {'>'} LOADING PROJECT ARCHIVES... FOUND {projects.length} ENTRIES.
+          {'>'} CHARGEMENT DES ARCHIVES PROJETS... {projects.length} ENTRÉES TROUVÉES.
         </p>
       </div>
 
@@ -172,7 +172,7 @@ const ProjectsPage: React.FC = () => {
                     </div>
                 </div>
                 <button onClick={() => setSelectedProject(null)} style={{ background: 'transparent', border: '1px solid #ffcc00', color: '#ffcc00', padding: '8px 20px', fontFamily: 'var(--font-title)', fontSize: '0.8em', cursor: 'pointer', textTransform: 'uppercase', transition: 'all 0.2s' }} onMouseEnter={(e) => {e.currentTarget.style.background = '#ffcc00'; e.currentTarget.style.color = '#000'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#ffcc00'}}>
-                    CLOSE [X]
+                    FERMER [X]
                 </button>
             </div>
 
@@ -182,16 +182,16 @@ const ProjectsPage: React.FC = () => {
                         <img src={selectedProject.image} alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
                     </div>
                 ) : (
-                    <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#444', border: '1px dashed #333', fontFamily: 'var(--font-title)' }}>[ NO VISUAL DATA ]</div>
+                    <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#444', border: '1px dashed #333', fontFamily: 'var(--font-title)' }}>[ AUCUNE DONNÉE VISUELLE ]</div>
                 )}
 
                 <div>
-                    <h4 style={{ color: '#ffcc00', fontSize: '1em', marginBottom: '8px', fontFamily: 'var(--font-title)' }}>// MISSION BRIEFING</h4>
+                    <h4 style={{ color: '#ffcc00', fontSize: '1em', marginBottom: '8px', fontFamily: 'var(--font-title)' }}>// OBJECTIFS DE MISSION</h4>
                     <p style={{ lineHeight: '1.5', fontSize: '0.95em', color: '#ccc', fontFamily: 'sans-serif' }}>{selectedProject.description}</p>
                 </div>
 
                 <div>
-                    <h4 style={{ color: '#ffcc00', fontSize: '1em', marginBottom: '8px', fontFamily: 'var(--font-title)' }}>// SYSTEM ARCHITECTURE</h4>
+                    <h4 style={{ color: '#ffcc00', fontSize: '1em', marginBottom: '8px', fontFamily: 'var(--font-title)' }}>// ARCHITECTURE SYSTÈME</h4>
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                         {selectedProject.stack.map(t => (
                             <span key={t} style={{ border: '1px solid #444', color: '#ddd', padding: '4px 12px', fontSize: '0.75em', fontFamily: 'var(--font-code)', background: '#111' }}>{t}</span>
@@ -201,7 +201,7 @@ const ProjectsPage: React.FC = () => {
 
                 <div style={{ borderTop: '1px solid #333', paddingTop: '20px', textAlign: 'center' }}>
                     <a href={selectedProject.repoLink} target="_blank" rel="noreferrer" style={{ display: 'inline-block', border: '1px solid #ffcc00', color: '#ffcc00', textDecoration: 'none', padding: '12px 30px', fontFamily: 'var(--font-title)', fontSize: '0.9em', letterSpacing: '1px', transition: 'all 0.3s' }} onMouseEnter={(e) => {e.currentTarget.style.background = '#ffcc00'; e.currentTarget.style.color = '#000'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#ffcc00'}}>
-                        ACCESS SOURCE CODE :: GITHUB
+                        ACCÉDER AU CODE SOURCE :: GITHUB
                     </a>
                 </div>
             </div>

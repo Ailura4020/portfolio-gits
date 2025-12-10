@@ -105,7 +105,7 @@ const SkillsPage: React.FC = () => {
       {/* HEADER PRINCIPAL */}
       <div style={{ marginBottom: '60px', paddingLeft: '20px', borderLeft: '4px solid var(--color-accent-neon)' }}>
 <DecryptedText 
-  text="SYSTEM DIAGNOSTICS"
+  text="DIAGNOSTIC SYSTÈME"
   interval={15000}
   style={{ 
     fontSize: isMobile ? '2.5em' : '3em', 
@@ -116,7 +116,7 @@ const SkillsPage: React.FC = () => {
     textTransform: 'uppercase'
   }} 
 />
-      <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>{'>'} ANALYZING OPERATOR CAPABILITIES... [KERNEL] & [PSYCHE].</p>
+      <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>{'>'} ANALYSE CAPACITÉS OPÉRATEUR....</p>
       </div>
 
       {/* --- SWITCHER (MOBILE vs DESKTOP) --- */}
@@ -128,7 +128,7 @@ const SkillsPage: React.FC = () => {
 
           {/* COLONNE GAUCHE (TECH TREE) - Prend 55% */}
           <div style={{ flex: '1.2' }}>
-            <ColumnHeader title="// ENGINEERING MODULES" subtitle="HARDWARE & SOFTWARE DEPENDENCIES" color="var(--color-accent-neon)" align="left" />
+            <ColumnHeader title="// MODULES INGÉNIERIE" subtitle="DÉPENDANCES MATÉRIELLES & LOGICIELLES" color="var(--color-accent-neon)" align="left" />
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', marginTop: '40px' }}>
               
@@ -177,7 +177,7 @@ const SkillsPage: React.FC = () => {
 
           {/* COLONNE DROITE (HUMAIN) - Prend 45% - GRILLE 2x2 */}
           <div style={{ flex: '1' }}>
-            <ColumnHeader title="// OPERATOR ATTRIBUTES" subtitle="PSYCHOMETRIC EVALUATION DATA" color="#ff2a2a" align="right" />
+            <ColumnHeader title="// ATTRIBUTS OPÉRATEUR" subtitle="DONNÉES ÉVALUATION PSYCHOMÉTRIQUE" color="#ff2a2a" align="right" />
             
             {/* GRILLE 2 COLONNES ICI */}
             <div style={{ 

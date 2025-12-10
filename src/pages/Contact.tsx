@@ -21,11 +21,10 @@ const SocialCard: React.FC<{
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        // DIMENSIONS MOBILES OPTIMISÉES
-        flex: isMobile ? '1 1 100%' : '1 1 280px', // Prend toute la largeur sur mobile
+        flex: isMobile ? '1 1 100%' : '1 1 280px',
         width: isMobile ? '100%' : 'auto',
-        maxWidth: '400px', // Max confortable
-        height: isMobile ? '100px' : '180px', // Beaucoup moins haut sur mobile (Bouton large)
+        maxWidth: '400px',
+        height: isMobile ? '100px' : '180px',
         
         textDecoration: 'none',
         position: 'relative',
@@ -34,18 +33,17 @@ const SocialCard: React.FC<{
         border: `1px solid ${isHovered ? color : 'rgba(255, 255, 255, 0.15)'}`, 
         backdropFilter: 'blur(10px)',
         display: 'flex',
-        flexDirection: isMobile ? 'row' : 'column', // Ligne sur mobile (Icone à gauche, Texte à droite)
+        flexDirection: isMobile ? 'row' : 'column',
         justifyContent: isMobile ? 'flex-start' : 'center',
         alignItems: 'center',
-        padding: isMobile ? '0 30px' : '0', // Padding latéral sur mobile
-        gap: isMobile ? '20px' : '0', // Espace entre icone et texte sur mobile
+        padding: isMobile ? '0 30px' : '0',
+        gap: isMobile ? '20px' : '0',
         
         transition: 'all 0.4s ease',
         boxShadow: isHovered ? `0 0 25px ${color}33` : 'none',
         clipPath: 'polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px)',
       }}
     >
-      {/* Icone */}
       <div style={{
         fontSize: isMobile ? '2.5em' : '3em', 
         color: isHovered ? color : 'rgba(255, 255, 255, 0.5)',
@@ -56,7 +54,6 @@ const SocialCard: React.FC<{
         {iconLabel}
       </div>
 
-      {/* Textes */}
       <div style={{ textAlign: isMobile ? 'left' : 'center' }}>
         <h3 style={{ 
           color: '#fff', fontSize: '1.3em', textTransform: 'uppercase', letterSpacing: '2px', margin: '0',
@@ -65,7 +62,6 @@ const SocialCard: React.FC<{
           {title}
         </h3>
         
-        {/* On affiche le rôle même sur mobile maintenant car on a de la place à droite */}
         <div style={{ 
           color: isHovered ? color : 'rgba(200, 200, 200, 0.6)', 
           fontFamily: 'var(--font-code)', fontSize: '0.75em', letterSpacing: '1px', marginTop: '5px'
@@ -74,7 +70,6 @@ const SocialCard: React.FC<{
         </div>
       </div>
 
-      {/* Déco Lignes */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '1px', background: color, opacity: isHovered ? 1 : 0, boxShadow: `0 0 10px ${color}`, transition: 'opacity 0.3s ease' }}></div>
       <div style={{ position: 'absolute', bottom: 0, right: 0, width: '100%', height: '1px', background: color, opacity: isHovered ? 1 : 0, boxShadow: `0 0 10px ${color}`, transition: 'opacity 0.3s ease' }}></div>
     </a>
@@ -96,17 +91,17 @@ const ContactPage: React.FC = () => {
       {/* HEADER */}
       <div style={{ textAlign: 'center', marginBottom: isMobile ? '30px' : '50px' }}>
        <DecryptedText 
-  text="CANAL DE COMMUNICATION"
-  interval={15000}
-  style={{ 
-    fontSize: '3.5em', 
-    color: '#fff', 
-    marginBottom: '15px',
-    textShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
-    fontFamily: 'var(--font-title)',
-    textTransform: 'uppercase'
-  }} 
-/>
+          text="CANAL DE COMMUNICATION"
+          interval={15000}
+          style={{ 
+            fontSize: '3.5em', 
+            color: '#fff', 
+            marginBottom: '15px',
+            textShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
+            fontFamily: 'var(--font-title)',
+            textTransform: 'uppercase'
+          }} 
+        />
         
         <div style={{ 
           display: 'inline-block',
@@ -121,7 +116,7 @@ const ContactPage: React.FC = () => {
           boxShadow: '0 0 15px rgba(224, 170, 255, 0.2)',
           borderRadius: '2px'
         }}>
-          ● STATUS: OPEN TO WORK (ALTERNANCE / PROJETS)
+          ● STATUT : DISPONIBLE (ALTERNANCE / PROJETS)
         </div>
 
         <p style={{ color: 'rgba(255,255,255,0.5)', marginTop: '20px', fontSize: '0.9em', fontFamily: 'var(--font-code)' }}>
@@ -132,7 +127,7 @@ const ContactPage: React.FC = () => {
       {/* CARTES */}
       <div style={{ 
         display: 'flex', 
-        flexDirection: isMobile ? 'column' : 'row', // Colonne sur mobile
+        flexDirection: isMobile ? 'column' : 'row', 
         alignItems: 'center',
         gap: isMobile ? '20px' : '30px', 
         justifyContent: 'center', 
@@ -141,8 +136,8 @@ const ContactPage: React.FC = () => {
         marginBottom: isMobile ? '40px' : '60px',
         width: '100%'
       }}>
-        <SocialCard title="LINKEDIN" role="> PROFESSIONAL UPLINK" link="https://www.linkedin.com/in/ton-profil" color="#0077b5" iconLabel="[IN]" isMobile={isMobile} />
-        <SocialCard title="GITHUB" role="> SOURCE REPOSITORY" link="https://github.com/Ailura4020" color="#9f7aea" iconLabel="[GIT]" isMobile={isMobile} />
+        <SocialCard title="LINKEDIN" role="> LIAISON PROFESSIONNELLE" link="https://www.linkedin.com/in/ton-profil" color="#0077b5" iconLabel="[IN]" isMobile={isMobile} />
+        <SocialCard title="GITHUB" role="> DÉPÔT SOURCE" link="https://github.com/Ailura4020" color="#9f7aea" iconLabel="[GIT]" isMobile={isMobile} />
       </div>
 
       {/* FOOTER */}
@@ -154,7 +149,7 @@ const ContactPage: React.FC = () => {
         background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)'
       }}>
         
-        {/* BOUTON CV AMÉLIORÉ */}
+        {/* BOUTON CV */}
         <div style={{ marginBottom: '30px' }}>
           <a 
             href="/cv-ailura.pdf" 
@@ -172,13 +167,13 @@ const ContactPage: React.FC = () => {
               letterSpacing: '1px',
               fontWeight: 'bold',
               boxShadow: '0 0 15px rgba(255,255,255,0.1)',
-              width: isMobile ? '100%' : 'auto', // Pleine largeur sur mobile
+              width: isMobile ? '100%' : 'auto', 
               textAlign: 'center'
             }}
             onMouseOver={(e) => { 
               e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)';
               e.currentTarget.style.boxShadow = '0 0 25px rgba(255,255,255,0.3)';
-              if(!isMobile) e.currentTarget.style.transform = 'scale(1.05)'; // Pas de zoom sur mobile
+              if(!isMobile) e.currentTarget.style.transform = 'scale(1.05)'; 
             }}
             onMouseOut={(e) => { 
               e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
@@ -186,14 +181,14 @@ const ContactPage: React.FC = () => {
               if(!isMobile) e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            [ ⬇ DOWNLOAD DATA_SHEET (CV.PDF) ]
+            [ ⬇ TÉLÉCHARGER DOSSIER (CV.PDF) ]
           </a>
         </div>
 
         <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.7em', fontFamily: 'var(--font-code)', lineHeight: '1.6' }}>
-          <p>© 2025 PROJECT AILURA. SYSTEM INTEGRITY VERIFIED.</p>
-          <p>CONCEPT & DEV: AILURA // HOSTING: GITHUB PAGES</p>
-          <p style={{ marginTop: '10px' }}>// END OF TRANSMISSION //</p>
+          <p>© 2025 PROJET AILURA. INTÉGRITÉ SYSTÈME VÉRIFIÉE.</p>
+          <p>CONCEPTION & DÉV : AILURA // HÉBERGEMENT : GITHUB PAGES</p>
+          <p style={{ marginTop: '10px' }}>// FIN DE TRANSMISSION //</p>
         </div>
       </footer>
 
