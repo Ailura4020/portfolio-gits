@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import ProjectCard, { type ProjectData } from '../components/ProjectCard';
 import ProjectsMobile from '../components/ProjectsMobile';
 import useIsMobile from '../hooks/useIsMobile';
+import DecryptedText from '../components/DecryptedText';
 
 // --- DONNÉES PROJETS ---
 const projects: ProjectData[] = [
@@ -126,9 +127,16 @@ const ProjectsPage: React.FC = () => {
           paddingLeft: '20px', // Standardisé à 20px comme Skills/Experience
           borderLeft: '4px solid var(--color-accent-neon)' // Ajout de la bordure comme les autres
       }}>
-        <h2 style={{ fontSize: isMobile ? '2.5em' : '3em', color: '#fff', marginBottom: '10px', textShadow: '0 0 15px var(--color-accent-neon)' }}>
-          TECHNICAL ARTIFACTS
-        </h2>
+        <DecryptedText 
+  text="TECHNICAL ARTIFACTS"
+  style={{ 
+    fontSize: isMobile ? '2.5em' : '4em', 
+    color: '#fff', 
+    marginBottom: '5px', 
+    textShadow: '0 0 15px var(--color-accent-neon)',
+    fontFamily: 'var(--font-title)'
+  }}
+/>
         <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>
           {'>'} LOADING PROJECT ARCHIVES... FOUND {projects.length} ENTRIES.
         </p>
