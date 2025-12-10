@@ -1,7 +1,5 @@
 // src/pages/Skills.tsx
 import React, { useState } from 'react';
-
-// --- 1. LES IMPORTS ---
 import SkillsMobile from '../components/SkillsMobile';
 import useIsMobile from '../hooks/useIsMobile';
 import DecryptedText from '../components/DecryptedText';
@@ -70,7 +68,7 @@ const CircuitDot: React.FC<{ style?: React.CSSProperties }> = ({ style }) => (
     }}></div>
 );
 
-// --- PERK NODE (Modifié pour être plus compact) ---
+// --- PERK NODE ---
 const PerkNode: React.FC<{ title: string; desc: string }> = ({ title, desc }) => {
   const [isHovered, setIsHovered] = useState(false);
   const activeColor = '#ff2a2a';
@@ -104,29 +102,21 @@ const SkillsPage: React.FC = () => {
       
       {/* HEADER PRINCIPAL */}
       <div style={{ marginBottom: '60px', paddingLeft: '20px', borderLeft: '4px solid var(--color-accent-neon)' }}>
-<DecryptedText 
-  text="DIAGNOSTIC SYSTÈME"
-  interval={15000}
-  style={{ 
-    fontSize: isMobile ? '2.5em' : '3em', 
-    color: '#fff', 
-    marginBottom: '10px', 
-    textShadow: '0 0 10px var(--color-accent-neon)',
-    fontFamily: 'var(--font-title)',
-    textTransform: 'uppercase'
-  }} 
-/>
-      <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>{'>'} ANALYSE CAPACITÉS OPÉRATEUR....</p>
+        <DecryptedText 
+          text="DIAGNOSTIC SYSTÈME"
+          interval={15000}
+          style={{ fontSize: isMobile ? '2.5em' : '3em', color: '#fff', marginBottom: '10px', textShadow: '0 0 10px var(--color-accent-neon)', fontFamily: 'var(--font-title)', textTransform: 'uppercase' }}
+        />
+        <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>{'>'} ANALYSE CAPACITÉS OPÉRATEUR... [NOYAU] & [PSYCHÉ].</p>
       </div>
 
-      {/* --- SWITCHER (MOBILE vs DESKTOP) --- */}
       {isMobile ? (
         <SkillsMobile />
       ) : (
         // VERSION DESKTOP : Layout 2 Colonnes
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '60px', alignItems: 'flex-start' }}>
 
-          {/* COLONNE GAUCHE (TECH TREE) - Prend 55% */}
+          {/* COLONNE GAUCHE (TECH TREE) */}
           <div style={{ flex: '1.2' }}>
             <ColumnHeader title="// MODULES INGÉNIERIE" subtitle="DÉPENDANCES MATÉRIELLES & LOGICIELLES" color="var(--color-accent-neon)" align="left" />
 
@@ -169,7 +159,7 @@ const SkillsPage: React.FC = () => {
               <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', zIndex: 5, marginTop: '10px' }}>
                 <HexSkill label="DOCKER" color="#2496ed" />
                 <HexSkill label="GIT" color="#f05032" />
-                <HexSkill label="POSTGRESQL" color="#336791" />
+                <HexSkill label="SQL" color="#336791" />
               </div>
 
             </div>
@@ -186,15 +176,12 @@ const SkillsPage: React.FC = () => {
                 gap: '20px', // Espace entre les cartes
                 marginTop: '20px' 
             }}>
-              <PerkNode title="INTELLIGENCE RELATIONNELLE" desc="Capacité à décrypter les dynamiques d'équipe et à fluidifier la communication." />
-              <PerkNode title="PÉDAGOGIE & VULGARISATION" desc="Traduction de concepts techniques complexes en langage accessible (Coach)." />
-              <PerkNode title="GESTION DE CONFLIT" desc="Médiation proactive et résolution diplomatique des blocages." />
-              <PerkNode title="PEER-LEARNING" desc="Apprentissage collaboratif et partage de connaissances (Méthode 42/Zone01)." />
-              
-              {/* Le dernier prend toute la largeur pour fermer la grille proprement */}
-              <div style={{ gridColumn: 'span 2' }}>
-                <PerkNode title="ANALYSE DE BESOIN" desc="Compréhension fine des attentes clients et traduction en specs techniques." />
-              </div>
+              <PerkNode title="COORDINATION TACTIQUE" desc="Synchronisation des unités et optimisation de la performance collective en temps réel." />
+              <PerkNode title="TRANSMISSION NEURONALE" desc="Transfert efficace de données et upgrade des compétences des nouvelles recrues." />
+              <PerkNode title="PROTOCOLE DE RÉSOLUTION" desc="Analyse rapide des requêtes critiques et déploiement de solutions correctives." />
+              <PerkNode title="INTERFACE HUMAIN-MACHINE" desc="Traduction fluide entre les impératifs techniques et les besoins utilisateurs." />
+              <PerkNode title="ADAPTATION MODULAIRE" desc="Reconfiguration immédiate face aux imprévus et environnements changeants." />
+              <PerkNode title="INTELLIGENCE TACTIQUE" desc="Compréhension des enjeux business et alignement des solutions techniques." />
             </div>
           </div>
 
