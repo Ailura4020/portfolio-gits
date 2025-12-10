@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.css'; 
 import HomePage from './pages/Home.tsx';
 import ProjectsPage from './pages/Projects.tsx';
@@ -108,6 +108,25 @@ const App: React.FC = () => {
   const [currentTheme, setCurrentTheme] = useState('home');
   const [initialized, setInitialized] = useState(false);
   const isMobile = useIsMobile(); 
+
+  // --- 1. EMPÊCHER LE NAVIGATEUR DE RESTAURER LE SCROLL ---
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    // Force le scroll en haut au chargement initial (au cas où)
+    window.scrollTo(0, 0);
+  }, []);
+
+  // --- 2. FORCER LE SCROLL EN HAUT QUAND L'INTRO EST FINIE ---
+  useEffect(() => {
+    if (initialized) {
+      // Petit délai pour être sûr que le DOM est prêt
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' }); // 'instant' pour ne pas voir le défilement
+      }, 50);
+    }
+  }, [initialized]);
 
   return (
     <div className="App" data-theme={currentTheme} style={{ minHeight: '100vh', backgroundColor: '#000', overflowX: 'hidden' }}>
