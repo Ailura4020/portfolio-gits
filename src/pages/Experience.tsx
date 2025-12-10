@@ -12,7 +12,7 @@ const ExperiencePage: React.FC = () => {
     {
       id: 'mission-active',
       label: 'ZONE01 / STREET CODER',
-      role: 'FULL STACK & COACH',
+      role: 'APPRENANTE & STAFF OPS', 
       date: '2024 - PRÉSENT',
       isOngoing: true,
       content: (
@@ -21,29 +21,34 @@ const ExperiencePage: React.FC = () => {
              // LOCALISATION : ROUEN, NORMANDIE
            </div>
           <p style={{ marginBottom: '20px', fontFamily: 'var(--font-title)', color: '#39ff14' }}>
-            <strong>{'>'} SYNCHRONISATION : DOUBLE TRAITEMENT EN COURS...</strong>
+            <strong>{'>'} SYNCHRONISATION : DOUBLE STATUT ACTIF...</strong>
           </p>
           <p>
-            Position hybride combinant l'acquisition intensive de compétences techniques et le mentoring pédagogique.
+            Position hybride unique : Apprenante en perfectionnement technique (Zone01) déployée simultanément en tant que Membre du Staff (Street Coder).
           </p>
           <br/>
           <strong style={{ fontFamily: 'var(--font-title)', color: 'var(--color-accent-teal)' }}>// JOURNAL DE MISSION :</strong>
+          
           <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid #39ff14' }}>
-            <strong style={{ color: '#39ff14' }}>@ ZONE01 NORMANDIE :</strong>
-            <ul style={{ listStyle: 'none', marginTop: '5px' }}>
-              <li style={{ marginBottom: '5px' }}>[{'>'}] Développement d'architectures résilientes (Go, JS, Rust).</li>
-              <li style={{ marginBottom: '5px' }}>[{'>'}] Travail en méthode Agile/Peer-learning.</li>
+            <strong style={{ color: '#39ff14' }}>@ ZONE01 (FORMATION) :</strong>
+            <ul style={{ listStyle: 'none', marginTop: '5px', fontSize: '0.9em' }}>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] Acquisition intensive de stack technique (Go, JS, Java).</li>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] Maîtrise de l'intelligence collective (Peer-learning).</li>
             </ul>
           </div>
+
           <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid #39ff14' }}>
-            <strong style={{ color: '#39ff14' }}>@ STREET CODER :</strong>
-            <ul style={{ listStyle: 'none', marginTop: '5px' }}>
-              <li style={{ marginBottom: '5px' }}>[{'>'}] <strong>Coach Pédagogique :</strong> Transmission de savoirs numériques.</li>
-              <li style={{ marginBottom: '5px' }}>[{'>'}] Accompagnement des publics éloignés du numérique.</li>
+            <strong style={{ color: '#39ff14' }}>@ STREET CODER (ALTERNANCE STAFF) :</strong>
+            <ul style={{ listStyle: 'none', marginTop: '5px', fontSize: '0.9em' }}>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] <strong>Supervision & Encadrement :</strong> Gestion des candidats (Piscines, Intégration).</li>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] <strong>Logistique Tactique :</strong> Organisation d'événements majeurs (Salons, Ateliers, Hackathons).</li>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] <strong>R&D Interne :</strong> Développement d'outils administratifs (Ex: Plateforme d'émargement).</li>
+              <li style={{ marginBottom: '5px' }}>[{'>'}] <strong>Administration :</strong> Gestion des dossiers et suivi opérationnel.</li>
             </ul>
           </div>
+
           <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-             {['GoLang', 'React', 'Pédagogie', 'Coaching', 'Node.js'].map(tech => (
+             {['GoLang', 'React', 'Gestion de Projet', 'Événementiel', 'Administration'].map(tech => (
                <span key={tech} style={{ 
                  fontSize: '0.8em', padding: '5px 15px', border: '1px solid #39ff14', background: 'rgba(57, 255, 20, 0.1)',
                  color: '#39ff14', fontFamily: 'var(--font-title)', letterSpacing: '1px'
@@ -57,7 +62,7 @@ const ExperiencePage: React.FC = () => {
     },
     {
       id: 'archive-bci',
-      label: 'BCI BANK',
+      label: 'BCI BANQUE',
       role: 'TÉLÉCONSEILLÈRE',
       date: 'OCT 2022 - JAN 2024',
       content: (
@@ -88,7 +93,7 @@ const ExperiencePage: React.FC = () => {
     },
     {
       id: 'archive-billabong-mgr',
-      label: 'BILLABONG GRP',
+      label: 'BBG* GRP BILLABONG',
       role: 'RESPONSABLE ADJOINTE',
       date: 'NOV 2021 - AVR 2022',
       content: (
@@ -119,7 +124,7 @@ const ExperiencePage: React.FC = () => {
     },
     {
       id: 'archive-billabong-sales',
-      label: 'BILLABONG OPS',
+      label: 'BBG* GRP BILLABONG',
       role: 'VENDEUSE',
       date: 'MAR 2019 - NOV 2021',
       content: (
@@ -156,7 +161,7 @@ const ExperiencePage: React.FC = () => {
       content: (
         <>
            <div style={{ fontFamily: 'var(--font-title)', color: 'var(--color-interface-light)', marginBottom: '10px' }}>
-             // LOCALISATION : FRANCE (ANGERS / ST-BARTH)
+             // LOCALISATION : FRANCE (ANGERS / ST-BARTHELEMY)
            </div>
            <p style={{ marginBottom: '20px' }}>
             <strong>// DÉPLOIEMENT INITIAL :</strong> Gestion de portefeuille client et objectifs commerciaux.

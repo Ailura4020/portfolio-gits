@@ -168,7 +168,7 @@ const HomePage: React.FC = () => {
             margin: isMobile ? '0 auto' : '0' 
           }}>
             Développeuse Full Stack en formation & Coach Pédagogique en alternance.<br/>
-            Bridging the gap between human intuition and machine logic.
+            [Connecter l'intuition humaine à la logique machine]
           </p>
       </div>
 
