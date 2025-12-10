@@ -3,13 +3,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import './CyberIntro.css';
 
 // 1. ASSETS
-// La vidéo de fond
 import gitsRainVideo from '../assets/gits-rainfall-text.mp4';
-
-// Ton profil (Vérifie le nom exact : portfolio.png ou portoflio.jpg selon ton dossier)
 import myPortrait from '../assets/portfolio.png'; 
 
-// Les 6 suspects (Assure-toi qu'ils sont bien dans src/assets/)
+// Import des suspects (Gardés tels quels)
 import suspect1 from '../assets/suspect1.png';
 import suspect2 from '../assets/suspect2.png';
 import suspect3 from '../assets/suspect3.png';
@@ -21,11 +18,26 @@ interface CyberIntroProps {
   onComplete: () => void;
 }
 
-// Tableau des suspects pour le défilement
 const SUSPECT_IMAGES = [suspect1, suspect2, suspect3, suspect4, suspect5, suspect6];
 
-const RANDOM_NAMES = ["KUSANAGI", "BATOU", "TOGUSA", "ISHIKAWA", "SAITO", "BOMA", "PAZU", "AZUMA"];
-const RANDOM_STATUS = ["SCANNING BIOMETRICS...", "ANALYZING RETINA...", "CHECKING CRIMINAL RECORD...", "SEARCHING INTERPOL DB..."];
+// --- NOUVEAUX TEXTES (MIX OPTION A + C) ---
+const RANDOM_CRIMES = [
+    "UNAUTHORIZED BRAIN DIVE", 
+    "CLASS-A THREAT DETECTED", 
+    "MILITARY PROXY HACK", 
+    "CORPORATE DATA THEFT", 
+    "AI LEVEL 4 BREACH", 
+    "MASSIVE NETWORK OUTAGE"
+];
+
+const RANDOM_STATUS = [
+    "TERMINATE ON SIGHT", 
+    "CRITICAL ERROR", 
+    "WANTED: DEAD OR ALIVE", 
+    "FUGITIVE // ARMED", 
+    "TRACE FAILED...", 
+    "SYSTEM DISCONNECTED"
+];
 
 const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
   const [phase, setPhase] = useState<'IDLE' | 'SEARCHING' | 'VERIFIED' | 'EXIT'>('IDLE');
@@ -43,17 +55,18 @@ const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
   const startSequence = () => {
     setPhase('SEARCHING');
     let cycles = 0;
-    const maxCycles = 30; // ~2.5 secondes de scan
+    const maxCycles = 30; 
 
     intervalRef.current = setInterval(() => {
       cycles++;
       const imageIndex = cycles % SUSPECT_IMAGES.length;
 
+      // Données aléatoires "Criminelles" pendant le scan
       setDisplayData({
-        name: RANDOM_NAMES[Math.floor(Math.random() * RANDOM_NAMES.length)],
-        id: Math.floor(Math.random() * 999999).toString(),
+        name: RANDOM_CRIMES[Math.floor(Math.random() * RANDOM_CRIMES.length)], // Affiche le Crime en "Nom"
+        id: "ERR-" + Math.floor(Math.random() * 999).toString(),
         status: RANDOM_STATUS[Math.floor(Math.random() * RANDOM_STATUS.length)],
-        clearance: 'ANALYZING...',
+        clearance: 'ANALYZING THREAT...',
         currentImage: SUSPECT_IMAGES[imageIndex]
       });
 
@@ -91,25 +104,25 @@ const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
   return (
     <div className="cyber-screen">
       
-      {/* --- BACKGROUND VIDEO --- */}
+      {/* VIDEO BACKGROUND */}
       <div className="video-bg-container">
         <video autoPlay loop muted playsInline className="cyber-video">
           <source src={gitsRainVideo} type="video/mp4" />
         </video>
-        {/* Overlay pour assombrir et unifier */}
         <div className="video-overlay"></div>
       </div>
 
-      {/* --- UI IDLE --- */}
+      {/* PHASE 1: IDLE */}
       {phase === 'IDLE' && (
         <div className="cyber-idle">
             <div className="triangle-logo"></div>
-            <div className="police-header">PUBLIC SECURITY SECTION 9</div>
-            <h1 className="system-title">ACCESS DATABASE</h1>
-            <div className="sub-title">// EXTERNAL CONNECTION DETECTED</div>
+            <div className="police-header">PUBLIC SECURITY SECTION 9 <br /> // FUGITIVE SQUAD</div>
+            <h1 className="system-title">CRIMINAL DATABASE</h1>
+            <div className="sub-title">// LOCATING TARGET : AILURA_4020</div>
             
+            {/* Bouton avec saut de ligne */}
             <button className="entry-btn" onClick={startSequence}>
-                [ INITIATE SEARCH ]
+                [ CLICK HERE <br /> TO ACCESS PERSONNEL FILE ]
             </button>
             
             <div style={{ marginTop: '40px', fontSize: '0.7em', color: 'rgba(0,255,255,0.6)', fontFamily: 'monospace', textShadow: '0 0 5px #000' }}>
@@ -119,7 +132,7 @@ const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
         </div>
       )}
 
-      {/* --- UI SCAN / VERIFIED --- */}
+      {/* PHASE 2: SCAN */}
       {(phase === 'SEARCHING' || phase === 'VERIFIED') && (
         <div className={`database-container ${phase === 'VERIFIED' ? 'verified' : ''}`}>
             

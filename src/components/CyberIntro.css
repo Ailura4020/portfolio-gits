@@ -229,7 +229,7 @@
 /* --- RESPONSIVE MOBILE --- */
 @media (max-width: 768px) {
     .database-container { 
-        flex-direction: column; /* Vertical sur mobile */
+        flex-direction: column; 
         width: 95%; 
         height: auto; 
         max-height: 90vh; 
@@ -238,9 +238,19 @@
     
     .mugshot-zone { 
         width: 100%; 
-        height: 250px; 
+        /* On augmente un peu la hauteur pour mieux voir */
+        height: 300px; 
         border-right: none; 
         border-bottom: 1px solid #0ff; 
+        background: #000;
+    }
+
+    /* CORRECTION IMAGE MOBILE : On force l'image à tenir en entier */
+    .mugshot-zone .mugshot-img {
+        object-fit: contain; /* L'image s'adapte sans être coupée */
+        object-position: center;
+        width: 100%;
+        height: 100%;
     }
     
     .data-zone { 
@@ -249,7 +259,6 @@
         gap: 15px;
     }
     
-    /* Correction Texte Mobile : On casse la grille pour passer en Flex vertical */
     .data-row { 
         display: flex; 
         flex-direction: column; 
@@ -259,14 +268,24 @@
     }
     
     .data-label { font-size: 0.7em; width: 100%; }
+    
+    /* On réduit un peu la taille du texte pour les longs noms de crimes */
     .data-value { 
-        font-size: 1em; 
+        font-size: 0.9em; 
         text-align: left; 
         white-space: normal; 
         width: 100%; 
+        word-break: break-word; /* Évite que ça dépasse */
     }
     
-    .system-title { font-size: 2em; }
+    .system-title { font-size: 1.8em; }
     .triangle-logo { transform: scale(0.7); margin-bottom: 10px; }
-    .entry-btn { padding: 15px 30px; font-size: 1em; }
+    
+    /* Bouton centré */
+    .entry-btn { 
+        padding: 15px 30px; 
+        font-size: 0.9em; 
+        text-align: center;
+        width: 100%;
+    }
 }
