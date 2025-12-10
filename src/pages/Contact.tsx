@@ -1,6 +1,7 @@
 // src/pages/Contact.tsx
 import React, { useState } from 'react';
 import useIsMobile from '../hooks/useIsMobile';
+import DecryptedText from '../components/DecryptedText';
 
 const SocialCard: React.FC<{ 
   title: string; 
@@ -94,12 +95,18 @@ const ContactPage: React.FC = () => {
       
       {/* HEADER */}
       <div style={{ textAlign: 'center', marginBottom: isMobile ? '30px' : '50px' }}>
-        <h2 style={{ 
-          fontSize: '3.5em', color: '#fff', marginBottom: '15px',
-          textShadow: '0 0 20px rgba(255, 255, 255, 0.5)'
-        }}>
-          CANAL DE COMMUNICATION
-        </h2>
+       <DecryptedText 
+  text="CANAL DE COMMUNICATION"
+  interval={15000}
+  style={{ 
+    fontSize: '3.5em', 
+    color: '#fff', 
+    marginBottom: '15px',
+    textShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
+    fontFamily: 'var(--font-title)',
+    textTransform: 'uppercase'
+  }} 
+/>
         
         <div style={{ 
           display: 'inline-block',

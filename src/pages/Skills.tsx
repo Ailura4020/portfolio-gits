@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 // --- 1. LES IMPORTS ---
 import SkillsMobile from '../components/SkillsMobile';
 import useIsMobile from '../hooks/useIsMobile';
+import DecryptedText from '../components/DecryptedText';
 
 // --- COMPOSANTS INTERNES ---
 
@@ -103,8 +104,19 @@ const SkillsPage: React.FC = () => {
       
       {/* HEADER PRINCIPAL */}
       <div style={{ marginBottom: '60px', paddingLeft: '20px', borderLeft: '4px solid var(--color-accent-neon)' }}>
-        <h2 style={{ fontSize: isMobile ? '2.5em' : '3em', color: '#fff', marginBottom: '10px', textShadow: '0 0 10px var(--color-accent-neon)' }}>SYSTEM DIAGNOSTICS</h2>
-        <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>{'>'} ANALYZING OPERATOR CAPABILITIES... [KERNEL] & [PSYCHE].</p>
+<DecryptedText 
+  text="SYSTEM DIAGNOSTICS"
+  interval={15000}
+  style={{ 
+    fontSize: isMobile ? '2.5em' : '3em', 
+    color: '#fff', 
+    marginBottom: '10px', 
+    textShadow: '0 0 10px var(--color-accent-neon)',
+    fontFamily: 'var(--font-title)',
+    textTransform: 'uppercase'
+  }} 
+/>
+      <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>{'>'} ANALYZING OPERATOR CAPABILITIES... [KERNEL] & [PSYCHE].</p>
       </div>
 
       {/* --- SWITCHER (MOBILE vs DESKTOP) --- */}
