@@ -1,144 +1,105 @@
 // src/components/ProjectCard.tsx
-import React from 'react';
+import React, { useState } from 'react';
 
 export interface ProjectData {
   id: string;
   codename: string;
   title: string;
-  status: 'COMPLETE' | 'IN PROGRESS' | 'ARCHIVED';
+  status: string;
+  type: string;
   description: string;
   stack: string[];
   repoLink: string;
-  image?: string; 
-  type: 'SCHOOL' | 'PERSONAL' | 'PRO'; 
+  image?: string;
 }
 
-interface CardProps {
-  project: ProjectData;
-  onClick: () => void;
-  isMobile?: boolean; // Nouvelle option pour forcer la largeur
-}
+const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ project, onClick }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
-const ProjectCard: React.FC<CardProps> = ({ project, onClick, isMobile }) => {
   return (
     <div 
-      className="project-card"
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
-        // LOGIQUE INTELLIGENTE :
-        // Si Mobile -> 100% de largeur
-        // Si Desktop -> Calcul mathématique pour faire 3 colonnes
-        minWidth: isMobile ? '100%' : 'calc((100% - 80px) / 3)', 
-        maxWidth: isMobile ? '100%' : 'calc((100% - 80px) / 3)',
-        
-        height: '550px',
-        // Ajout d'une marge en bas uniquement sur mobile pour espacer les cartes
-        marginBottom: isMobile ? '40px' : '0',
-        
-        backgroundColor: 'rgba(10, 10, 10, 0.9)',
-        border: '1px solid var(--color-interface-dark)',
-        position: 'relative',
-        display: 'flex',
+        // FLEXIBILITÉ TOTALE : On remplit le parent
+        width: '100%', 
+        height: '100%', 
+        border: `1px solid ${isHovered ? 'var(--color-accent-neon)' : 'rgba(255, 255, 255, 0.2)'}`,
+        background: 'rgba(5, 10, 15, 0.8)',
+        display: 'flex', 
         flexDirection: 'column',
-        transition: 'all 0.4s ease',
+        position: 'relative',
         cursor: 'pointer',
-        clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)',
-        flexShrink: 0,
-      }}
-      onMouseEnter={(e) => {
-        if (!isMobile) { // On désactive l'effet de zoom sur mobile (gênant au touch)
-            e.currentTarget.style.transform = 'scale(1.02)';
-            e.currentTarget.style.borderColor = 'var(--color-accent-neon)';
-            e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 204, 0, 0.2)';
-            e.currentTarget.style.zIndex = '10';
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!isMobile) {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.borderColor = 'var(--color-interface-dark)';
-            e.currentTarget.style.boxShadow = 'none';
-            e.currentTarget.style.zIndex = '1';
-        }
+        transition: 'all 0.3s ease',
+        boxShadow: isHovered ? '0 0 20px rgba(0, 255, 255, 0.15)' : 'none',
+        // Clip path "Tech" (coin coupé)
+        clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)'
       }}
     >
-      {/* ... Le reste du contenu ne change pas ... */}
-      
-      {/* HEADER */}
-      <div style={{ 
-        display: 'flex', justifyContent: 'space-between', padding: '15px 20px', 
-        borderBottom: '1px solid var(--color-interface-dark)', fontSize: '0.7em', color: 'var(--color-accent-neon)',
-        fontFamily: 'var(--font-title)'
-      }}>
+      {/* HEADER CARTE */}
+      <div style={{ padding: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', fontSize: '0.7em', color: '#888', fontFamily: 'var(--font-code)' }}>
         <span>[{project.codename}]</span>
-        <span>STATUS: {project.status}</span>
+        <span style={{ color: isHovered ? 'var(--color-accent-neon)' : '#888' }}>STATUS: {project.status}</span>
       </div>
 
-      {/* IMAGE */}
+      {/* IMAGE / VISUEL (Hauteur fixe pour uniformité) */}
       <div style={{ 
-        height: '200px', width: '100%', position: 'relative', overflow: 'hidden',
-        borderBottom: '1px solid var(--color-accent-neon)'
+          flex: 1, 
+          background: '#000', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          overflow: 'hidden',
+          borderBottom: '1px solid rgba(255,255,255,0.1)',
+          minHeight: '200px' // Hauteur min pour l'image
       }}>
         {project.image ? (
-          <img 
-            src={project.image} 
-            alt={project.title} 
-            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(60%) sepia(20%)' }}
-          />
+            <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: isHovered ? 1 : 0.6, transition: 'opacity 0.3s' }} />
         ) : (
-          <div style={{ 
-            width: '100%', height: '100%', backgroundColor: '#050505', 
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 204, 0, 0.05) 3px)'
-          }}>
-            <div style={{ fontSize: '3em', color: 'var(--color-interface-dark)' }}>⚠</div>
-            <div style={{ fontFamily: 'var(--font-title)', color: 'var(--color-interface-light)', marginTop: '10px', letterSpacing: '2px' }}>
-              NO VISUAL DATA
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+                <div style={{ fontSize: '2em', color: '#333' }}>⚠</div>
+                <div style={{ color: '#444', fontFamily: 'var(--font-title)', fontSize: '0.8em', letterSpacing: '2px' }}>NO VISUAL DATA</div>
             </div>
-          </div>
         )}
-        <div style={{
-          position: 'absolute', top: '10px', right: '10px',
-          backgroundColor: 'var(--color-accent-neon)', color: '#000',
-          padding: '2px 8px', fontSize: '0.7em', fontWeight: 'bold', fontFamily: 'var(--font-title)'
+      </div>
+
+      {/* CORPS DE LA CARTE */}
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ 
+            fontSize: '1.5em', margin: '0 0 10px 0', color: isHovered ? 'var(--color-accent-neon)' : '#fff', 
+            fontFamily: 'var(--font-title)', textTransform: 'uppercase'
         }}>
-          {project.type} PROJECT
+            {project.title}
+        </h3>
+        
+        {/* Résumé Tech */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
+            {project.stack.slice(0, 3).map(tech => ( // On montre juste les 3 premiers tags
+                <span key={tech} style={{ fontSize: '0.7em', border: '1px solid #333', padding: '2px 8px', color: '#aaa' }}>
+                    {tech}
+                </span>
+            ))}
+            {project.stack.length > 3 && <span style={{ fontSize: '0.7em', color: '#555' }}>+</span>}
+        </div>
+
+        {/* Bouton Inspect (Apparaît au survol) */}
+        <div style={{ 
+            marginTop: '20px', 
+            textAlign: 'center', 
+            border: '1px solid var(--color-accent-neon)', 
+            padding: '10px',
+            color: 'var(--color-accent-neon)',
+            fontFamily: 'var(--font-title)',
+            fontSize: '0.8em',
+            opacity: isHovered ? 1 : 0, // Visible seulement au survol
+            transform: isHovered ? 'translateY(0)' : 'translateY(10px)',
+            transition: 'all 0.3s'
+        }}>
+            {'>'} INSPECT DATA
         </div>
       </div>
 
-      {/* CONTENU */}
-      <div style={{ padding: '30px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <h3 style={{ fontSize: '1.5em', color: '#fff', marginBottom: '15px', textTransform: 'uppercase', letterSpacing: '1px' }}>
-          {project.title}
-        </h3>
-        <div style={{ marginBottom: '20px', flex: 1 }}>
-          <strong style={{ color: 'var(--color-accent-neon)', fontSize: '0.8em', display: 'block', marginBottom: '5px' }}>
-            // MISSION BRIEFING
-          </strong>
-          <p style={{ fontSize: '0.9em', lineHeight: '1.6', color: 'var(--color-text-primary)' }}>
-            {project.description}
-          </p>
-        </div>
-        <div style={{ marginBottom: '25px' }}>
-          <strong style={{ color: 'var(--color-accent-neon)', fontSize: '0.8em', display: 'block', marginBottom: '10px' }}>
-            // SYSTEM ARCHITECTURE
-          </strong>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {project.stack.map(tech => (
-              <span key={tech} style={{ border: '1px solid var(--color-interface-dark)', padding: '4px 8px', fontSize: '0.75em', color: '#ccc' }}>
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '12px',
-            border: '1px solid var(--color-accent-neon)', color: 'var(--color-accent-neon)',
-            fontFamily: 'var(--font-title)', fontSize: '0.9em', letterSpacing: '2px'
-          }}>
-          {'>'} INSPECT DATA
-        </div>
-      </div>
     </div>
   );
 };

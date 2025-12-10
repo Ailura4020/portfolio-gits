@@ -1,22 +1,21 @@
 // src/pages/Skills.tsx
 import React, { useState } from 'react';
 
-// --- 1. LES IMPORTS (TOUJOURS EN HAUT) ---
+// --- 1. LES IMPORTS ---
 import SkillsMobile from '../components/SkillsMobile';
 import useIsMobile from '../hooks/useIsMobile';
 
-// --- LES COMPOSANTS INTERNES (Header, Hexagone, etc.) ---
-// (On garde tout ce qu'on a fait avant)
+// --- COMPOSANTS INTERNES ---
 
 const ColumnHeader: React.FC<{ title: string; subtitle: string; color: string; align: 'left' | 'right' }> = ({ title, subtitle, color, align }) => (
   <div style={{
-    marginBottom: '50px',
+    marginBottom: '40px',
     padding: '15px 25px',
-    background: `linear-gradient(${align === 'left' ? '90deg' : '-90deg'}, rgba(255, 255, 255, 0.1), transparent)`,
-    borderLeft: align === 'left' ? `4px solid #ffffff` : 'none',
-    borderRight: align === 'right' ? `4px solid #ffffff` : 'none',
+    background: `linear-gradient(${align === 'left' ? '90deg' : '-90deg'}, rgba(255, 255, 255, 0.05), transparent)`,
+    borderLeft: align === 'left' ? `4px solid ${color}` : 'none',
+    borderRight: align === 'right' ? `4px solid ${color}` : 'none',
     textAlign: align,
-    boxShadow: align === 'left' ? `inset 10px 0 20px -10px rgba(255,255,255,0.2)` : `inset -10px 0 20px -10px rgba(255,255,255,0.2)`
+    boxShadow: align === 'left' ? `inset 10px 0 20px -10px rgba(255,255,255,0.1)` : `inset -10px 0 20px -10px rgba(255,255,255,0.1)`
   }}>
     <h3 style={{ 
       color: color, margin: 0, fontSize: '1.5em', letterSpacing: '2px', 
@@ -61,24 +60,34 @@ const HexSkill: React.FC<HexProps> = ({ label, level, color = 'var(--color-accen
 
 const CircuitDot: React.FC<{ style?: React.CSSProperties }> = ({ style }) => (
     <div style={{
-        position: 'absolute', width: '8px', height: '8px', 
+        position: 'absolute', width: '6px', height: '6px', 
         backgroundColor: '#fff', 
         borderRadius: '50%',
-        boxShadow: '0 0 10px var(--color-accent-neon), 0 0 20px var(--color-accent-neon)', 
+        boxShadow: '0 0 10px var(--color-accent-neon)', 
         zIndex: 5,
         ...style
     }}></div>
 );
 
+// --- PERK NODE (Modifié pour être plus compact) ---
 const PerkNode: React.FC<{ title: string; desc: string }> = ({ title, desc }) => {
   const [isHovered, setIsHovered] = useState(false);
   const activeColor = '#ff2a2a';
   return (
-    <div onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} style={{ display: 'flex', alignItems: 'center', marginBottom: '35px', position: 'relative' }}>
-      <div style={{ width: '30px', height: '2px', backgroundColor: isHovered ? activeColor : 'var(--color-interface-dark)', marginRight: '15px', boxShadow: isHovered ? `0 0 10px ${activeColor}` : 'none', transition: 'all 0.3s ease' }}></div>
-      <div style={{ borderLeft: `3px solid ${isHovered ? activeColor : 'var(--color-interface-dark)'}`, backgroundColor: 'rgba(0, 0, 0, 0.7)', backdropFilter: 'blur(3px)', padding: '20px', width: '100%', position: 'relative', transition: 'all 0.3s ease', border: `1px solid ${isHovered ? activeColor : 'transparent'}`, borderLeftWidth: '3px' }}>
-        <h4 style={{ color: isHovered ? '#fff' : '#ddd', margin: 0, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase', textShadow: isHovered ? `0 0 10px ${activeColor}` : 'none' }}>{title}</h4>
-        <div style={{ fontSize: '0.9em', color: '#bbb', marginTop: '8px', lineHeight: '1.4' }}>{desc}</div>
+    <div onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} style={{ display: 'flex', alignItems: 'stretch', position: 'relative', height: '100%' }}>
+      {/* Barre verticale décorative */}
+      <div style={{ width: '4px', backgroundColor: isHovered ? activeColor : 'var(--color-interface-dark)', marginRight: '15px', boxShadow: isHovered ? `0 0 10px ${activeColor}` : 'none', transition: 'all 0.3s ease' }}></div>
+      
+      {/* Contenu */}
+      <div style={{ 
+          backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+          border: `1px solid ${isHovered ? activeColor : 'rgba(255,255,255,0.1)'}`,
+          padding: '20px', width: '100%', 
+          transition: 'all 0.3s ease',
+          display: 'flex', flexDirection: 'column', justifyContent: 'center'
+      }}>
+        <h4 style={{ color: isHovered ? '#fff' : '#eee', margin: '0 0 10px 0', fontSize: '1em', letterSpacing: '1px', textTransform: 'uppercase', textShadow: isHovered ? `0 0 10px ${activeColor}` : 'none' }}>{title}</h4>
+        <div style={{ fontSize: '0.85em', color: '#bbb', lineHeight: '1.5' }}>{desc}</div>
       </div>
     </div>
   );
@@ -86,74 +95,66 @@ const PerkNode: React.FC<{ title: string; desc: string }> = ({ title, desc }) =>
 
 // --- COMPOSANT PRINCIPAL ---
 const SkillsPage: React.FC = () => {
-  const circuitColor = 'rgba(255, 255, 255, 0.2)'; 
-  
-  // --- 2. ACTIVATION DU HOOK (Au début de la fonction) ---
+  const circuitColor = 'rgba(255, 255, 255, 0.15)'; 
   const isMobile = useIsMobile();
 
   return (
     <div style={{ paddingTop: '50px', paddingBottom: '100px', overflowX: 'hidden' }}>
       
       {/* HEADER PRINCIPAL */}
-      <div style={{ marginBottom: '80px', paddingLeft: '20px', borderLeft: '4px solid var(--color-accent-neon)' }}>
-        <h2 style={{ fontSize: '3em', color: '#fff', marginBottom: '10px', textShadow: '0 0 10px var(--color-accent-neon)' }}>SYSTEM DIAGNOSTICS</h2>
+      <div style={{ marginBottom: '60px', paddingLeft: '20px', borderLeft: '4px solid var(--color-accent-neon)' }}>
+        <h2 style={{ fontSize: isMobile ? '2.5em' : '3em', color: '#fff', marginBottom: '10px', textShadow: '0 0 10px var(--color-accent-neon)' }}>SYSTEM DIAGNOSTICS</h2>
         <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>{'>'} ANALYZING OPERATOR CAPABILITIES... [KERNEL] & [PSYCHE].</p>
       </div>
 
-      {/* --- 3. LE SWITCHER (MOBILE vs DESKTOP) --- */}
+      {/* --- SWITCHER (MOBILE vs DESKTOP) --- */}
       {isMobile ? (
-        // VERSION MOBILE (Le nouveau composant simple)
         <SkillsMobile />
       ) : (
-        // VERSION DESKTOP (L'arbre complexe avec circuits)
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '80px', justifyContent: 'center', alignItems: 'flex-start' }}>
+        // VERSION DESKTOP : Layout 2 Colonnes
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '60px', alignItems: 'flex-start' }}>
 
-          {/* COLONNE GAUCHE (TECH TREE) */}
-          <div style={{ flex: '1 1 550px', minWidth: '350px' }}>
+          {/* COLONNE GAUCHE (TECH TREE) - Prend 55% */}
+          <div style={{ flex: '1.2' }}>
             <ColumnHeader title="// ENGINEERING MODULES" subtitle="HARDWARE & SOFTWARE DEPENDENCIES" color="var(--color-accent-neon)" align="left" />
 
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', marginTop: '40px' }}>
               
-              <div style={{ position: 'absolute', top: '50px', bottom: '50px', left: '50%', width: '1px', background: 'rgba(255,255,255,0.1)', zIndex: 0 }}></div>
+              <div style={{ position: 'absolute', top: '50px', bottom: '50px', left: '50%', width: '1px', background: 'rgba(255,255,255,0.05)', zIndex: 0 }}></div>
 
-              {/* NIVEAU 1 */}
-              <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', zIndex: 5 }}>
+              {/* RANG 1 : Core */}
+              <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', zIndex: 5 }}>
                 <HexSkill label="JAVASCRIPT" level="ES6+" color="#f7df1e" size="large" />
                 <HexSkill label="TYPESCRIPT" level="Strict" color="#3178c6" size="large" />
                 <HexSkill label="GO (GOLANG)" level="Backend" color="#00add8" size="large" />
                 <HexSkill label="JAVA" level="OOP" color="#f89820" size="large" />
               </div>
 
-              {/* CIRCUIT 1 */}
-              <div style={{ position: 'relative', width: '80%', height: '60px', zIndex: 0 }}>
-                  <div style={{ position: 'absolute', left: '10%', top: 0, height: '100%', width: '2px', background: circuitColor }}></div>
-                  <div style={{ position: 'absolute', left: '35%', top: 0, height: '100%', width: '2px', background: circuitColor }}></div>
-                  <div style={{ position: 'absolute', right: '35%', top: 0, height: '100%', width: '2px', background: circuitColor }}></div>
-                  <div style={{ position: 'absolute', right: '10%', top: 0, height: '100%', width: '2px', background: circuitColor }}></div>
-                  <div style={{ position: 'absolute', bottom: 0, left: '5%', right: '5%', height: '2px', background: circuitColor }}></div>
-                  <CircuitDot style={{ left: '10%', top: '50%', transform: 'translate(-50%, -50%)' }} />
-                  <CircuitDot style={{ left: '35%', top: '50%', transform: 'translate(-50%, -50%)' }} />
-                  <CircuitDot style={{ right: '35%', top: '50%', transform: 'translate(50%, -50%)' }} />
-                  <CircuitDot style={{ right: '10%', top: '50%', transform: 'translate(50%, -50%)' }} />
+              {/* Circuit de liaison */}
+              <div style={{ position: 'relative', width: '80%', height: '50px', zIndex: 0 }}>
+                  <div style={{ position: 'absolute', left: '10%', top: 0, height: '100%', width: '1px', background: circuitColor }}></div>
+                  <div style={{ position: 'absolute', right: '10%', top: 0, height: '100%', width: '1px', background: circuitColor }}></div>
+                  <div style={{ position: 'absolute', bottom: 0, left: '10%', right: '10%', height: '1px', background: circuitColor }}></div>
+                  <CircuitDot style={{ left: '10%', top: '50%' }} />
+                  <CircuitDot style={{ right: '10%', top: '50%' }} />
               </div>
 
-              {/* NIVEAU 2 */}
-              <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center', zIndex: 5, marginTop: '20px' }}>
+              {/* RANG 2 : Frameworks */}
+              <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', zIndex: 5, marginTop: '10px' }}>
                 <HexSkill label="REACT" level="Hooks" color="#61dafb" />
                 <HexSkill label="ANGULAR" level="RxJS" color="#dd0031" />
                 <HexSkill label="NODE.JS" level="API" color="#339933" />
                 <HexSkill label="SPRING" level="Boot" color="#6db33f" />
               </div>
 
-              {/* CIRCUIT 2 */}
-              <div style={{ position: 'relative', width: '60%', height: '60px', zIndex: 0 }}>
-                  <div style={{ position: 'absolute', left: '50%', top: 0, height: '100%', width: '2px', background: circuitColor }}></div>
-                  <div style={{ position: 'absolute', bottom: 0, left: '10%', right: '10%', height: '2px', background: circuitColor }}></div>
+              {/* Circuit de liaison */}
+              <div style={{ position: 'relative', width: '60%', height: '50px', zIndex: 0 }}>
+                  <div style={{ position: 'absolute', left: '50%', top: 0, height: '100%', width: '1px', background: circuitColor }}></div>
                   <CircuitDot style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }} />
               </div>
 
-              {/* NIVEAU 3 */}
-              <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center', zIndex: 5, marginTop: '20px' }}>
+              {/* RANG 3 : Tools */}
+              <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', zIndex: 5, marginTop: '10px' }}>
                 <HexSkill label="DOCKER" color="#2496ed" />
                 <HexSkill label="GIT" color="#f05032" />
                 <HexSkill label="POSTGRESQL" color="#336791" />
@@ -162,15 +163,26 @@ const SkillsPage: React.FC = () => {
             </div>
           </div>
 
-          {/* COLONNE DROITE (HUMAIN) */}
-          <div style={{ flex: '1 1 400px', minWidth: '350px' }}>
+          {/* COLONNE DROITE (HUMAIN) - Prend 45% - GRILLE 2x2 */}
+          <div style={{ flex: '1' }}>
             <ColumnHeader title="// OPERATOR ATTRIBUTES" subtitle="PSYCHOMETRIC EVALUATION DATA" color="#ff2a2a" align="right" />
-            <div style={{ paddingLeft: '10px', marginTop: '20px' }}>
+            
+            {/* GRILLE 2 COLONNES ICI */}
+            <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: '1fr 1fr', // 2 colonnes égales
+                gap: '20px', // Espace entre les cartes
+                marginTop: '20px' 
+            }}>
               <PerkNode title="INTELLIGENCE RELATIONNELLE" desc="Capacité à décrypter les dynamiques d'équipe et à fluidifier la communication." />
               <PerkNode title="PÉDAGOGIE & VULGARISATION" desc="Traduction de concepts techniques complexes en langage accessible (Coach)." />
               <PerkNode title="GESTION DE CONFLIT" desc="Médiation proactive et résolution diplomatique des blocages." />
               <PerkNode title="PEER-LEARNING" desc="Apprentissage collaboratif et partage de connaissances (Méthode 42/Zone01)." />
-              <PerkNode title="ANALYSE DE BESOIN" desc="Compréhension fine des attentes clients et traduction en specs techniques." />
+              
+              {/* Le dernier prend toute la largeur pour fermer la grille proprement */}
+              <div style={{ gridColumn: 'span 2' }}>
+                <PerkNode title="ANALYSE DE BESOIN" desc="Compréhension fine des attentes clients et traduction en specs techniques." />
+              </div>
             </div>
           </div>
 
