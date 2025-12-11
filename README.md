@@ -1,11 +1,3 @@
-### 📝 Procédure
-
-1.  Crée un fichier nommé `README.md` à la racine de ton projet.
-2.  Colle le contenu ci-dessous.
-3.  *(Optionnel)* Fais une capture d'écran de ta Home Page, nomme-la `preview.png`, mets-la à la racine du projet pour qu'elle s'affiche dans le README.
-
------
-
 ### Contenu du fichier `README.md`
 
 ````markdown
