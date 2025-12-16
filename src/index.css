@@ -1,5 +1,4 @@
 /* src/index.css */
-<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap');
 
 :root {
@@ -25,50 +24,11 @@ html {
   background-color: #050505;
   scroll-padding-top: 60px;
   scroll-behavior: smooth;
-=======
-
-/* --- Import des Polices --- */
-/* (IMPORTANT : Assure-toi que ces polices sont importées dans le fichier public/index.html) */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap');
-
-/* --- Variables CSS (Palette GitS Cinématique) --- */
-:root {
-  /* Fond et Ombres (Basé sur le Noir et Bleu Marine Profond) */
-  --color-bg-primary: #000216;      /* Noir/Bleu Marine très profond (1ère couleur) */
-  --color-bg-secondary: #001228;    /* Bleu sombre (2ème couleur) */
-  
-  /* Texte et Interface */
-  --color-text-primary: #e0e0e0;     /* Gris Clair pour le corps */
-  --color-text-title: #ffffff;      /* Blanc pur pour les titres */
-  
-  /* Accents et Neon (Basé sur le Teal/Cyan Vif) */
-  --color-accent-neon: #00ffff;      /* Cyan vif pour l'effet néon/lien (couleur 8 ou plus) */
-  --color-accent-teal: #006679;      /* Teal sombre pour les lignes d'interface (couleur 6) */
-  --color-accent-secondary: #afc9e0; /* Une couleur froide et claire pour l'inactivité */
-  
-  /* Gris d'Interface */
-  --color-interface-dark: #1f3747;   /* Pour les bordures et séparations */
-  
-  /* Polices */
-  --font-title: 'Orbitron', sans-serif;
-  --font-body: 'Inter', sans-serif;
-}
-
-/* --- Base Reset & Body --- */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
->>>>>>> d559643dcb0e62de0b56e561fd1367c398bbe757
 }
 
 body {
   font-family: var(--font-body);
-<<<<<<< HEAD
   background-color: #050505;
-=======
-  background-color: var(--color-bg-primary);
->>>>>>> d559643dcb0e62de0b56e561fd1367c398bbe757
   color: var(--color-text-primary);
   min-height: 100vh;
   transition: color 0.5s ease;
@@ -78,7 +38,6 @@ body {
   position: relative;
 }
 
-<<<<<<< HEAD
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-title); color: var(--color-text-title); text-transform: uppercase; letter-spacing: 0.1em; }
 a { color: var(--color-accent-neon); text-decoration: none; transition: color 0.3s ease; }
 a:hover { color: var(--color-accent-secondary); }
@@ -207,33 +166,4 @@ a:hover { color: var(--color-accent-secondary); }
   60% { clip: rect(10px, 9999px, 50px, 0); }
   80% { clip: rect(90px, 9999px, 20px, 0); }
   100% { clip: rect(20px, 9999px, 70px, 0); }
-=======
-/* --- Styles des Titres --- */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-title);
-  color: var(--color-text-title);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-/* --- Styles des Liens/Boutons --- */
-a {
-  color: var(--color-accent-neon);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: var(--color-accent-secondary);
-}
-
-.neon-border {
-  border: 1px solid var(--color-accent-neon);
-  box-shadow: 0 0 5px var(--color-accent-neon);
-}
-
-/* Enlève le style par défaut des listes */
-ul {
-    list-style: none;
->>>>>>> d559643dcb0e62de0b56e561fd1367c398bbe757
 }
