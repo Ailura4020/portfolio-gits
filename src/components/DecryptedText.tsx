@@ -6,16 +6,16 @@ const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%&^*=-+";
 
 interface DecryptedTextProps {
   text: string;
-  style?: React.CSSProperties; // Pour accepter tes styles existants
+  style?: React.CSSProperties; 
   className?: string;
-  interval?: number; // Temps en ms entre chaque animation auto (ex: 10000 = 10s)
+  interval?: number; 
 }
 
 const DecryptedText: React.FC<DecryptedTextProps> = ({ 
   text, 
   style, 
   className,
-  interval = 10000 // Par défaut : animation toutes les 10 secondes
+  interval = 10000 
 }) => {
   const [displayText, setDisplayText] = useState(text);
   const [isHovered, setIsHovered] = useState(false);
@@ -24,20 +24,21 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
 
   // Fonction d'animation
   const animate = () => {
-    if (animationRunning.current) return; // Évite les conflits
+    if (animationRunning.current) return; 
     animationRunning.current = true;
     
     let iteration = 0;
     
     const timer = setInterval(() => {
-      setDisplayText(prev => 
+      // CORRECTION ICI : on remplace 'prev' par '()' et 'letter' par '_'
+      setDisplayText(() => 
         text
           .split("")
-          .map((letter, index) => {
+          .map((_, index) => {
             if (index < iteration) {
-              return text[index]; // Lettre finale trouvée
+              return text[index]; 
             }
-            return CHARS[Math.floor(Math.random() * CHARS.length)]; // Lettre cryptée
+            return CHARS[Math.floor(Math.random() * CHARS.length)]; 
           })
           .join("")
       );
@@ -47,22 +48,20 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
         animationRunning.current = false;
       }
 
-      iteration += 1 / 2; // Vitesse de décryptage
+      iteration += 1 / 2; 
     }, 30);
   };
 
-  // 1. Déclenchement au Scroll / Navigation (Intersection Observer)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Si l'élément devient visible (scroll ou clic menu)
           if (entry.isIntersecting) {
             animate();
           }
         });
       },
-      { threshold: 0.5 } // Se déclenche quand 50% du titre est visible
+      { threshold: 0.5 } 
     );
 
     if (elementRef.current) {
@@ -70,14 +69,12 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
     }
 
     return () => observer.disconnect();
-  }, []); // [] = s'exécute au montage
+  }, []); 
 
-  // 2. Animation Périodique (Auto-loop)
   useEffect(() => {
     if (!interval) return;
 
     const loop = setInterval(() => {
-      // On lance l'animation seulement si l'élément est visible à l'écran
       if (elementRef.current && elementRef.current.getBoundingClientRect().top > 0 && elementRef.current.getBoundingClientRect().bottom < window.innerHeight) {
          animate();
       }
@@ -86,7 +83,6 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
     return () => clearInterval(loop);
   }, [interval]);
 
-  // 3. Déclenchement au Survol (Interaction utilisateur)
   const handleMouseEnter = () => {
     if (!isHovered) {
         setIsHovered(true);

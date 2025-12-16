@@ -13,7 +13,8 @@ export interface ProjectData {
   image?: string;
 }
 
-const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ project, onClick }) => {
+// CORRECTION ICI : On garde la définition <{... isMobile?: boolean }> mais on retire 'isMobile' des accolades ({...})
+const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void; isMobile?: boolean }> = ({ project, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -22,7 +23,6 @@ const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ 
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        // FLEXIBILITÉ TOTALE : On remplit le parent
         width: '100%', 
         height: '100%', 
         border: `1px solid ${isHovered ? 'var(--color-accent-neon)' : 'rgba(255, 255, 255, 0.2)'}`,
@@ -33,17 +33,14 @@ const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ 
         cursor: 'pointer',
         transition: 'all 0.3s ease',
         boxShadow: isHovered ? '0 0 20px rgba(0, 255, 255, 0.15)' : 'none',
-        // Clip path "Tech" (coin coupé)
         clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)'
       }}
     >
-      {/* HEADER CARTE */}
       <div style={{ padding: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', fontSize: '0.7em', color: '#888', fontFamily: 'var(--font-code)' }}>
         <span>[{project.codename}]</span>
         <span style={{ color: isHovered ? 'var(--color-accent-neon)' : '#888' }}>STATUS: {project.status}</span>
       </div>
 
-      {/* IMAGE / VISUEL (Hauteur fixe pour uniformité) */}
       <div style={{ 
           flex: 1, 
           background: '#000', 
@@ -52,7 +49,7 @@ const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ 
           justifyContent: 'center', 
           overflow: 'hidden',
           borderBottom: '1px solid rgba(255,255,255,0.1)',
-          minHeight: '200px' // Hauteur min pour l'image
+          minHeight: '200px' 
       }}>
         {project.image ? (
             <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: isHovered ? 1 : 0.6, transition: 'opacity 0.3s' }} />
@@ -64,7 +61,6 @@ const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ 
         )}
       </div>
 
-      {/* CORPS DE LA CARTE */}
       <div style={{ padding: '20px' }}>
         <h3 style={{ 
             fontSize: '1.5em', margin: '0 0 10px 0', color: isHovered ? 'var(--color-accent-neon)' : '#fff', 
@@ -73,9 +69,8 @@ const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ 
             {project.title}
         </h3>
         
-        {/* Résumé Tech */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
-            {project.stack.slice(0, 3).map(tech => ( // On montre juste les 3 premiers tags
+            {project.stack.slice(0, 3).map(tech => ( 
                 <span key={tech} style={{ fontSize: '0.7em', border: '1px solid #333', padding: '2px 8px', color: '#aaa' }}>
                     {tech}
                 </span>
@@ -83,7 +78,6 @@ const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ 
             {project.stack.length > 3 && <span style={{ fontSize: '0.7em', color: '#555' }}>+</span>}
         </div>
 
-        {/* Bouton Inspect (Apparaît au survol) */}
         <div style={{ 
             marginTop: '20px', 
             textAlign: 'center', 
@@ -92,7 +86,7 @@ const ProjectCard: React.FC<{ project: ProjectData; onClick: () => void }> = ({ 
             color: 'var(--color-accent-neon)',
             fontFamily: 'var(--font-title)',
             fontSize: '0.8em',
-            opacity: isHovered ? 1 : 0, // Visible seulement au survol
+            opacity: isHovered ? 1 : 0, 
             transform: isHovered ? 'translateY(0)' : 'translateY(10px)',
             transition: 'all 0.3s'
         }}>
