@@ -30,7 +30,9 @@ const projects: ProjectData[] = [
     id: 'p4', codename: 'REAL-TIME-COMMS', title: 'REAL TIME FORUM', status: 'TERMINÉ', type: 'ECOLE',
     description: "Plateforme de discussion instantanée. Architecture SPA (Single Page App) avec gestion des WebSockets pour la communication bidirectionnelle en temps réel.",
     stack: ['Go (Golang)', 'SQLite', 'Docker', 'WebSockets', 'JS'],
-    repoLink: 'https://github.com/Ailura4020/real-time-forum.git'
+    repoLink: 'https://github.com/Ailura4020/real-time-forum.git',
+    image: '/projects/real-time-forum.png' 
+
   },
   {
     id: 'p5', codename: 'TCP-NET-PROTOCOL', title: 'NET-CAT', status: 'TERMINÉ', type: 'ECOLE',
