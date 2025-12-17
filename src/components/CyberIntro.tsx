@@ -4,9 +4,9 @@ import './CyberIntro.css';
 
 // 1. ASSETS
 import gitsRainVideo from '../assets/gits-rainfall-text.mp4';
-import myPortrait from '../assets/portfolio.png'; 
+import myPortrait from '../assets/portfolio.png'; // Assure-toi que c'est bien .png ou .webp selon ton fichier réel
 
-// Import des suspects (Gardés tels quels)
+// Import des suspects (Format WebP pour la rapidité)
 import suspect1 from '../assets/suspect1.webp';
 import suspect2 from '../assets/suspect2.webp';
 import suspect3 from '../assets/suspect3.webp';
@@ -20,7 +20,7 @@ interface CyberIntroProps {
 
 const SUSPECT_IMAGES = [suspect1, suspect2, suspect3, suspect4, suspect5, suspect6];
 
-// --- NOUVEAUX TEXTES (MIX OPTION A + C) ---
+// --- TEXTES D'AMBIANCE ---
 const RANDOM_CRIMES = [
     "PLONGÉE CYBERNÉTIQUE NON AUTORISÉE", 
     "MENACE DE CLASSE A DÉTECTÉE", 
@@ -31,7 +31,7 @@ const RANDOM_CRIMES = [
 ];
 
 const RANDOM_STATUS = [
-    "ÉLIMINER À VUE",         // Ambiance Psycho-Pass
+    "ÉLIMINER À VUE",
     "ERREUR CRITIQUE", 
     "RECHERCHÉ : MORT OU VIF", 
     "FUGITIF // ARMÉ", 
@@ -52,10 +52,27 @@ const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
 
   const intervalRef = useRef<number | null>(null);
 
+  // --- OPTIMISATION 1 : PRÉCHARGEMENT DES IMAGES ---
+  // Cela force le navigateur à télécharger les images dès l'ouverture de la page
+  // pour éviter le lag au moment du clic.
+  useEffect(() => {
+    SUSPECT_IMAGES.forEach((imageSrc) => {
+      const img = new Image();
+      img.src = imageSrc;
+    });
+    // On précharge aussi ton portrait final
+    const portraitImg = new Image();
+    portraitImg.src = myPortrait;
+  }, []);
+
   const startSequence = () => {
     setPhase('SEARCHING');
     let cycles = 0;
-    const maxCycles = 30; 
+    
+    // --- OPTIMISATION 2 : DURÉE RÉDUITE ---
+    // Avant : 30 cycles. Maintenant : 15 cycles.
+    // L'animation dure 2x moins longtemps pour être plus "punchy".
+    const maxCycles = 15; 
 
     intervalRef.current = setInterval(() => {
       cycles++;
@@ -63,7 +80,7 @@ const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
 
       // Données aléatoires "Criminelles" pendant le scan
       setDisplayData({
-        name: RANDOM_CRIMES[Math.floor(Math.random() * RANDOM_CRIMES.length)], // Affiche le Crime en "Nom"
+        name: RANDOM_CRIMES[Math.floor(Math.random() * RANDOM_CRIMES.length)],
         id: "ERR-" + Math.floor(Math.random() * 999).toString(),
         status: RANDOM_STATUS[Math.floor(Math.random() * RANDOM_STATUS.length)],
         clearance: 'ANALYZING THREAT...',
@@ -71,10 +88,10 @@ const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
       });
 
       if (cycles >= maxCycles) {
-        clearInterval(intervalRef.current!);
+        if (intervalRef.current) clearInterval(intervalRef.current);
         matchFound();
       }
-    }, 80);
+    }, 60); // --- OPTIMISATION 3 : VITESSE ACCÉLÉRÉE (60ms au lieu de 80ms)
   };
 
   const matchFound = () => {
@@ -90,7 +107,7 @@ const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
     setTimeout(() => {
         setPhase('EXIT');
         setTimeout(onComplete, 1000); 
-    }, 2500);
+    }, 2000); // Petit ajustement ici aussi (2s au lieu de 2.5s pour rester dynamique)
   };
 
   useEffect(() => {
@@ -117,17 +134,16 @@ const CyberIntro: React.FC<CyberIntroProps> = ({ onComplete }) => {
         <div className="cyber-idle">
             <div className="triangle-logo"></div>
             <div className="police-header">SÉCURITÉ PUBLIQUE SECTION 9 <br></br>// BRIGADE DES FUGITIFS</div>
-<h1 className="system-title">BASE DE DONNÉES CRIMINELLE</h1>
-<div className="sub-title">// LOCALISATION CIBLE : AILURA_4020</div>
+            <h1 className="system-title">BASE DE DONNÉES CRIMINELLE</h1>
+            <div className="sub-title">// LOCALISATION CIBLE : AILURA_4020</div>
             
-            {/* Bouton avec saut de ligne */}
             <button className="entry-btn" onClick={startSequence}>
-    [ CLIQUER ICI <br /> POUR ACCÉDER AU DOSSIER ]
-</button>
+                [ CLIQUER ICI <br /> POUR ACCÉDER AU DOSSIER ]
+            </button>
             
             <div style={{ marginTop: '40px', fontSize: '0.7em', color: 'rgba(0,255,255,0.6)', fontFamily: 'monospace', textShadow: '0 0 5px #000' }}>
                 ATTENTION : L'ACCÈS NON AUTORISÉ EST UN CRIME DE CLASSE A<br/>
-    PROTOCOLE DE SÉCURITÉ CYBER-CERVEAU ACTIF
+                PROTOCOLE DE SÉCURITÉ CYBER-CERVEAU ACTIF
             </div>
         </div>
       )}
