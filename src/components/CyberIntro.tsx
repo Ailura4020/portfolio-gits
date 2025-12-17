@@ -7,12 +7,12 @@ import gitsRainVideo from '../assets/gits-rainfall-text.mp4';
 import myPortrait from '../assets/portfolio.png'; 
 
 // Import des suspects (Gardés tels quels)
-import suspect1 from '../assets/suspect1.png';
-import suspect2 from '../assets/suspect2.png';
-import suspect3 from '../assets/suspect3.png';
-import suspect4 from '../assets/suspect4.png';
-import suspect5 from '../assets/suspect5.png';
-import suspect6 from '../assets/suspect6.png';
+import suspect1 from '../assets/suspect1.webp';
+import suspect2 from '../assets/suspect2.webp';
+import suspect3 from '../assets/suspect3.webp';
+import suspect4 from '../assets/suspect4.webp';
+import suspect5 from '../assets/suspect5.webp';
+import suspect6 from '../assets/suspect6.webp';
 
 interface CyberIntroProps {
   onComplete: () => void;
