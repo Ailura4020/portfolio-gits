@@ -4,7 +4,7 @@ import './CyberIntro.css';
 
 // 1. ASSETS
 import gitsRainVideo from '../assets/gits-rainfall-text.mp4';
-import myPortrait from '../assets/portfolio.png'; // Assure-toi que c'est bien .png ou .webp selon ton fichier réel
+import myPortrait from '../assets/portfolio.webp'; // Assure-toi que c'est bien .png ou .webp selon ton fichier réel
 
 // Import des suspects (Format WebP pour la rapidité)
 import suspect1 from '../assets/suspect1.webp';
