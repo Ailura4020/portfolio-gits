@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './index.css'; 
 import HomePage from './pages/Home.tsx';
 import ProjectsPage from './pages/Projects.tsx';
+import ArchivesPage from './pages/Archives.tsx';
 import ExperiencePage from './pages/Experience.tsx';
 import SkillsPage from './pages/Skills.tsx';
 import ContactPage from './pages/Contact.tsx';
@@ -44,7 +45,8 @@ const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     if (!isOpen) return null;
     const links = [
       { id: 'home', label: 'ACCUEIL' }, 
-      { id: 'projects', label: 'PROJETS' }, 
+      { id: 'projects', label: 'PROJETS' },
+      { id: 'archives', label: 'ARCHIVES' }, 
       { id: 'experience', label: 'EXPÉRIENCE' }, 
       { id: 'skills', label: 'COMPÉTENCES' }, 
       { id: 'contact', label: 'CONTACT' }
@@ -72,6 +74,7 @@ const NavigationBar: React.FC = () => {
   const links = [
       { id: 'home', label: 'ACCUEIL' }, 
       { id: 'projects', label: 'PROJETS' }, 
+      { id: 'archives', label: 'ARCHIVES' },
       { id: 'experience', label: 'EXPÉRIENCE' }, 
       { id: 'skills', label: 'COMPÉTENCES' }, 
       { id: 'contact', label: 'CONTACT' }
@@ -154,6 +157,7 @@ const App: React.FC = () => {
           <main style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
             <section id="home"><HomePage /></section>
             <section id="projects"><ProjectsPage /></section>
+            <section id="archives"><ArchivesPage /></section>
             <section id="experience"><ExperiencePage /></section>
             <section id="skills"><SkillsPage /></section>
             <section id="contact"><ContactPage /></section>
