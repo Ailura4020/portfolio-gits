@@ -76,7 +76,6 @@ const ArchivesPage: React.FC = () => {
       <div style={{ marginBottom: '40px', paddingLeft: '20px', borderLeft: '4px solid var(--color-accent-neon)' }}>
         <DecryptedText 
           text="[ ARCHIVES OPÉRATIONNELLES ]"
-          interval={15000}
           style={{ 
             fontSize: isMobile ? '2.5em' : '4em', 
             color: 'var(--color-accent-neon)', 

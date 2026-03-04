@@ -6,25 +6,24 @@ const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%&^*=-+";
 
 interface DecryptedTextProps {
   text: string;
-  style?: React.CSSProperties; // Pour accepter tes styles existants
+  style?: React.CSSProperties; 
   className?: string;
-  interval?: number; // Temps en ms entre chaque animation auto (ex: 10000 = 10s)
 }
 
 const DecryptedText: React.FC<DecryptedTextProps> = ({ 
   text, 
   style, 
-  className,
-  interval = 10000 // Par défaut : animation toutes les 10 secondes
+  className
 }) => {
   const [displayText, setDisplayText] = useState(text);
   const [isHovered, setIsHovered] = useState(false);
   const elementRef = useRef<HTMLHeadingElement>(null);
   const animationRunning = useRef(false);
+  const hasAnimated = useRef(false); // Mémorise si l'animation a déjà eu lieu
 
   // Fonction d'animation
   const animate = () => {
-    if (animationRunning.current) return; // Évite les conflits
+    if (animationRunning.current) return; 
     animationRunning.current = true;
     
     let iteration = 0;
@@ -51,14 +50,16 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
     }, 30);
   };
 
-  // 1. Déclenchement au Scroll / Navigation (Intersection Observer)
+  // 1. Déclenchement au Scroll UNIQUE (Intersection Observer)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Si l'élément devient visible (scroll ou clic menu)
-          if (entry.isIntersecting) {
+          // Si l'élément devient visible ET n'a pas encore été animé
+          if (entry.isIntersecting && !hasAnimated.current) {
+            hasAnimated.current = true; // Verrouille l'animation
             animate();
+            observer.disconnect(); // Désactive l'observateur pour toujours
           }
         });
       },
@@ -72,21 +73,9 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
     return () => observer.disconnect();
   }, []); // [] = s'exécute au montage
 
-  // 2. Animation Périodique (Auto-loop)
-  useEffect(() => {
-    if (!interval) return;
+  // (L'animation périodique / Auto-loop a été totalement supprimée ici)
 
-    const loop = setInterval(() => {
-      // On lance l'animation seulement si l'élément est visible à l'écran
-      if (elementRef.current && elementRef.current.getBoundingClientRect().top > 0 && elementRef.current.getBoundingClientRect().bottom < window.innerHeight) {
-         animate();
-      }
-    }, interval);
-
-    return () => clearInterval(loop);
-  }, [interval]);
-
-  // 3. Déclenchement au Survol (Interaction utilisateur)
+  // 2. Déclenchement au Survol (Interaction utilisateur - Optionnel mais cool)
   const handleMouseEnter = () => {
     if (!isHovered) {
         setIsHovered(true);
