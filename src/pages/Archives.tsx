@@ -75,7 +75,7 @@ const ArchivesPage: React.FC = () => {
       {/* HEADER SECTION AVEC ANIMATION (Comme Projects et Experience) */}
       <div style={{ marginBottom: '40px', paddingLeft: '20px', borderLeft: '4px solid var(--color-accent-neon)' }}>
         <DecryptedText 
-          text="[ ARCHIVES OPÉRATIONNELLES ]"
+          text="OPÉRATIONS EXTÉRIEURES"
           style={{ 
             fontSize: isMobile ? '2.5em' : '4em', 
             color: 'var(--color-accent-neon)', 
@@ -86,7 +86,7 @@ const ArchivesPage: React.FC = () => {
           }}
         />
         <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-interface-light)' }}>
-          // REGISTRE SYBIL :: MISSIONS & DIPLOMATIE
+          // LIAISON HUMAINE, TRANSMISSIONS & LEADERSHIP
         </p>
       </div>
 

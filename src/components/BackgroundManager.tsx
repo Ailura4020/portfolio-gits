@@ -5,7 +5,7 @@ import useIsMobile from '../hooks/useIsMobile';
 const SECTION_CONFIG = [
   { id: 'home', desktop: '/backgrounds/home.jpg', mobile: '/backgrounds/mobile/mobile-home.jpg', fallbackColor: 'radial-gradient(circle at 50% 50%, #050a14 0%, #000000 100%)' },
   { id: 'projects', desktop: '/backgrounds/project.jpg', mobile: '/backgrounds/mobile/mobile-projects.jpg', fallbackColor: 'linear-gradient(to bottom, #1a1a00, #0a0a0a)' },
-  { id: 'archives', desktop: '/backgrounds/archives.jpg', mobile: '/backgrounds/mobile/mobile-archives.jpg', fallbackColor: 'linear-gradient(135deg, #1a001a, #00001a)' },
+  { id: 'archives', desktop: '/backgrounds/archives.jpg', mobile: '/backgrounds/mobile/mobile-archives.png', fallbackColor: 'linear-gradient(135deg, #1a001a, #00001a)' },
   { id: 'experience', desktop: '/backgrounds/experiences.jpg', mobile: '/backgrounds/mobile/mobile-experiences.jpg', fallbackColor: 'linear-gradient(to right, #000c1a, #001a33)' },
   { id: 'skills', desktop: '/backgrounds/diagnostic.jpg', mobile: '/backgrounds/mobile/mobile-skills.jpg', fallbackColor: 'linear-gradient(45deg, #1a0000, #00001a)' },
   { id: 'contact', desktop: '/backgrounds/communication.jpg', mobile: '/backgrounds/mobile/mobile-contact.jpg', fallbackColor: 'linear-gradient(to bottom, #0a0f14, #000000)' }

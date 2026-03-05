@@ -9,7 +9,7 @@ import SkillsPage from './pages/Skills.tsx';
 import ContactPage from './pages/Contact.tsx';
 import CustomCursor from './components/CustomCursor.tsx'; 
 import BackgroundManager from './components/BackgroundManager.tsx';
-import Logo from './components/Logo'; // Assure-toi que ce composant existe ou retire-le si tu utilises du texte
+import Logo from './components/Logo';
 import useIsMobile from './hooks/useIsMobile';
 import CyberIntro from './components/CyberIntro';
 
@@ -46,7 +46,7 @@ const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     const links = [
       { id: 'home', label: 'ACCUEIL' }, 
       { id: 'projects', label: 'PROJETS' },
-      { id: 'archives', label: 'ARCHIVES' }, 
+      { id: 'archives', label: 'OPÉRATIONS EXTÉRIEURES' }, 
       { id: 'experience', label: 'EXPÉRIENCE' }, 
       { id: 'skills', label: 'COMPÉTENCES' }, 
       { id: 'contact', label: 'CONTACT' }
@@ -74,7 +74,7 @@ const NavigationBar: React.FC = () => {
   const links = [
       { id: 'home', label: 'ACCUEIL' }, 
       { id: 'projects', label: 'PROJETS' }, 
-      { id: 'archives', label: 'ARCHIVES' },
+      { id: 'archives', label: 'OPÉRATIONS EXTÉRIEURES' },
       { id: 'experience', label: 'EXPÉRIENCE' }, 
       { id: 'skills', label: 'COMPÉTENCES' }, 
       { id: 'contact', label: 'CONTACT' }
@@ -90,7 +90,7 @@ const NavigationBar: React.FC = () => {
             padding: isMobile ? '0 20px' : '0 50px'
         }}>
             
-            {/* LOGO (Ajusté selon ta demande) */}
+            {/* LOGO */}
             <div style={{ width: isMobile ? '160px' : '220px', transition: 'width 0.3s ease' }}>
                 <Logo />
             </div>

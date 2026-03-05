@@ -136,7 +136,7 @@ const ContactPage: React.FC = () => {
         marginBottom: isMobile ? '40px' : '60px',
         width: '100%'
       }}>
-        <SocialCard title="LINKEDIN" role="> LIAISON PROFESSIONNELLE" link="https://www.linkedin.com/in/ton-profil" color="#0077b5" iconLabel="[IN]" isMobile={isMobile} />
+        <SocialCard title="LINKEDIN" role="> LIAISON PROFESSIONNELLE" link="https://www.linkedin.com/in/justine-faure" color="#0077b5" iconLabel="[IN]" isMobile={isMobile} />
         <SocialCard title="GITHUB" role="> DÉPÔT SOURCE" link="https://github.com/Ailura4020" color="#9f7aea" iconLabel="[GIT]" isMobile={isMobile} />
       </div>
 
@@ -149,39 +149,42 @@ const ContactPage: React.FC = () => {
         background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)'
       }}>
         
-        {/* BOUTON CV */}
+        {/* BOUTON CV CORRIGÉ */}
         <div style={{ marginBottom: '30px' }}>
           <a 
-            href="/cv-ailura.pdf" 
-            download
+            href="/cv-justine-faure.pdf" 
+            download="CV_Justine_Faure_FullStack.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-              color: '#fff', 
+              color: '#39ff14', // Petit clin d'oeil vert Matrix/Tech pour le bouton CV
               textDecoration: 'none', 
-              border: '1px solid #fff', 
+              border: '1px solid #39ff14', 
               padding: '15px 30px',     
               fontSize: '0.9em', 
               fontFamily: 'var(--font-code)',
               transition: 'all 0.3s',
-              backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+              backgroundColor: 'rgba(57, 255, 20, 0.05)', 
               display: 'inline-block',
               letterSpacing: '1px',
               fontWeight: 'bold',
-              boxShadow: '0 0 15px rgba(255,255,255,0.1)',
+              boxShadow: '0 0 15px rgba(57, 255, 20, 0.1)',
               width: isMobile ? '100%' : 'auto', 
-              textAlign: 'center'
+              textAlign: 'center',
+              borderRadius: '2px'
             }}
             onMouseOver={(e) => { 
-              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)';
-              e.currentTarget.style.boxShadow = '0 0 25px rgba(255,255,255,0.3)';
+              e.currentTarget.style.backgroundColor = 'rgba(57, 255, 20, 0.15)';
+              e.currentTarget.style.boxShadow = '0 0 25px rgba(57, 255, 20, 0.3)';
               if(!isMobile) e.currentTarget.style.transform = 'scale(1.05)'; 
             }}
             onMouseOut={(e) => { 
-              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
-              e.currentTarget.style.boxShadow = '0 0 15px rgba(255,255,255,0.1)';
+              e.currentTarget.style.backgroundColor = 'rgba(57, 255, 20, 0.05)';
+              e.currentTarget.style.boxShadow = '0 0 15px rgba(57, 255, 20, 0.1)';
               if(!isMobile) e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            [ ⬇ TÉLÉCHARGER DOSSIER (CV.PDF) ]
+            📥 TÉLÉCHARGER MON CV (PDF)
           </a>
         </div>
 

@@ -167,7 +167,7 @@ const HomePage: React.FC = () => {
             opacity: 0.8,
             margin: isMobile ? '0 auto' : '0' 
           }}>
-            Développeuse Full Stack en formation & Coach Pédagogique en alternance.<br/>
+            Développeuse Full Stack en formation & Ambassadrice Opérationnelle.<br/>
             [Connecter l'intuition humaine à la logique machine]
           </p>
       </div>

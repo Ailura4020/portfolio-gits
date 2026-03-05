@@ -16,7 +16,6 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
   className
 }) => {
   const [displayText, setDisplayText] = useState(text);
-  const [isHovered, setIsHovered] = useState(false);
   const elementRef = useRef<HTMLHeadingElement>(null);
   const animationRunning = useRef(false);
   const hasAnimated = useRef(false); // Mémorise si l'animation a déjà eu lieu
@@ -73,22 +72,10 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
     return () => observer.disconnect();
   }, []); // [] = s'exécute au montage
 
-  // (L'animation périodique / Auto-loop a été totalement supprimée ici)
-
-  // 2. Déclenchement au Survol (Interaction utilisateur - Optionnel mais cool)
-  const handleMouseEnter = () => {
-    if (!isHovered) {
-        setIsHovered(true);
-        animate();
-        setTimeout(() => setIsHovered(false), 1000); 
-    }
-  };
-
   return (
     <h2 
       ref={elementRef}
       className={className}
-      onMouseEnter={handleMouseEnter}
       style={{ cursor: 'default', ...style }} 
     >
       {displayText}

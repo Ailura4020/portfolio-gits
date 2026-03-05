@@ -25,12 +25,14 @@ const projects: ProjectData[] = [
     description: "Création d'un moteur de jeu from scratch en JavaScript pur (Vanilla). Gestion de la physique, des collisions et du rendu graphique sans framework.",
     stack: ['JavaScript (ES6+)', 'HTML5 Canvas', 'CSS3', 'OOP Pattern'],
     repoLink: 'https://github.com/Ailura4020/make-your-game',
+    image: '/projects/makeyourgame.png'
   },
   {
     id: 'p4', codename: 'REAL-TIME-COMMS', title: 'REAL TIME FORUM', status: 'TERMINÉ', type: 'ECOLE',
     description: "Plateforme de discussion instantanée. Architecture SPA (Single Page App) avec gestion des WebSockets pour la communication bidirectionnelle en temps réel.",
     stack: ['Go (Golang)', 'SQLite', 'Docker', 'WebSockets', 'JS'],
-    repoLink: 'https://github.com/Ailura4020/real-time-forum.git'
+    repoLink: 'https://github.com/Ailura4020/real-time-forum.git',
+    image: '/projects/real-time-forum.png' 
   },
   {
     id: 'p5', codename: 'TCP-NET-PROTOCOL', title: 'NET-CAT', status: 'TERMINÉ', type: 'ECOLE',
