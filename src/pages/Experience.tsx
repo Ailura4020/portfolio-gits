@@ -191,7 +191,6 @@ const ExperiencePage: React.FC = () => {
       
       <DecryptedText 
         text="DOSSIER PERSONNEL"
-        interval={15000}
         style={{ 
             fontSize: '3em', 
             color: '#fff', 
