@@ -47,7 +47,7 @@ const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
       { id: 'home', label: 'ACCUEIL' }, 
       { id: 'projects', label: 'PROJETS' },
       { id: 'archives', label: 'OPÉRATIONS EXTÉRIEURES' }, 
-      { id: 'experience', label: 'EXPÉRIENCE' }, 
+      { id: 'experience', label: 'EXPÉRIENCES' }, 
       { id: 'skills', label: 'COMPÉTENCES' }, 
       { id: 'contact', label: 'CONTACT' }
     ];
@@ -75,7 +75,7 @@ const NavigationBar: React.FC = () => {
       { id: 'home', label: 'ACCUEIL' }, 
       { id: 'projects', label: 'PROJETS' }, 
       { id: 'archives', label: 'OPÉRATIONS EXTÉRIEURES' },
-      { id: 'experience', label: 'EXPÉRIENCE' }, 
+      { id: 'experience', label: 'EXPÉRIENCES' }, 
       { id: 'skills', label: 'COMPÉTENCES' }, 
       { id: 'contact', label: 'CONTACT' }
   ];
