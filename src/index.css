@@ -11,6 +11,7 @@
 
 /* THEMES */
 [data-theme="projects"] { --color-accent-neon: #ffcc00; }
+[data-theme="archives"] { --color-accent-neon: #ff00c1; }
 [data-theme="experience"] { --color-accent-neon: #39ff14; }
 [data-theme="skills"] { --color-accent-neon: #ff2a2a; }
 [data-theme="contact"] { --color-accent-neon: #e0aaff; }
@@ -68,7 +69,8 @@ a:hover { color: var(--color-accent-secondary); }
 @media (max-width: 768px) {
   /* COULEURS & DESIGN MOBILE */
   [data-theme="home"] { --color-accent-neon: #00ff9d; }
-  [data-theme="projects"] { --color-accent-neon: #ffcc00; } 
+  [data-theme="projects"] { --color-accent-neon: #ffcc00; }
+  [data-theme="archives"] { --color-accent-neon: #ff00c1; }
   [data-theme="experience"] { --color-accent-neon: #00ffff; }
   [data-theme="skills"] { --color-accent-neon: #ff2a2a; }
   [data-theme="contact"] { --color-accent-neon: #d8b4fe; }

@@ -185,35 +185,34 @@
       }
     ];
 
-    return (
-      <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
-        
-        <DecryptedText 
-          text="DOSSIER PERSONNEL"
-          interval={15000}
-          style={{ 
-              fontSize: '3em', 
-              color: '#fff', 
-              marginBottom: '5px',
-              fontFamily: 'var(--font-title)',
-              textTransform: 'uppercase',
-              textShadow: '0 0 15px var(--color-accent-neon)', 
-              borderLeft: '4px solid var(--color-accent-neon)',
-              paddingLeft: '20px'
-          }}
-        />
-        
-        <p style={{ 
-          color: 'var(--color-interface-light)', 
-          maxWidth: '600px', 
-          marginBottom: '60px',
-          paddingLeft: '25px',
-          fontFamily: 'var(--font-code)',
-          fontSize: '0.9em'
-        }}>
-          {'>'} ÉTABLISSEMENT CONNEXION CYBER-CERVEAU... <br/>
-          {'>'} TÉLÉCHARGEMENT HISTORIQUE SUJET : AILURA.
-        </p>
+  return (
+    <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
+      
+      <DecryptedText 
+        text="DOSSIER PERSONNEL"
+        style={{ 
+            fontSize: '3em', 
+            color: '#fff', 
+            marginBottom: '5px',
+            fontFamily: 'var(--font-title)',
+            textTransform: 'uppercase',
+            textShadow: '0 0 15px var(--color-accent-neon)', 
+            borderLeft: '4px solid var(--color-accent-neon)',
+            paddingLeft: '20px'
+        }}
+      />
+      
+      <p style={{ 
+        color: 'var(--color-interface-light)', 
+        maxWidth: '600px', 
+        marginBottom: '60px',
+        paddingLeft: '25px',
+        fontFamily: 'var(--font-code)',
+        fontSize: '0.9em'
+      }}>
+        {'>'} ÉTABLISSEMENT CONNEXION CYBER-CERVEAU... <br/>
+        {'>'} TÉLÉCHARGEMENT HISTORIQUE SUJET : AILURA.
+      </p>
 
         {isMobile ? (
           <ExperienceMobile missions={missions} />
