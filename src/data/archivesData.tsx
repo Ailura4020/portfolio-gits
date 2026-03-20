@@ -23,13 +23,13 @@ export interface ArchiveData {
 export const ARCHIVES_DATA: ArchiveData[] = [
   // --- PROJET 1 : ROLEXPLORER ---
   {
-    id: 'OP-ROBLOX-ISCOM-01',
+    id: 'OP-ISCOM-ZONE01',
     type: 'MISSION MAJEURE',
     title: 'CHALLENGE METAVERSE : ROLEXPLORER',
-    date: 'SYS.DATE : 2025.03',
+    date: 'SYS.DATE : 2025.04',
     role: 'RÔLE : DÉVELOPPEUSE (ZONE01)',
-    shortDesc: '1ère place au hackathon inter-écoles (1 semaine). Conception d\'un jeu Roblox immersif.',
-    thumbnail: '/archives/logo_rolexplorer.png', 
+    shortDesc: 'Immersion d\'une semaine. Apprentissage express du langage Lua pour concevoir un jeu Roblox interactif au sein d\'une équipe pluridisciplinaire (Tech & Créa).',
+    thumbnail: '/archives/logo_rolexplorer.png',
     modalMedia: {
       type: 'video', 
       url: '/archives/clip_rolexplorer.mov' 
@@ -75,12 +75,12 @@ export const ARCHIVES_DATA: ArchiveData[] = [
 
   // --- PROJET 2 : BUENO CREAM PASTRY ---
   {
-    id: 'OP-ROBLOX-ISCOM-02',
+    id: 'OP-ISCOM-ZONE01',
     type: 'MISSION MAJEURE',
-    title: 'BUENO CREAM PASTRY : METAVERSE V2',
+    title: 'CHALLENGE METAVERSE : BUENO CREAM PASTRY',
     date: 'SYS.DATE : 2025.05', 
     role: 'RÔLE : CHEFFE DE PROJET / LIAISON ISCOM',
-    shortDesc: 'Seconde victoire consécutive 🥇. Conception d\'un jeu Roblox immersif de gestion (Tycoon) complexe.',
+    shortDesc: 'Développement d\'un jeu de gestion (Tycoon). Chefferie de projet technique et coordination inter-écoles pour transposer un univers de marque sur Roblox.',
     thumbnail: '/archives/logo_bueno.png', 
     modalMedia: {
       type: 'video', 
