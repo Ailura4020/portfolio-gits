@@ -22,7 +22,7 @@ const TacticalTabs: React.FC<TacticalTabsProps> = ({ tabs }) => {
   return (
     <div style={{ 
         width: '100%', 
-        maxWidth: '1200px', // MODE PAYSAGE : Largeur augmentée
+        maxWidth: '1200px', 
         margin: '0 auto', 
         fontFamily: 'var(--font-title)' 
     }}>
@@ -37,7 +37,8 @@ const TacticalTabs: React.FC<TacticalTabsProps> = ({ tabs }) => {
         position: 'relative',
         gap: '5px' 
       }}>
-        {tabs.map((tab, index) => {
+        {/* CORRECTION ICI : suppression de 'index' qui n'était pas utilisé */}
+        {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           const accentColor = tab.isOngoing ? '#39ff14' : '#00ffff';
           const borderColor = isActive ? accentColor : 'rgba(255, 255, 255, 0.3)';
@@ -63,7 +64,7 @@ const TacticalTabs: React.FC<TacticalTabsProps> = ({ tabs }) => {
                 }
               }}
               style={{
-                clipPath: 'polygon(15px 0, calc(100% - 15px) 0, 100% 100%, 0 100%)', // Forme plus large
+                clipPath: 'polygon(15px 0, calc(100% - 15px) 0, 100% 100%, 0 100%)', 
                 background: bgColor,
                 borderBottom: 'none',
                 boxShadow: isActive 
@@ -71,7 +72,7 @@ const TacticalTabs: React.FC<TacticalTabsProps> = ({ tabs }) => {
                     : `inset 0 1px 0 ${borderColor}, inset 1px 0 0 ${borderColor}, inset -1px 0 0 ${borderColor}`,
                 color: textColor,
                 fontSize: '0.9em',
-                padding: '12px 30px', // Onglets un peu plus larges
+                padding: '12px 30px', 
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 position: 'relative',
@@ -92,14 +93,14 @@ const TacticalTabs: React.FC<TacticalTabsProps> = ({ tabs }) => {
         })}
       </div>
 
-      {/* --- PANNEAU DE CONTENU (DOSSIER PAYSAGE) --- */}
+      {/* --- PANNEAU DE CONTENU --- */}
       <div style={{
         backgroundColor: 'rgba(0, 5, 10, 0.95)', 
         border: `2px solid var(--color-interface-dark)`,
         borderTopColor: tabs.find(t => t.id === activeTab)?.isOngoing ? '#39ff14' : '#00ffff',
-        padding: '40px 50px', // Marges latérales plus larges
+        padding: '40px 50px', 
         position: 'relative',
-        minHeight: '400px', // Hauteur réduite pour accentuer l'effet large
+        minHeight: '400px', 
         boxShadow: '0 0 30px rgba(0,0,0,0.5)',
         zIndex: 1,
         display: 'flex',
@@ -117,7 +118,6 @@ const TacticalTabs: React.FC<TacticalTabsProps> = ({ tabs }) => {
           return (
             <div key={tab.id} style={{ animation: 'fadeIn 0.3s ease-out', flex: 1, display: 'flex', flexDirection: 'column' }}>
               
-              {/* En-tête Large */}
               <div style={{ 
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
                 marginBottom: '30px', borderBottom: `1px solid ${accentColor}`, paddingBottom: '15px' 
@@ -143,15 +143,13 @@ const TacticalTabs: React.FC<TacticalTabsProps> = ({ tabs }) => {
                 </div>
               </div>
 
-              {/* Texte optimisé pour la largeur */}
               <div style={{ 
                   lineHeight: '1.8', color: '#ccc', fontFamily: 'var(--font-body)', fontSize: '1.05em',
-                  flex: 1, maxWidth: '95%' // Utilise bien la largeur
+                  flex: 1, maxWidth: '95%' 
               }}>
                 {tab.content}
               </div>
 
-              {/* Footer Décoratif */}
               <div style={{ 
                   marginTop: '40px', borderTop: '1px dashed #333', paddingTop: '10px', 
                   fontSize: '0.7em', color: '#555', fontFamily: 'monospace', textAlign: 'right' 

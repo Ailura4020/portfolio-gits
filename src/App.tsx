@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import './index.css'; 
 import HomePage from './pages/Home.tsx';
 import ProjectsPage from './pages/Projects.tsx';
+import ArchivesPage from './pages/Archives.tsx';
 import ExperiencePage from './pages/Experience.tsx';
 import SkillsPage from './pages/Skills.tsx';
 import ContactPage from './pages/Contact.tsx';
 import CustomCursor from './components/CustomCursor.tsx'; 
 import BackgroundManager from './components/BackgroundManager.tsx';
-import Logo from './components/Logo'; // Assure-toi que ce composant existe ou retire-le si tu utilises du texte
+import Logo from './components/Logo';
 import useIsMobile from './hooks/useIsMobile';
 import CyberIntro from './components/CyberIntro';
 
@@ -44,8 +45,9 @@ const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     if (!isOpen) return null;
     const links = [
       { id: 'home', label: 'ACCUEIL' }, 
-      { id: 'projects', label: 'PROJETS' }, 
-      { id: 'experience', label: 'EXPÉRIENCE' }, 
+      { id: 'projects', label: 'PROJETS' },
+      { id: 'archives', label: 'OPÉRATIONS EXTÉRIEURES' }, 
+      { id: 'experience', label: 'EXPÉRIENCES' }, 
       { id: 'skills', label: 'COMPÉTENCES' }, 
       { id: 'contact', label: 'CONTACT' }
     ];
@@ -72,7 +74,8 @@ const NavigationBar: React.FC = () => {
   const links = [
       { id: 'home', label: 'ACCUEIL' }, 
       { id: 'projects', label: 'PROJETS' }, 
-      { id: 'experience', label: 'EXPÉRIENCE' }, 
+      { id: 'archives', label: 'OPÉRATIONS EXTÉRIEURES' },
+      { id: 'experience', label: 'EXPÉRIENCES' }, 
       { id: 'skills', label: 'COMPÉTENCES' }, 
       { id: 'contact', label: 'CONTACT' }
   ];
@@ -87,7 +90,7 @@ const NavigationBar: React.FC = () => {
             padding: isMobile ? '0 20px' : '0 50px'
         }}>
             
-            {/* LOGO (Ajusté selon ta demande) */}
+            {/* LOGO */}
             <div style={{ width: isMobile ? '160px' : '220px', transition: 'width 0.3s ease' }}>
                 <Logo />
             </div>
@@ -154,6 +157,7 @@ const App: React.FC = () => {
           <main style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
             <section id="home"><HomePage /></section>
             <section id="projects"><ProjectsPage /></section>
+            <section id="archives"><ArchivesPage /></section>
             <section id="experience"><ExperiencePage /></section>
             <section id="skills"><SkillsPage /></section>
             <section id="contact"><ContactPage /></section>
