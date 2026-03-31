@@ -8,19 +8,19 @@ interface DecryptedTextProps {
   text: string;
   style?: React.CSSProperties; 
   className?: string;
-  interval?: number; // <-- On tolère cet attribut pour que TypeScript ne bloque plus tes autres pages
+  interval?: number; // On le laisse ici pour que les autres pages ne plantent pas
 }
 
 const DecryptedText: React.FC<DecryptedTextProps> = ({ 
   text, 
   style, 
-  className,
-  interval // On l'accepte mais on ne l'utilise plus
+  className
+  // SUPPRESSION DE 'interval' ICI : on l'ignore totalement !
 }) => {
   const [displayText, setDisplayText] = useState(text);
   const elementRef = useRef<HTMLHeadingElement>(null);
   const animationRunning = useRef(false);
-  const hasAnimated = useRef(false); // Mémorise si l'animation a déjà eu lieu
+  const hasAnimated = useRef(false); 
 
   // Fonction d'animation
   const animate = () => {
@@ -30,15 +30,14 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
     let iteration = 0;
     
     const timer = setInterval(() => {
-      // CORRECTION : suppression de 'prev' et 'letter' inutilisés
       setDisplayText(
         text
           .split("")
-          .map((_, index) => { // '_' indique à TypeScript qu'on n'utilise pas cette variable
+          .map((_, index) => { 
             if (index < iteration) {
-              return text[index]; // Lettre finale trouvée
+              return text[index]; 
             }
-            return CHARS[Math.floor(Math.random() * CHARS.length)]; // Lettre cryptée
+            return CHARS[Math.floor(Math.random() * CHARS.length)]; 
           })
           .join("")
       );
@@ -57,15 +56,14 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Si l'élément devient visible ET n'a pas encore été animé
           if (entry.isIntersecting && !hasAnimated.current) {
-            hasAnimated.current = true; // Verrouille l'animation
+            hasAnimated.current = true;
             animate();
-            observer.disconnect(); // Désactive l'observateur pour toujours
+            observer.disconnect();
           }
         });
       },
-      { threshold: 0.5 } // Se déclenche quand 50% du titre est visible
+      { threshold: 0.5 }
     );
 
     if (elementRef.current) {
@@ -73,7 +71,7 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
     }
 
     return () => observer.disconnect();
-  }, []); // [] = s'exécute au montage
+  }, []);
 
   return (
     <h2 
