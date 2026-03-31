@@ -8,12 +8,14 @@ interface DecryptedTextProps {
   text: string;
   style?: React.CSSProperties; 
   className?: string;
+  interval?: number; // <-- On tolère cet attribut pour que TypeScript ne bloque plus tes autres pages
 }
 
 const DecryptedText: React.FC<DecryptedTextProps> = ({ 
   text, 
   style, 
-  className
+  className,
+  interval // On l'accepte mais on ne l'utilise plus
 }) => {
   const [displayText, setDisplayText] = useState(text);
   const elementRef = useRef<HTMLHeadingElement>(null);
@@ -28,10 +30,11 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
     let iteration = 0;
     
     const timer = setInterval(() => {
-      setDisplayText(prev => 
+      // CORRECTION : suppression de 'prev' et 'letter' inutilisés
+      setDisplayText(
         text
           .split("")
-          .map((letter, index) => {
+          .map((_, index) => { // '_' indique à TypeScript qu'on n'utilise pas cette variable
             if (index < iteration) {
               return text[index]; // Lettre finale trouvée
             }
