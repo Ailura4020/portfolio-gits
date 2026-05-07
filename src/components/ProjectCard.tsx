@@ -8,9 +8,11 @@ export interface ProjectData {
   status: string;
   type: string;
   description: string;
+  fullDesc?: React.ReactNode; 
   stack: string[];
-  repoLink: string;
+  repoLink?: string;          
   image?: string;
+  gallery?: string[];        
 }
 
 // CORRECTION ICI : On garde la définition <{... isMobile?: boolean }> mais on retire 'isMobile' des accolades ({...})
