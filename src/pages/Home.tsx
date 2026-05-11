@@ -156,7 +156,7 @@ const HomePage: React.FC = () => {
 
           <div style={{ minHeight: '30px', fontSize: isMobile ? '0.9em' : '1.1em', marginBottom: '30px' }}>
             <span style={{ color: '#555', marginRight: '10px' }}>{'>'}</span>
-            <Typewriter text="INITIALISATION PROTOCOLE ARCHITECTE FULL STACK..." />
+            <Typewriter text="INITIALISATION PROTOCOLE BUSINESS ANALYST // UNITÉ AILURA..." />
           </div>
 
           <p style={{
@@ -167,8 +167,9 @@ const HomePage: React.FC = () => {
             opacity: 0.8,
             margin: isMobile ? '0 auto' : '0' 
           }}>
-            Développeuse Full Stack en formation & Ambassadrice Opérationnelle.<br/>
-            [Connecter l'intuition humaine à la logique machine]
+            Agent de Liaison Systèmes : Business Analysis & Coordination IT.
+<br/>
+            [ Décoder la vision métier // Structurer la réalité technique ]
           </p>
       </div>
 

@@ -59,6 +59,40 @@
           </>
         )
       },
+    {
+        id: 'archive-efficenty',
+        label: 'EFFICENTY',
+        role: 'COACH PÉDAGOGIQUE DÉVELOPPEUSE (PROFIL BA/PO)',
+        date: 'JUIN 2025 - DÉC 2025',
+        content: (
+          <>
+            <div style={{ fontFamily: 'var(--font-title)', color: 'var(--color-interface-light)', marginBottom: '10px' }}>
+              // LOCALISATION : ROUEN, FRANCE
+            </div>
+            <p style={{ marginBottom: '20px' }}>
+              <strong>// MÉMOIRE ARCHIVÉE :</strong> Pilotage complet du cycle de vie d'un produit de formation technique. Analyse des besoins du marché et coordination transverse pour une livraison "from scratch" en environnement agile.
+            </p>
+            <ul style={{ listStyle: 'none', paddingLeft: '20px', borderLeft: '1px solid var(--color-interface-dark)' }}>
+              <li style={{ marginBottom: '10px' }}>[+] <strong>Product Vision & Strategy :</strong> Conception et structuration d'un programme de formation aligné sur les exigences du secteur technique.</li>
+              <li style={{ marginBottom: '10px' }}>[+] <strong>Analyse des Besoins (BA) :</strong> Identification des besoins des apprenants et spécification des objectifs pédagogiques via un suivi régulier.</li>
+              <li style={{ marginBottom: '10px' }}>[+] <strong>Stakeholder Management :</strong> Coordination centrale entre les équipes internes, les experts externes et les partenaires professionnels.</li>
+              <li style={{ marginBottom: '10px' }}>[+] <strong>Gestion de Backlog & Delivery :</strong> Organisation et priorisation des ateliers techniques, des conférences et du programme d'employabilité.</li>
+              <li style={{ marginBottom: '10px' }}>[+] <strong>Assurance Qualité (QA) :</strong> Pilotage des évaluations, participation aux jurys et audit continu de la progression des "utilisateurs" (apprenants).</li>
+              <li style={{ marginBottom: '10px' }}>[+] <strong>Leadership Transverse :</strong> Coaching, gestion des priorités et prise d'initiative dans un contexte à forte autonomie.</li>
+            </ul>
+            <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              {['Business Analysis', 'Product Ownership', 'Stakeholder Management', 'Agile Coordination', 'Leadership'].map(tech => (
+                <span key={tech} style={{ 
+                  fontSize: '0.8em', padding: '5px 10px', border: '1px solid var(--color-interface-dark)', 
+                  color: 'var(--color-interface-light)', fontFamily: 'var(--font-title)' 
+                }}>
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </>
+        )
+      },
       {
         id: 'archive-bci',
         label: 'BCI BANQUE',

@@ -12,6 +12,7 @@ import BackgroundManager from './components/BackgroundManager.tsx';
 import Logo from './components/Logo';
 import useIsMobile from './hooks/useIsMobile';
 import CyberIntro from './components/CyberIntro';
+import AgentProfile from './pages/AgentProfile.tsx';
 
 // --- ANIMATIONS CSS ---
 const styleSheet = document.createElement("style");
@@ -45,6 +46,7 @@ const MobileMenuOverlay: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     if (!isOpen) return null;
     const links = [
       { id: 'home', label: 'ACCUEIL' }, 
+      { id: 'agent-profile', label: 'AGENT' },
       { id: 'projects', label: 'PROJETS' },
       { id: 'archives', label: 'OPÉRATIONS EXTÉRIEURES' }, 
       { id: 'experience', label: 'EXPÉRIENCES' }, 
@@ -73,6 +75,7 @@ const NavigationBar: React.FC = () => {
   const isMobile = useIsMobile(); 
   const links = [
       { id: 'home', label: 'ACCUEIL' }, 
+      { id: 'agent-profile', label: 'AGENT' },
       { id: 'projects', label: 'PROJETS' }, 
       { id: 'archives', label: 'OPÉRATIONS EXTÉRIEURES' },
       { id: 'experience', label: 'EXPÉRIENCES' }, 
@@ -156,6 +159,7 @@ const App: React.FC = () => {
           
           <main style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
             <section id="home"><HomePage /></section>
+            <section id="agent-profile"><AgentProfile /></section>
             <section id="projects"><ProjectsPage /></section>
             <section id="archives"><ArchivesPage /></section>
             <section id="experience"><ExperiencePage /></section>

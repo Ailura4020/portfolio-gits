@@ -8,6 +8,81 @@ import DecryptedText from '../components/DecryptedText';
 // --- DONNÉES PROJETS ---
 const projects: ProjectData[] = [
   {
+    id: 'p-campus', 
+    codename: 'CAMPUS-PLATFORM-26', 
+    title: 'PLATEFORME PÉDAGOGIQUE CAMPUS', 
+    status: 'EN COURS', 
+    type: 'CERTIFICATION RNCP',
+    description: "Conception fonctionnelle et modélisation complète d'une plateforme SaaS éducative. Traduction des besoins métier en interfaces (UX/UI) et architecture technique.",
+    stack: ['Figma', 'UML', 'MERISE', 'PostgreSQL', 'Supabase', 'Next.js'],
+    // Laisse cette ligne vide pour repoLink, car c'est privé !
+    image: '/projects/campus-thumb.png',
+    gallery: [
+      '/projects/campus-zoning.jpg',
+      '/projects/campus-wireframe.png',
+      '/projects/campus-maquette-hd.png',
+      '/projects/flow_etudiant.png',
+    ],
+    fullDesc: (
+      <>
+        <div style={{ marginBottom: '15px' }}>
+          <strong style={{ color: '#ffcc00' }}>[ CONTEXTE ]</strong><br/>
+          Projet de certification RNCP. Conception <em>from scratch</em> d'une plateforme centralisée pour la gestion des parcours étudiants, du travail collaboratif et des évaluations inter-écoles.
+        </div>
+        
+        <div style={{ marginBottom: '15px' }}>
+          <strong style={{ color: '#ffcc00' }}>// PRODUCT DISCOVERY & UX/UI :</strong>
+          <ul style={{ paddingLeft: '20px', marginTop: '5px', color: '#ccc', listStyleType: 'square' }}>
+            <li>Analyse des besoins et rédaction des User Stories pour 3 cibles distinctes (Étudiants, Formateurs, Admins).</li>
+            <li>Conception de l'expérience utilisateur : zoning, wireframing et réalisation des maquettes haute fidélité sous Figma.</li>
+          </ul>
+        </div>
+
+        <div style={{ marginBottom: '15px' }}>
+          <strong style={{ color: '#ffcc00' }}>// BUSINESS ANALYSIS & SYSTÈME :</strong>
+          <ul style={{ paddingLeft: '20px', marginTop: '5px', color: '#ccc', listStyleType: 'square' }}>
+            <li>Modélisation des processus métier via diagrammes UML (cas d'utilisation et flux d'authentification).</li>
+            <li>Conception de la structure de données relationnelle (MCD / MLD avec 12 tables) pour l'intégration PostgreSQL (Supabase).</li>
+          </ul>
+        </div>
+
+        <div>
+          <strong style={{ color: '#ffcc00' }}>[ LEADERSHIP & COORDINATION ]</strong><br/>
+          Rôle de pivot entre la direction (client) et l'équipe de développement (Front/Back). Mise en place d'une approche itérative pour livrer une architecture (Next.js/Supabase) viable et sécurisée.
+        </div>
+      </>
+    )
+  },
+  {
+    id: 'p-pixel-forge', 
+    codename: 'PIXEL-FORGE-26', 
+    title: 'PIXEL FORGE // ARCADE LANDING PAGE', 
+    status: 'EN COURS', 
+    type: 'PROJET PERSONNEL',
+    description: "Conception d'une landing page immersive aux accents rétrogaming et cyberpunk. Intégration d'un carrousel 3D interactif et gestion dynamique des données via API Fetch.",
+    stack: ['HTML5', 'CSS3 (Modulaire)', 'Vanilla JS (ES6)', 'Fetch API / JSON'],
+    repoLink: 'https://github.com/Ailura4020/arcade-landing-page', 
+    image: '/projects/pixel-forge-thumb.png',
+    video: '/projects/pixel-forge-video.mp4',
+    fullDesc: (
+      <>
+        <div style={{ marginBottom: '15px' }}>
+          <strong style={{ color: '#ffcc00' }}>[ CONTEXTE OPÉRATIONNEL ]</strong><br/>
+          Développement d'une vitrine web pour "Pixel Forge", un moteur open-source fictif dédié aux créateurs de mondes virtuels. L'objectif était de concevoir une expérience utilisateur (UX) marquante, inspirée des bornes d'arcade des années 90, en poussant les limites du CSS et du JavaScript natif.
+        </div>
+        
+        <div style={{ marginBottom: '15px' }}>
+          <strong style={{ color: '#ffcc00' }}>// ARCHITECTURE & FONCTIONNALITÉS :</strong>
+          <ul style={{ paddingLeft: '20px', marginTop: '5px', color: '#ccc', listStyleType: 'square' }}>
+            <li style={{ marginBottom: '5px' }}><strong>Carrousel 3D Dynamique :</strong> Programmation d'un système de sélection de "cartouches" généré dynamiquement à partir de données JSON (Fetch API).</li>
+            <li style={{ marginBottom: '5px' }}><strong>Design Immersif (UI) :</strong> Intégration d'effets visuels complexes (Scanlines CRT, typographies pixelisées, animations de glitch et survols néon).</li>
+            <li><strong>Composants Modulaires :</strong> Création d'un gestionnaire de fenêtres modales pour l'affichage des briefings de mission et intégration d'un "Hall of Fame" (Tableau des scores).</li>
+          </ul>
+        </div>
+      </>
+    )
+  },
+  {
     id: 'p1', codename: 'SPRING-ANGULAR-24', title: 'ANGUL-IT', status: 'TERMINÉ', type: 'ECOLE',
     description: "Développement Full Stack d'un système d'authentification robuste et d'une API REST sécurisée. Gestion complexe de l'état front-end.",
     stack: ['Java Spring Boot', 'Angular', 'PostgreSQL', 'JWT', 'Docker'],
@@ -152,7 +227,7 @@ const ProjectsPage: React.FC = () => {
         <ProjectsDesktop projects={projects} onSelect={setSelectedProject} />
       )}
 
-      {/* --- MODAL POP-UP --- */}
+     {/* --- MODAL POP-UP --- */}
       {selectedProject && (
         <div style={{
           position: 'fixed', inset: 0, zIndex: 9999,
@@ -166,6 +241,7 @@ const ProjectsPage: React.FC = () => {
             boxShadow: '0 0 50px rgba(0,0,0,0.8)', position: 'relative', display: 'flex', flexDirection: 'column'
           }} onClick={(e) => e.stopPropagation()}>
             
+            {/* EN-TÊTE MODALE */}
             <div style={{ padding: '15px 30px', borderBottom: '1px solid #ffcc00', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255, 204, 0, 0.05)' }}>
                 <div>
                     <h2 style={{ color: '#ffcc00', margin: 0, fontSize: '1.5em', textTransform: 'uppercase', fontFamily: 'var(--font-title)' }}>{selectedProject.title}</h2>
@@ -179,19 +255,55 @@ const ProjectsPage: React.FC = () => {
             </div>
 
             <div style={{ padding: '30px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                {selectedProject.image ? (
-                    <div style={{ border: '1px solid #333', padding: '5px', background: '#000' }}>
-                        <img src={selectedProject.image} alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
-                    </div>
+               {/* MÉDIA PRINCIPAL (Vidéo si disponible, sinon Image) */}
+            <div style={{ border: '1px solid #333', padding: '5px', background: '#000' }}>
+                {selectedProject.video ? (
+                    /* Si une vidéo est renseignée, on la joue */
+                    <video 
+                        src={selectedProject.video} 
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline 
+                        style={{ width: '100%', height: 'auto', display: 'block' }}
+                    />
+                ) : selectedProject.image ? (
+                    /* Sinon, on affiche l'image classique */
+                    <img 
+                        src={selectedProject.image} 
+                        alt="" 
+                        style={{ width: '100%', height: 'auto', display: 'block' }} 
+                    />
                 ) : (
-                    <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#444', border: '1px dashed #333', fontFamily: 'var(--font-title)' }}>[ AUCUNE DONNÉE VISUELLE ]</div>
+                    <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#444', border: '1px dashed #333' }}>
+                        [ AUCUNE DONNÉE VISUELLE ]
+                    </div>
                 )}
+            </div>
 
+                {/* TEXTE DÉTAILLÉ OU SIMPLE */}
                 <div>
-                    <h4 style={{ color: '#ffcc00', fontSize: '1em', marginBottom: '8px', fontFamily: 'var(--font-title)' }}>// OBJECTIFS DE MISSION</h4>
-                    <p style={{ lineHeight: '1.5', fontSize: '0.95em', color: '#ccc', fontFamily: 'sans-serif' }}>{selectedProject.description}</p>
+                    <h4 style={{ color: '#ffcc00', fontSize: '1em', marginBottom: '8px', fontFamily: 'var(--font-title)' }}>// RAPPORT DE DÉVELOPPEMENT</h4>
+                    <div style={{ lineHeight: '1.5', fontSize: '0.95em', color: '#ccc', fontFamily: 'sans-serif' }}>
+                        {selectedProject.fullDesc ? selectedProject.fullDesc : <p>{selectedProject.description}</p>}
+                    </div>
                 </div>
 
+                {/* GALERIE D'IMAGES (NOUVEAU) */}
+                {selectedProject.gallery && selectedProject.gallery.length > 0 && (
+                  <div>
+                    <h4 style={{ color: '#ffcc00', fontSize: '1em', marginBottom: '10px', fontFamily: 'var(--font-title)' }}>// LIVRABLES & CONCEPTION</h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '10px' }}>
+                      {selectedProject.gallery.map((img, idx) => (
+                        <div key={idx} style={{ border: '1px solid #444', aspectRatio: '16/9', overflow: 'hidden', background: '#000' }}>
+                          <img src={img} alt={`Livrable ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* ARCHITECTURE SYSTÈME */}
                 <div>
                     <h4 style={{ color: '#ffcc00', fontSize: '1em', marginBottom: '8px', fontFamily: 'var(--font-title)' }}>// ARCHITECTURE SYSTÈME</h4>
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
@@ -201,10 +313,17 @@ const ProjectsPage: React.FC = () => {
                     </div>
                 </div>
 
+                {/* GESTION DU LIEN GITHUB / PRIVÉ */}
                 <div style={{ borderTop: '1px solid #333', paddingTop: '20px', textAlign: 'center' }}>
-                    <a href={selectedProject.repoLink} target="_blank" rel="noreferrer" style={{ display: 'inline-block', border: '1px solid #ffcc00', color: '#ffcc00', textDecoration: 'none', padding: '12px 30px', fontFamily: 'var(--font-title)', fontSize: '0.9em', letterSpacing: '1px', transition: 'all 0.3s' }} onMouseEnter={(e) => {e.currentTarget.style.background = '#ffcc00'; e.currentTarget.style.color = '#000'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#ffcc00'}}>
-                        ACCÉDER AU CODE SOURCE :: GITHUB
-                    </a>
+                    {selectedProject.repoLink ? (
+                        <a href={selectedProject.repoLink} target="_blank" rel="noreferrer" style={{ display: 'inline-block', border: '1px solid #ffcc00', color: '#ffcc00', textDecoration: 'none', padding: '12px 30px', fontFamily: 'var(--font-title)', fontSize: '0.9em', letterSpacing: '1px', transition: 'all 0.3s' }} onMouseEnter={(e) => {e.currentTarget.style.background = '#ffcc00'; e.currentTarget.style.color = '#000'}} onMouseLeave={(e) => {e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#ffcc00'}}>
+                            ACCÉDER AU CODE SOURCE :: GITHUB
+                        </a>
+                    ) : (
+                        <span style={{ display: 'inline-block', border: '1px solid #444', color: '#666', padding: '12px 30px', fontFamily: 'var(--font-title)', fontSize: '0.9em', letterSpacing: '1px', cursor: 'not-allowed', background: 'rgba(0,0,0,0.5)' }}>
+                            [ REPOSITORY PRIVÉ / CERTIFICATION ]
+                        </span>
+                    )}
                 </div>
             </div>
           </div>

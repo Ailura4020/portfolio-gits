@@ -24,7 +24,7 @@ const ArchivesPage: React.FC = () => {
         </div>
 
         {/* GRILLE DES CARTES */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: isMobile ? '20px' : '30px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: isMobile ? '20px' : '30px' }}>
           {ARCHIVES_DATA.map((archive) => (
             <div 
               key={archive.id} 

@@ -153,7 +153,7 @@ const ContactPage: React.FC = () => {
         <div style={{ marginBottom: '30px' }}>
           <a 
             href="/cv-justine-faure.pdf" 
-            download="CV_Justine_Faure_FullStack.pdf"
+            download="CV_Justine_Faure.pdf"
             target="_blank"
             rel="noopener noreferrer"
             style={{
