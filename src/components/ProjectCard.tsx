@@ -12,6 +12,7 @@ export interface ProjectData {
   stack: string[];
   repoLink?: string;          
   image?: string;
+  video?: string;
   gallery?: string[];        
 }
 

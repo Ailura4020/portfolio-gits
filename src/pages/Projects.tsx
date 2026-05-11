@@ -54,6 +54,35 @@ const projects: ProjectData[] = [
     )
   },
   {
+    id: 'p-pixel-forge', 
+    codename: 'PIXEL-FORGE-26', 
+    title: 'PIXEL FORGE // ARCADE LANDING PAGE', 
+    status: 'EN COURS', 
+    type: 'PROJET PERSONNEL',
+    description: "Conception d'une landing page immersive aux accents rétrogaming et cyberpunk. Intégration d'un carrousel 3D interactif et gestion dynamique des données via API Fetch.",
+    stack: ['HTML5', 'CSS3 (Modulaire)', 'Vanilla JS (ES6)', 'Fetch API / JSON'],
+    repoLink: 'https://github.com/Ailura4020/arcade-landing-page', 
+    image: '/projects/pixel-forge-thumb.png',
+    video: '/projects/pixel-forge-video.mp4',
+    fullDesc: (
+      <>
+        <div style={{ marginBottom: '15px' }}>
+          <strong style={{ color: '#ffcc00' }}>[ CONTEXTE OPÉRATIONNEL ]</strong><br/>
+          Développement d'une vitrine web pour "Pixel Forge", un moteur open-source fictif dédié aux créateurs de mondes virtuels. L'objectif était de concevoir une expérience utilisateur (UX) marquante, inspirée des bornes d'arcade des années 90, en poussant les limites du CSS et du JavaScript natif.
+        </div>
+        
+        <div style={{ marginBottom: '15px' }}>
+          <strong style={{ color: '#ffcc00' }}>// ARCHITECTURE & FONCTIONNALITÉS :</strong>
+          <ul style={{ paddingLeft: '20px', marginTop: '5px', color: '#ccc', listStyleType: 'square' }}>
+            <li style={{ marginBottom: '5px' }}><strong>Carrousel 3D Dynamique :</strong> Programmation d'un système de sélection de "cartouches" généré dynamiquement à partir de données JSON (Fetch API).</li>
+            <li style={{ marginBottom: '5px' }}><strong>Design Immersif (UI) :</strong> Intégration d'effets visuels complexes (Scanlines CRT, typographies pixelisées, animations de glitch et survols néon).</li>
+            <li><strong>Composants Modulaires :</strong> Création d'un gestionnaire de fenêtres modales pour l'affichage des briefings de mission et intégration d'un "Hall of Fame" (Tableau des scores).</li>
+          </ul>
+        </div>
+      </>
+    )
+  },
+  {
     id: 'p1', codename: 'SPRING-ANGULAR-24', title: 'ANGUL-IT', status: 'TERMINÉ', type: 'ECOLE',
     description: "Développement Full Stack d'un système d'authentification robuste et d'une API REST sécurisée. Gestion complexe de l'état front-end.",
     stack: ['Java Spring Boot', 'Angular', 'PostgreSQL', 'JWT', 'Docker'],
@@ -226,14 +255,31 @@ const ProjectsPage: React.FC = () => {
             </div>
 
             <div style={{ padding: '30px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                {/* IMAGE PRINCIPALE */}
-                {selectedProject.image ? (
-                    <div style={{ border: '1px solid #333', padding: '5px', background: '#000' }}>
-                        <img src={selectedProject.image} alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
-                    </div>
+               {/* MÉDIA PRINCIPAL (Vidéo si disponible, sinon Image) */}
+            <div style={{ border: '1px solid #333', padding: '5px', background: '#000' }}>
+                {selectedProject.video ? (
+                    /* Si une vidéo est renseignée, on la joue */
+                    <video 
+                        src={selectedProject.video} 
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline 
+                        style={{ width: '100%', height: 'auto', display: 'block' }}
+                    />
+                ) : selectedProject.image ? (
+                    /* Sinon, on affiche l'image classique */
+                    <img 
+                        src={selectedProject.image} 
+                        alt="" 
+                        style={{ width: '100%', height: 'auto', display: 'block' }} 
+                    />
                 ) : (
-                    <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#444', border: '1px dashed #333', fontFamily: 'var(--font-title)' }}>[ AUCUNE DONNÉE VISUELLE ]</div>
+                    <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#444', border: '1px dashed #333' }}>
+                        [ AUCUNE DONNÉE VISUELLE ]
+                    </div>
                 )}
+            </div>
 
                 {/* TEXTE DÉTAILLÉ OU SIMPLE */}
                 <div>
