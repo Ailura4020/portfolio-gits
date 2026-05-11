@@ -21,6 +21,92 @@ export interface ArchiveData {
 
 // --- TA BASE DE DONNÉES ---
 export const ARCHIVES_DATA: ArchiveData[] = [
+    // --- SOIRÉE D'INTÉGRATION ZONE01 ---
+  {
+    id: 'OP-INTEGRATION-ZONE01',
+    type: 'ÉVÉNEMENT', 
+    title: 'THE PLAYGROUND : SOIRÉE D\'INTÉGRATION',
+    date: 'SYS.DATE : 2025.11',
+    role: 'RÔLE : LEAD AMBASSADRICE',
+    shortDesc: 'Organisation de A à Z de la soirée d\'intégration annuelle. Conception, budgétisation et coordination logistique d\'un événement multi-activités pour fédérer le campus.',
+    thumbnail: '/archives/Visuel_The_Playground.jpg',
+    modalMedia: {
+      type: 'image', 
+      url: '/archives/Visuel_The_Playground.jpg' 
+    },
+    fullDesc: (
+      <>
+        <p style={{ marginBottom: '15px' }}>
+          <strong>[ CONTEXTE ]</strong><br/>
+          Organisation de la soirée d'intégration "The Playground", un événement créé sur mesure pour accueillir et fédérer la nouvelle promotion de Zone01. Une soirée placée sous le signe de l'échange, de l'E-Sport et de la cohésion d'équipe.
+        </p>
+        
+        <p style={{ marginBottom: '10px', color: 'var(--color-accent-neon)' }}>
+          <strong>// RESPONSABILITÉS & COORDINATION :</strong>
+        </p>
+        <ul style={{ paddingLeft: '20px', marginBottom: '15px', color: '#ccc', listStyleType: 'square' }}>
+          <li style={{ marginBottom: '8px' }}>
+            <strong style={{ color: '#fff' }}>Pilotage d'équipe :</strong> Responsable du pôle des ambassadeurs/rices. Animation de réunions hebdomadaires, délégation des tâches stratégiques et interface directe avec le directeur du campus.
+          </li>
+          <li>
+            <strong style={{ color: '#fff' }}>Gestion Opérationnelle :</strong> Élaboration et suivi du budget, gestion de la communication (teasing, inscriptions) et création des formulaires de satisfaction post-événement.
+          </li>
+        </ul>
+
+        <p style={{ marginBottom: '15px' }}>
+          <strong>[ LOGISTIQUE & PROGRAMME ]</strong><br/>
+          Coordination de multiples pôles d'activités en simultané : gestion des intervenants (DJs, animateurs de jeux de rôles), mise en place de tournois E-Sport (Valorant, League of Legends, Smash Bros), et logistique du rafraîchissement (tickets nominatifs).
+        </p>
+
+        <p>
+          <strong>[ RÉSULTAT ]</strong><br/>
+          Un événement couronné de succès ayant renforcé l'esprit de cohorte, démontrant une capacité solide à mener un projet logistique complexe de sa phase de conception jusqu'à son bilan analytique.
+        </p>
+      </>
+    )
+  },
+  {
+    id: 'OP-GO-PISCINE',
+    type: 'ÉVÉNEMENT',
+    title: 'ATELIER GO : TRANSMISSION & MENTORAT',
+    date: 'SYS.DATE : 2025.11',
+    role: 'RÔLE : AMBASSADRICE & MENTORE',
+    shortDesc: 'Conception et animation d\'un atelier technique pour les nouveaux arrivants (Piscineux). Vulgarisation des fondamentaux du langage Go et partage de méthodologies.',
+    thumbnail: '/archives/slide_go_presentation.png',
+    modalMedia: {
+      type: 'image', 
+      url: '/archives/slide_go_presentation.png' 
+    },
+    fullDesc: (
+      <>
+        <p style={{ marginBottom: '15px' }}>
+          <strong>[ CONTEXTE ]</strong><br/>
+          En tant qu'Ambassadrice Zone01, j'ai co-animé un atelier "Peer-to-Peer" pour accompagner les candidats durant leur période d'immersion (Piscine). L'enjeu était de faciliter la compréhension des concepts clés pour réduire la courbe d'apprentissage initiale.
+        </p>
+        
+        <p style={{ marginBottom: '10px', color: 'var(--color-accent-neon)' }}>
+          <strong>// CONTENU & PÉDAGOGIE :</strong>
+        </p>
+        <ul style={{ paddingLeft: '20px', marginBottom: '15px', color: '#ccc', listStyleType: 'square' }}>
+          <li style={{ marginBottom: '8px' }}>
+            <strong style={{ color: '#fff' }}>Fondamentaux Go :</strong> Introduction à la structure des programmes, à la gestion des packages et à l'utilisation des runes via des exemples concrets.
+          </li>
+          <li style={{ marginBottom: '8px' }}>
+            <strong style={{ color: '#fff' }}>Résolution de problèmes :</strong> Accompagnement interactif sur des exercices pivots (ex: OnlyA) pour transmettre une logique de débogage structurée.
+          </li>
+          <li>
+            <strong style={{ color: '#fff' }}>Soft Skills :</strong> Coaching sur la gestion du stress, l'importance de l'entraide et les méthodes de recherche documentaire efficace.
+          </li>
+        </ul>
+
+        <p style={{ marginBottom: '15px' }}>
+          <strong>[ IMPACT ]</strong><br/>
+          Soutien direct à une cohorte d'apprenants. Cet atelier a permis de renforcer la cohésion du groupe et de valider ma capacité à traduire des concepts techniques complexes en un langage accessible et actionnable.
+        </p>
+      </>
+    ),
+    link: 'https://www.linkedin.com/posts/zone01-rouen-normandie_nos-apprenants-m%C3%A8nent-leurs-ateliers-activity-7392563405947080706-xccT?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9lnoIBu_7BtsbGIsfONdMQMD2d7fhNFBk' 
+  },
   // --- PROJET 1 : ROLEXPLORER ---
   {
     id: 'OP-ISCOM-ZONE01',
@@ -70,7 +156,6 @@ export const ARCHIVES_DATA: ArchiveData[] = [
         </p>
       </>
     )
-    // Pas de lien, le bouton n'apparaît pas
   },
 
   // --- PROJET 2 : BUENO CREAM PASTRY ---
