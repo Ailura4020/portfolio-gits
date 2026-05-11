@@ -104,7 +104,7 @@ const AgentProfile: React.FC = () => {
         {/* EN-TÊTE FIXE */}
         <div style={{ marginBottom: '40px', paddingLeft: '20px', borderLeft: '4px solid var(--color-accent-neon)' }}>
           <h2 style={{ fontSize: isMobile ? '2.2em' : '4em', color: 'var(--color-accent-neon)', margin: '0 0 5px 0', textShadow: '0 0 15px var(--color-accent-neon)', fontFamily: 'var(--font-title)', textTransform: 'uppercase' }}>
-            DOSSIER AGENT // CLASSIFIÉ
+            DOSSIER AGENT
           </h2>
           <p style={{ color: 'var(--color-accent-teal)', fontFamily: 'var(--font-code)', letterSpacing: '0.1em', fontSize: isMobile ? '0.8em' : '1em', margin: 0 }}>
             // SYSTÈME DE CAMOUFLAGE : DÉSACTIVÉ //
