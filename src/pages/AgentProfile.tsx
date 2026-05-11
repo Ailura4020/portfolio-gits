@@ -49,54 +49,51 @@ const AgentProfile: React.FC = () => {
   return (
     <section ref={sectionRef} id="agent-profile" style={{ minHeight: '100vh', paddingTop: '100px', paddingBottom: '100px', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
       
-     {/* STYLES CSS INJECTÉS POUR L'ILLUSION HOLOGRAPHIQUE (Ghost in the Shell) */}
+     {/* STYLES CSS INJECTÉS POUR L'ILLUSION HOLOGRAPHIQUE (Mise au point progressive & Aller-retour) */}
       <style>
         {`
-          /* Animation d'apparition du contenu (plus lente et décomposée) */
+          /* Mise au point progressive de la caméra */
           @keyframes thermopticReveal {
-            0% { opacity: 0; filter: blur(20px) brightness(2); transform: translateY(40px) scale(0.95); }
-            20% { opacity: 0.8; filter: blur(3px) brightness(1.5); transform: translateY(10px) scale(0.98); }
-            25% { opacity: 0.2; filter: blur(10px); }
-            45% { opacity: 0.9; filter: blur(1px) brightness(1.2); transform: translateY(0px) scale(1); }
-            55% { opacity: 0.4; filter: blur(4px); }
-            70% { opacity: 1; filter: blur(0px) brightness(1); }
-            80% { opacity: 0.8; }
-            100% { opacity: 1; transform: translateY(0px) scale(1); filter: blur(0px); }
+            0% { opacity: 0; filter: blur(20px) brightness(2); transform: translateY(20px); }
+            30% { opacity: 0.6; filter: blur(10px) brightness(1.5); }
+            50% { opacity: 0.4; filter: blur(12px); } /* Léger sursaut d'interférence */
+            75% { opacity: 0.8; filter: blur(5px) brightness(1.2); }
+            100% { opacity: 1; transform: translateY(0px); filter: blur(0px) brightness(1); }
           }
           
-          /* Animation du laser de balayage (plus lent) */
+          /* Laser : Aller-retour (0% -> 50% -> 100%) */
           @keyframes holographicScanline {
             0% { top: -5%; opacity: 0; }
-            15% { opacity: 1; }
-            85% { opacity: 1; }
-            100% { top: 105%; opacity: 0; }
+            10% { opacity: 1; }
+            50% { top: 105%; opacity: 1; } /* Atteint le bas au milieu de l'animation */
+            90% { opacity: 1; }
+            100% { top: -5%; opacity: 0; } /* Remonte en haut à la fin */
           }
           
           .holo-container {
-            opacity: 0; /* Invisible par défaut */
+            opacity: 0; 
           }
           
-          /* Déclenchement au scroll (Durée augmentée à 2.8 secondes) */
+          /* Le texte apparaît en 3 secondes */
           .holo-container.active {
-            animation: thermopticReveal 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation: thermopticReveal 3s ease-out forwards;
           }
           
-          /* Le laser de balayage (Plus épais et plus lumineux) */
           .scanline {
             position: absolute;
             left: 0;
             width: 100%;
-            height: 6px; /* Plus épais */
-            background: rgba(0, 255, 255, 0.9); /* Cyan plus fort */
-            box-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 40px rgba(0, 255, 255, 0.6), 0 0 10px #ffffff; /* Halo intense */
+            height: 6px;
+            background: rgba(0, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 40px rgba(0, 255, 255, 0.6), 0 0 10px #ffffff;
             pointer-events: none;
             z-index: 10;
             opacity: 0;
           }
           
-          /* Déclenchement du laser */
+          /* Le laser dure 4 secondes pour faire l'aller-retour complet */
           .holo-container.active .scanline {
-            animation: holographicScanline 2.8s ease-in-out forwards;
+            animation: holographicScanline 4s ease-in-out forwards;
             animation-delay: 0.1s;
           }
         `}
@@ -136,7 +133,7 @@ const AgentProfile: React.FC = () => {
             >
               <div style={{ width: '100%', aspectRatio: '3/4', background: '#000', border: '1px solid #222', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative' }}>
                 {/* L'emplacement de ta future image */}
-                <img src="/archives/ta-photo-agent.jpg" alt="Major Ailura" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.1) sepia(0.2) hue-rotate(180deg)' }} />
+                <img src="/archives/agent-profil.jpg" alt="Major Ailura" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'none' }} />
               </div>
               <div style={{ marginTop: '20px', fontFamily: 'var(--font-code)', fontSize: '0.85em', color: 'var(--color-interface-light)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
@@ -164,13 +161,23 @@ const AgentProfile: React.FC = () => {
                     Je m'appelle Justine, opérant sous l'identifiant <strong>Major Ailura</strong>. Mon parcours n'est pas linéaire, et c'est exactement ce qui fait ma force.
                   </p>
                   <p style={{ marginBottom: '20px' }}>
-                    Avant de plonger dans le code et les bases de données, j'ai forgé mon expérience sur le terrain, dans les secteurs de la banque et du retail. Ces années m'ont appris une chose essentielle : la technologie n'a de sens que si elle sert l'utilisateur. C'est cette conviction profonde qui m'a poussée à me former intensivement au développement d'applications.
+                    Avant de plonger dans le code, j'ai forgé mon expérience sur le terrain (banque, retail). Ces années m'ont appris une chose essentielle : la technologie n'a de sens que si elle sert l'utilisateur. C'est cette conviction qui m'a poussée à me former intensivement au développement. Aujourd'hui, je me positionne comme un véritable "pont" entre le monde des machines (la technique) et celui des humains (le business, les clients).
                   </p>
-                  <p style={{ marginBottom: '20px' }}>
-                    Aujourd'hui, je me positionne comme un profil hybride, un véritable "pont" entre le monde des machines (la technique) et celui des humains (le business, les clients). Lors de mon alternance, j'ai eu l'opportunité de créer et de coordonner une formation technique complète en totale autonomie, jonglant entre la gestion des priorités, l'animation d'ateliers et la communication avec des profils très techniques.
-                  </p>
+
+                  <h5 style={{ color: '#fff', fontFamily: 'var(--font-title)', marginTop: '30px', marginBottom: '10px', borderBottom: '1px solid #333', paddingBottom: '5px' }}>
+                    [ CAPACITÉS DE DÉPLOIEMENT : BUSINESS ANALYST ]
+                  </h5>
+                  <ul style={{ paddingLeft: '20px', marginBottom: '20px', color: '#ccc', listStyleType: 'square' }}>
+                    <li style={{ marginBottom: '8px' }}><strong>Recueil & Analyse :</strong> Traduction des besoins utilisateurs en spécifications fonctionnelles claires.</li>
+                    <li style={{ marginBottom: '8px' }}><strong>Agilité & Outils :</strong> Rédaction de User Stories, création de backlogs et modélisation de processus (UML/Merise).</li>
+                    <li><strong>Coordination :</strong> Animation d'ateliers, suivi de projets IT transverses et facilitation entre les équipes Tech et Métier.</li>
+                  </ul>
+
+                  <h5 style={{ color: '#fff', fontFamily: 'var(--font-title)', marginTop: '30px', marginBottom: '10px', borderBottom: '1px solid #333', paddingBottom: '5px' }}>
+                    [ DONNÉES COGNITIVES ANNEXES ]
+                  </h5>
                   <p>
-                    <strong>Ce que je propose ?</strong> Une compréhension rapide des enjeux métier, une gestion fluide de l'humain, et la capacité de naviguer dans des architectures complexes sans jamais y rester enfermée. Je suis prête à m'investir dans des projets IT transverses où la communication, l'organisation et la résolution de problèmes sont au centre du jeu.
+                    En dehors du réseau, mon système maintient son équilibre grâce à une forte appétence pour la <strong>créativité</strong>. Qu'il s'agisse de m'immerger dans des univers narratifs (lecture, jeux vidéo) ou de jouer de la musique, ces explorations nourrissent ma capacité à imaginer des solutions innovantes et orientées utilisateur.
                   </p>
                 </div>
               </div>
