@@ -267,16 +267,14 @@ const MainframeDesktop: React.FC<{ projects: typeof projects }> = ({ projects })
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
 
-  // Détection du besoin de scroller le rapport
-  const checkScrollRequirement = () => {
+  const checkScroll = () => {
     if (contentRef.current) {
       const { scrollHeight, clientHeight, scrollTop } = contentRef.current;
       setCanScroll(scrollHeight > clientHeight + scrollTop + 10);
     }
   };
 
-  // Gestion des flèches de la galerie
-  const checkGalleryArrows = () => {
+  const checkGallery = () => {
     if (galleryRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = galleryRef.current;
       setShowLeftArrow(scrollLeft > 10);
@@ -286,25 +284,19 @@ const MainframeDesktop: React.FC<{ projects: typeof projects }> = ({ projects })
 
   const scrollGallery = (direction: 'left' | 'right') => {
     if (galleryRef.current) {
-      const scrollAmount = 400;
-      galleryRef.current.scrollBy({ 
-        left: direction === 'left' ? -scrollAmount : scrollAmount, 
-        behavior: 'smooth' 
-      });
+      const amount = 400;
+      galleryRef.current.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' });
     }
   };
 
   useEffect(() => {
     if (contentRef.current) contentRef.current.scrollTop = 0;
-    setTimeout(() => {
-      checkScrollRequirement();
-      checkGalleryArrows();
-    }, 150);
+    const timer = setTimeout(() => { checkScroll(); checkGallery(); }, 150);
+    return () => clearTimeout(timer);
   }, [activeProject]);
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '40px', flex: 1, minHeight: 0, height: '100%' }}>
-      
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -312,8 +304,8 @@ const MainframeDesktop: React.FC<{ projects: typeof projects }> = ({ projects })
         .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255, 204, 0, 0.4); border-radius: 10px; }
         @keyframes bounceHint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
         .scroll-hint { animation: bounceHint 2s infinite; }
-        @keyframes dataScan { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
         .scan-effect { animation: dataScan 0.4s ease-out forwards; }
+        @keyframes dataScan { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
       `}</style>
 
       {/* MENU GAUCHE */}
@@ -336,13 +328,8 @@ const MainframeDesktop: React.FC<{ projects: typeof projects }> = ({ projects })
 
       {/* PANNEAU DROIT */}
       <div key={activeProject.id} className="scan-effect" style={{ border: '1px solid #ffcc00', background: 'rgba(5, 10, 15, 0.85)', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
-        
-        <div 
-          ref={contentRef} 
-          onScroll={checkScrollRequirement}
-          className="custom-scroll" 
-          style={{ overflowY: 'auto', padding: '30px', flex: 1, position: 'relative' }}
-        >
+        <div ref={contentRef} onScroll={checkScroll} className="custom-scroll" style={{ overflowY: 'auto', padding: '30px', flex: 1 }}>
+          
           {/* MÉDIA PRINCIPAL */}
           <div style={{ border: '1px solid #333', background: '#000', marginBottom: '30px', textAlign: 'center', minHeight: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {activeProject.video ? (
@@ -356,28 +343,35 @@ const MainframeDesktop: React.FC<{ projects: typeof projects }> = ({ projects })
             )}
           </div>
 
-          <h2 style={{ color: '#ffcc00', fontFamily: 'var(--font-title)', textTransform: 'uppercase', marginBottom: '5px' }}>{activeProject.title}</h2>
+          {/* TITRE ET STATUS */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+            <h2 style={{ color: '#ffcc00', fontFamily: 'var(--font-title)', textTransform: 'uppercase', margin: 0 }}>{activeProject.title}</h2>
+            <div style={{ 
+              border: '1px solid #ffcc00', 
+              padding: '4px 12px', 
+              fontSize: '0.7em', 
+              fontFamily: 'var(--font-code)', 
+              color: activeProject.status.includes('EN COURS') ? '#00ff00' : '#ffcc00',
+  borderColor: activeProject.status.includes('EN COURS') ? '#00ff00' : '#ffcc00',
+              textTransform: 'uppercase',
+              letterSpacing: '1px'
+            }}>
+              {activeProject.status}
+            </div>
+          </div>
+          
           <p style={{ color: '#ffcc00', opacity: 0.6, fontFamily: 'var(--font-code)', fontSize: '0.8em', marginBottom: '20px' }}>// DÉCRYPTAGE DU RAPPORT...</p>
           
           <div style={{ color: '#ccc', lineHeight: '1.7', marginBottom: '30px' }}>{activeProject.fullDesc || activeProject.description}</div>
 
-          {/* GALERIE RÉTABLIE */}
+          {/* GALERIE */}
           {activeProject.gallery && activeProject.gallery.length > 0 && (
             <div style={{ position: 'relative', marginTop: '40px' }}>
-              <h4 style={{ color: '#ffcc00', marginBottom: '15px', fontFamily: 'var(--font-title)' }}>// ARCHIVES VISUELLES COMPLÉMENTAIRES</h4>
-              
-              {showLeftArrow && <button onClick={() => scrollGallery('left')} style={{ position: 'absolute', left: '-10px', top: '55%', zIndex: 10, background: '#ffcc00', border: 'none', cursor: 'pointer', padding: '10px', color: '#000', fontWeight: 'bold' }}>{'<'}</button>}
-              {showRightArrow && <button onClick={() => scrollGallery('right')} style={{ position: 'absolute', right: '-10px', top: '55%', zIndex: 10, background: '#ffcc00', border: 'none', cursor: 'pointer', padding: '10px', color: '#000', fontWeight: 'bold' }}>{'>'}</button>}
-              
-              <div 
-                ref={galleryRef} 
-                onScroll={checkGalleryArrows} 
-                className="no-scrollbar" 
-                style={{ display: 'flex', gap: '15px', overflowX: 'auto', scrollBehavior: 'smooth' }}
-              >
-                {activeProject.gallery.map((img, idx) => (
-                  <img key={idx} src={img} alt="" style={{ height: '160px', border: '1px solid #444', flexShrink: 0, background: '#000' }} />
-                ))}
+              <h4 style={{ color: '#ffcc00', marginBottom: '15px', fontFamily: 'var(--font-title)' }}>// ARCHIVES VISUELLES</h4>
+              {showLeftArrow && <button onClick={() => scrollGallery('left')} style={{ position: 'absolute', left: '-10px', top: '55%', zIndex: 10, background: '#ffcc00', border: 'none', padding: '10px', color: '#000', cursor: 'pointer' }}>{'<'}</button>}
+              {showRightArrow && <button onClick={() => scrollGallery('right')} style={{ position: 'absolute', right: '-10px', top: '55%', zIndex: 10, background: '#ffcc00', border: 'none', padding: '10px', color: '#000', cursor: 'pointer' }}>{'>'}</button>}
+              <div ref={galleryRef} onScroll={checkGallery} className="no-scrollbar" style={{ display: 'flex', gap: '15px', overflowX: 'auto', scrollBehavior: 'smooth' }}>
+                {activeProject.gallery.map((img, idx) => <img key={idx} src={img} alt="" style={{ height: '160px', border: '1px solid #444', flexShrink: 0, background: '#000' }} />)}
               </div>
             </div>
           )}
@@ -391,7 +385,6 @@ const MainframeDesktop: React.FC<{ projects: typeof projects }> = ({ projects })
           </div>
         </div>
 
-        {/* HINT DE SCROLL INTELLIGENT */}
         {canScroll && (
           <div className="scroll-hint" style={{ 
             position: 'absolute', bottom: '15px', right: '30px', 
@@ -406,7 +399,6 @@ const MainframeDesktop: React.FC<{ projects: typeof projects }> = ({ projects })
     </div>
   );
 };
-
 const ProjectsPage: React.FC = () => {
   const isMobile = useIsMobile(1024);
   return (
