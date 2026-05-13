@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react'; // useRef et useEffe
 import ProjectsMobile from '../components/ProjectsMobile';
 import useIsMobile from '../hooks/useIsMobile';
 import DecryptedText from '../components/DecryptedText';
+import ProjectModal from '../components/ProjectModal';
 
 // --- DONNÉES PROJETS ---
 const projects = [
@@ -401,6 +402,7 @@ const MainframeDesktop: React.FC<{ projects: typeof projects }> = ({ projects })
 };
 const ProjectsPage: React.FC = () => {
   const isMobile = useIsMobile(1024);
+  const [selectedProject, setSelectedProject] = useState<any | null>(null);
   return (
     <div style={{ paddingTop: '100px', paddingBottom: '30px', height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: isMobile ? '0 20px' : '0 40px', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
@@ -408,7 +410,22 @@ const ProjectsPage: React.FC = () => {
           <DecryptedText text="ARTEFACTS TECHNIQUES" style={{ fontSize: isMobile ? '2.5em' : '3.5em', color: 'var(--color-accent-neon)', fontFamily: 'var(--font-title)' }} />
           <p style={{ fontFamily: 'var(--font-code)', color: 'var(--color-accent-teal)', margin: 0 }}>{'>'} PROTOCOLE D'ACCÈS AUX ARCHIVES... {projects.length} UNITÉS DÉTECTÉES.</p>
         </div>
-        {isMobile ? <ProjectsMobile projects={projects} onSelectProject={() => {}} /> : <MainframeDesktop projects={projects} />}
+        {isMobile ? (
+          <div style={{ flex: 1, overflowY: 'auto', paddingBottom: '20px' }}>
+            <ProjectsMobile 
+              projects={projects} 
+              onSelectProject={(proj) => setSelectedProject(proj)} 
+            />
+            {selectedProject && (
+              <ProjectModal 
+                project={selectedProject} 
+                onClose={() => setSelectedProject(null)} 
+              />
+            )}
+          </div>
+        ) : (
+          <MainframeDesktop projects={projects} />
+        )}
       </div>
     </div>
   );
