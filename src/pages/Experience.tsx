@@ -9,48 +9,52 @@
     const isMobile = useIsMobile(1024);
 
     const missions: TabData[] = [
-      {
+   {
         id: 'mission-active',
         label: 'ZONE01',
         role: 'APPRENANTE & AMBASSADRICE', 
-        date: 'Juin 2024 - PRÉSENT',
-        isOngoing: true,
+        date: 'JUIN 2024 - JUIN 2026',
+        isOngoing: false,
         content: (
           <>
-            <div style={{ fontFamily: 'var(--font-title)', color: 'rgba(57, 255, 20, 0.8)', marginBottom: '10px', fontSize: '0.9em' }}>
+            <div style={{ fontFamily: 'var(--font-title)', color: 'var(--color-interface-light)', marginBottom: '10px', fontSize: '0.9em' }}>
               // LOCALISATION : ROUEN, NORMANDIE
             </div>
-            <p style={{ marginBottom: '20px', fontFamily: 'var(--font-title)', color: '#39ff14' }}>
-              <strong>{'>'} SYNCHRONISATION : DOUBLE STATUT ACTIF...</strong>
+            <p style={{ marginBottom: '20px', fontFamily: 'var(--font-title)', color: 'var(--color-accent-teal)' }}>
+              <strong>{'>'} SYNCHRONISATION : CYCLE TERMINÉ...</strong>
             </p>
             <p>
-              Profil hybride : Upgrade technique continu en développement (Apprenante) couplé à une fonction de liaison externe et événementielle (Ambassadrice).
+              Profil hybride : Upgrade technique continu en développement couplé à une fonction de liaison externe et événementielle.
+            </p>
+            <p style={{ marginTop: '10px', fontWeight: 'bold', color: '#fff' }}>
+              {'>'} CERTIFICATION : Titre Concepteur Développeur d'Application (Niveau 6 / Bac+3) obtenu.
             </p>
             <br/>
             <strong style={{ fontFamily: 'var(--font-title)', color: 'var(--color-accent-teal)' }}>// JOURNAL DE MISSION :</strong>
             
-            <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid #39ff14' }}>
-              <strong style={{ color: '#39ff14' }}>Partie Technique : Orientation Front/Intégration :</strong>
+            <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid var(--color-interface-dark)' }}>
+              <strong style={{ color: 'var(--color-interface-light)' }}>Partie Technique : Orientation Front/Intégration :</strong>
               <ul style={{ listStyle: 'none', marginTop: '5px', fontSize: '0.9em' }}>
-              <li><strong>Front-End & UI :</strong> Conception d'interfaces réactives (JS/Angular), routage et expérience utilisateur (UX).</li>
-            <li><strong>Intégration API :</strong> Consommation de données RESTful, manipulation JSON et connexion avec le Back-end.</li>
-            <li><strong>Collaboration Agile :</strong> Coordination avec l'équipe Back-end, définition des besoins (contrats d'interface) et Git Flow.</li>
-          </ul>
+                <li><strong>Front-End & UI :</strong> Conception d'interfaces réactives (JS/Angular), routage et expérience utilisateur (UX).</li>
+                <li><strong>Intégration API :</strong> Consommation de données RESTful, manipulation JSON et connexion avec le Back-end.</li>
+                <li><strong>Collaboration Agile :</strong> Coordination avec l'équipe Back-end, définition des besoins (contrats d'interface) et Git Flow.</li>
+              </ul>
             </div>
-            <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid #39ff14' }}>
-              <strong style={{ color: '#39ff14' }}>Partie Ambassadrice : Leadership & Soft Skills :</strong>
+            <div style={{ marginTop: '15px', paddingLeft: '15px', borderLeft: '2px solid var(--color-interface-dark)' }}>
+              <strong style={{ color: 'var(--color-interface-light)' }}>Partie Ambassadrice : Leadership & Soft Skills :</strong>
               <ul style={{ listStyle: 'none', marginTop: '5px', fontSize: '0.9em' }}>
                 <li><strong>Event Management :</strong> Co-organisation des sélections ("Piscines"), ateliers et soirées d'intégration.</li>
-          <li><strong>Communication :</strong> Représentation aux salons (Étudiant, Emploi, Femmes & Sport).</li>
-          <li><strong>Onboarding :</strong> Accueil, mentorat et accompagnement des nouvelles promotions.</li>
-        </ul>
+                <li><strong>Communication :</strong> Représentation aux salons (Étudiant, Emploi, Femmes & Sport).</li>
+                <li><strong>Onboarding :</strong> Accueil, mentorat et accompagnement des nouvelles promotions.</li>
+              </ul>
             </div>
 
             <div style={{ marginTop: '30px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               {['GoLang', 'React', 'Gestion de Projet', 'Événementiel', 'Administration'].map(tech => (
                 <span key={tech} style={{ 
-                  fontSize: '0.8em', padding: '5px 15px', border: '1px solid #39ff14', background: 'rgba(57, 255, 20, 0.1)',
-                  color: '#39ff14', fontFamily: 'var(--font-title)', letterSpacing: '1px'
+                  fontSize: '0.8em', padding: '5px 15px', border: '1px solid var(--color-interface-dark)', 
+                  background: 'transparent',
+                  color: 'var(--color-interface-light)', fontFamily: 'var(--font-title)', letterSpacing: '1px'
                 }}>
                   {tech}
                 </span>
@@ -62,7 +66,7 @@
     {
         id: 'archive-efficenty',
         label: 'EFFICENTY',
-        role: 'COACH PÉDAGOGIQUE DÉVELOPPEUSE (PROFIL BA/PO)',
+        role: 'COACH PÉDAGOGIQUE DÉVELOPPEUSE',
         date: 'JUIN 2025 - DÉC 2025',
         content: (
           <>

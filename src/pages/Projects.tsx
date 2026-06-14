@@ -12,7 +12,7 @@ const projects = [
     id: 'p-campus', 
     codename: 'CAMPUS-PLATFORM-26', 
     title: 'PLATEFORME PÉDAGOGIQUE CAMPUS', 
-    status: 'EN COURS', 
+    status: 'TERMINÉ', 
     type: 'CERTIFICATION RNCP (BA)',
     description: "Conception fonctionnelle et modélisation complète d'une plateforme SaaS éducative.",
     stack: ['Figma', 'UML', 'MERISE', 'PostgreSQL', 'Supabase', 'Next.js'],
