@@ -152,7 +152,7 @@ const ContactPage: React.FC = () => {
         {/* BOUTON CV CORRIGÉ */}
         <div style={{ marginBottom: '30px' }}>
           <a 
-            href="/cv-justine-faure.pdf" 
+            href="/justine-faure-cv.pdf" 
             download="CV_Justine_Faure.pdf"
             target="_blank"
             rel="noopener noreferrer"
