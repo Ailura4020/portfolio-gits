@@ -1,7 +1,8 @@
 // src/components/ProjectModal.tsx
 import React, { useEffect } from 'react';
+import type { Project } from '../types';
 
-const ProjectModal: React.FC<{ project: any; onClose: () => void }> = ({ project, onClose }) => {
+const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ project, onClose }) => {
   // Empêche le défilement de la page principale
   useEffect(() => {
     document.body.style.overflow = 'hidden';

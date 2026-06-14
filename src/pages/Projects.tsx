@@ -1,5 +1,6 @@
 // src/pages/Projects.tsx
 import React, { useState, useRef, useEffect } from 'react'; // useRef et useEffect sont essentiels ici
+import type { Project } from '../types';
 import ProjectsMobile from '../components/ProjectsMobile';
 import useIsMobile from '../hooks/useIsMobile';
 import DecryptedText from '../components/DecryptedText';
@@ -402,7 +403,7 @@ const MainframeDesktop: React.FC<{ projects: typeof projects }> = ({ projects })
 };
 const ProjectsPage: React.FC = () => {
   const isMobile = useIsMobile(1024);
-  const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   return (
     <div style={{ paddingTop: '100px', paddingBottom: '30px', height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: isMobile ? '0 20px' : '0 40px', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>

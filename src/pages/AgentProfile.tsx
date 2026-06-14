@@ -132,18 +132,14 @@ const AgentProfile: React.FC = () => {
               }}
             >
               <div style={{ width: '100%', aspectRatio: '3/4', background: '#000', border: '1px solid #222', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative' }}>
-                {/* L'emplacement de ta future image */}
                 <img src="/archives/agent-profil.jpg" alt="Major Ailura" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'none' }} />
               </div>
               <div style={{ marginTop: '20px', fontFamily: 'var(--font-code)', fontSize: '0.85em', color: 'var(--color-interface-light)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span>ID:</span> <strong style={{ color: '#fff', textShadow: '0 0 5px rgba(255,255,255,0.5)' }}>MAJOR AILURA</strong>
+                  <span>ID:</span> <strong style={{ color: '#fff', textShadow: '0 0 5px rgba(255,255,255,0.5)' }}>JUSTINE</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span>NOM:</span> <strong style={{ color: '#fff' }}>Justine FAURE</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span>CLASS:</span> <strong style={{ color: 'rgba(0, 255, 255, 0.9)' }}>BUSINESS ANALYST</strong>
+                  <span>CLASS:</span> <strong style={{ color: 'rgba(0, 255, 255, 0.9)' }}>HUMAN RELAY</strong>
                 </div>
               </div>
             </div>
@@ -153,31 +149,41 @@ const AgentProfile: React.FC = () => {
               <div style={{ background: 'rgba(5, 10, 15, 0.6)', border: '1px solid rgba(0, 255, 255, 0.2)', padding: isMobile ? '20px' : '40px', height: '100%' }}>
                 <h4 style={{ color: 'rgba(0, 255, 255, 0.9)', fontFamily: 'var(--font-title)', marginBottom: '25px', fontSize: '1.4em', letterSpacing: '1px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <span style={{ display: 'inline-block', width: '8px', height: '8px', background: 'rgba(0, 255, 255, 0.9)', borderRadius: '50%', boxShadow: '0 0 10px rgba(0,255,255,0.8)' }}></span>
-                  // TRANSMISSION DIRECTE : ÉTABLIE
+                  // L'HUMAIN AU CŒUR DE L'ARCHITECTURE
                 </h4>
                 
                 <div style={{ color: 'var(--color-text-primary)', lineHeight: '1.8', fontSize: '1.05em', fontFamily: 'sans-serif' }}>
                   <p style={{ marginBottom: '20px' }}>
-                    Je m'appelle Justine, opérant sous l'identifiant <strong>Major Ailura</strong>. Mon parcours n'est pas linéaire, et c'est exactement ce qui fait ma force.
+                    On vit dans une ère de haute technologie, un monde complexe et en perpétuel mouvement, à la manière des grandes cités futuristes qui ne dorment jamais. Mais au milieu de ces flux constants, ce qui m’importe, c’est ce qui se passe entre les êtres humains.
                   </p>
                   <p style={{ marginBottom: '20px' }}>
-                    Avant de plonger dans le code, j'ai forgé mon expérience sur le terrain (banque, retail). Ces années m'ont appris une chose essentielle : la technologie n'a de sens que si elle sert l'utilisateur. C'est cette conviction qui m'a poussée à me former intensivement au développement. Aujourd'hui, je me positionne comme un véritable "pont" entre le monde des machines (la technique) et celui des humains (le business, les clients).
+                    Je m'appelle Justine. Mon parcours est une trajectoire choisie : une série d’opportunités saisies avec audace, toujours avec l'idée de ne jamais me perdre en chemin.
                   </p>
 
                   <h5 style={{ color: '#fff', fontFamily: 'var(--font-title)', marginTop: '30px', marginBottom: '10px', borderBottom: '1px solid #333', paddingBottom: '5px' }}>
-                    [ CAPACITÉS DE DÉPLOIEMENT : BUSINESS ANALYST ]
+                    // MA VISION :
                   </h5>
-                  <ul style={{ paddingLeft: '20px', marginBottom: '20px', color: '#ccc', listStyleType: 'square' }}>
-                    <li style={{ marginBottom: '8px' }}><strong>Recueil & Analyse :</strong> Traduction des besoins utilisateurs en spécifications fonctionnelles claires.</li>
-                    <li style={{ marginBottom: '8px' }}><strong>Agilité & Outils :</strong> Rédaction de User Stories, création de backlogs et modélisation de processus (UML/Merise).</li>
-                    <li><strong>Coordination :</strong> Animation d'ateliers, suivi de projets IT transverses et facilitation entre les équipes Tech et Métier.</li>
-                  </ul>
+                  <p style={{ marginBottom: '20px' }}>
+                    Je considère la technique comme un langage, un outil pour traduire les besoins. Mais ma vraie spécialité, c’est le lien. Pour qu'un projet soit réussi, il faut plus que des compétences ; il faut de l'écoute, une confiance partagée et une envie commune de créer quelque chose qui a du sens. J'aime comprendre les gens, animer le dialogue entre les équipes et m'assurer que chaque voix compte.
+                  </p>
 
                   <h5 style={{ color: '#fff', fontFamily: 'var(--font-title)', marginTop: '30px', marginBottom: '10px', borderBottom: '1px solid #333', paddingBottom: '5px' }}>
-                    [ DONNÉES COGNITIVES ANNEXES ]
+                    // CE QUI NOURRIT MON QUOTIDIEN :
                   </h5>
+                  <p style={{ marginBottom: '20px' }}>
+                    Je suis une exploratrice de possibles. Ma curiosité est mon moteur principal. En dehors du travail, je me régénère à travers mes passions : les univers narratifs qui stimulent l'imagination, la guitare, l'écriture, les voyages, et le calme nécessaire de la méditation. Ce bien-être est mon ancrage ; c’est grâce à lui que je peux aborder chaque nouvelle mission avec créativité et une vision claire.
+                  </p>
+
+                  <h5 style={{ color: '#fff', fontFamily: 'var(--font-title)', marginTop: '30px', marginBottom: '10px', borderBottom: '1px solid #333', paddingBottom: '5px' }}>
+                    // TRAVAILLER AVEC MOI, C'EST :
+                  </h5>
+                  <ul style={{ paddingLeft: '20px', marginBottom: '20px', color: '#ccc', listStyleType: 'square' }}>
+                    <li style={{ marginBottom: '8px' }}><strong>Une approche humaine :</strong> L'empathie avant tout.</li>
+                    <li style={{ marginBottom: '8px' }}><strong>De la curiosité partagée :</strong> Apprendre, découvrir et évoluer ensemble.</li>
+                    <li><strong>Une volonté de construire :</strong> Transformer l'idée en réalité, en équipe.</li>
+                  </ul>
                   <p>
-                    En dehors du réseau, mon système maintient son équilibre grâce à une forte appétence pour la <strong>créativité</strong>. Qu'il s'agisse de m'immerger dans des univers narratifs (lecture, jeux vidéo) ou de jouer de la musique, ces explorations nourrissent ma capacité à imaginer des solutions innovantes et orientées utilisateur.
+                    Je cherche des projets où l'on construit, où l'on échange et où l'on apporte une réelle valeur humaine.
                   </p>
                 </div>
               </div>

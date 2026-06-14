@@ -71,7 +71,7 @@ const DecryptedText: React.FC<DecryptedTextProps> = ({
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [animate]);
 
   return (
     <h2 
